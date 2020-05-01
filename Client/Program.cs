@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using TaskPlanner.Client.Services.Managers;
 using TaskPlanner.Client.Services.Utilities;
 
 namespace TaskPlanner.Client
@@ -26,6 +27,7 @@ namespace TaskPlanner.Client
             builder.Services.AddApiAuthorization();
 
             builder.Services.AddTransient<IRandomStringGenerator, RandomStringGenerator>();
+            builder.Services.AddSingleton<ITaskManager, TaskManager>();
 
             await builder.Build().RunAsync();
         }

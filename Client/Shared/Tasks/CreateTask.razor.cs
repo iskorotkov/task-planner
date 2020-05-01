@@ -2,12 +2,15 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using TaskPlanner.Client.Services.Managers;
 using TaskPlanner.Shared.Data.Tasks;
 
 namespace TaskPlanner.Client.Shared.Tasks
 {
     public partial class CreateTask
     {
+        [Inject] public ITaskManager TaskManager { get; set; }
+
         [Parameter] public EventCallback<Todo> TaskCreated { get; set; }
         // [Parameter] public EventCallback? CreationCanceled { get; set; }
 
@@ -27,6 +30,7 @@ namespace TaskPlanner.Client.Shared.Tasks
         {
             if (_context.Validate())
             {
+                await TaskManager.Add(_task);
                 if (TaskCreated.HasDelegate)
                 {
                     await TaskCreated.InvokeAsync(_task);

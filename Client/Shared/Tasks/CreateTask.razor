@@ -15,19 +15,15 @@
 
                     <div class="form-group">
                         <label>Title</label>
-                        <InputText class="form-control" bind-Value="@_task.Title"
-                            ValueExpression="() => _task.Title"/>
+                        <InputText class="form-control" @bind-Value="@_task.Title"/>
                     </div>
 
                     <div class="form-group">
                         <label>Description</label>
-                        <InputText class="form-control" bind-Value="@_task.Description"
-                            ValueExpression="() => _task.Description"/>
+                        <InputText class="form-control" @bind-Value="@_task.Description"/>
                     </div>
                 </EditForm>
 
-                <p>@_task.Title</p>
-                <p>@_task.Description</p>
             </div>
 
             <div class="modal-footer">

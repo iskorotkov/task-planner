@@ -1,43 +1,21 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components;
+using TaskPlanner.Client.Services.Managers;
 using TaskPlanner.Shared.Data.Tasks;
 
 namespace TaskPlanner.Client.Pages
 {
     public partial class Overview
     {
-        private readonly List<Todo> _tasks;
+        [Inject] public ITaskManager TaskManager { get; set; } = null!;
 
+        private List<Todo> _tasks = null!;
         private Todo? _selectedTask;
 
-        public Overview()
+        protected override async Task OnInitializedAsync()
         {
-            _tasks = new List<Todo>
-            {
-                new Todo
-                {
-                    Title = "Task #1",
-                    Description = "A simple task",
-                    Author = "Ivan Korotkov"
-                },
-                new Todo
-                {
-                    Title = "Task #2",
-                    Description = "A complex task",
-                    Author = "Ivan Korotkov"
-                },
-                new Todo
-                {
-                    Title = "Task #3",
-                    Description = "Just a reminder to do smth...",
-                    Author = "Ivan Korotkov"
-                },
-                new Todo
-                {
-                    Title = "Task #4",
-                    Description = "Grocery list:\n1. ...;\n2. ...",
-                    Author = "Ivan Korotkov"
-                }
-            };
+            _tasks = await TaskManager.Get();
         }
 
         private void SetSelectedTask(Todo task)
