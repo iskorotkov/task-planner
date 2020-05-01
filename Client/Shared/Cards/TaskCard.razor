@@ -1,0 +1,15 @@
+@using TaskPlanner.Client.Shared.Modals
+
+<div class="card position-relative" @attributes="@AdditionalAttributes">
+    <div class="card-body">
+        <h4 class="card-title">@Todo.Title</h4>
+        <h6 class="card-subtitle mb-2 text-muted">@Todo.Author</h6>
+        <p class="card-text">@Todo.Description</p>
+    </div>
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#@_id">
+        Launch demo modal
+    </button>
+</div>
+
+<TaskInfo Task="@Todo" id="@_id"/>

@@ -1,0 +1,39 @@
+﻿@page "/overview"
+
+@using TaskPlanner.Client.Shared.Cards
+@using TaskPlanner.Client.Shared.Modals
+
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 p-0">
+                <ul class="flex-column nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="active nav-link" href="#">Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Plan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Settings</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-8">
+                <div class="row">
+                    @foreach (var task in _tasks)
+                    {
+                        <div class="col-4">
+                            <TaskCard Todo="@task" TaskSelected="@SetSelectedTask"/>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (_selectedTask != null)
+{
+    <TaskInfo Task="@_selectedTask"/>
+}
