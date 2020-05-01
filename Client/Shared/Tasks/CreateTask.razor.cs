@@ -9,18 +9,21 @@ namespace TaskPlanner.Client.Shared.Tasks
 {
     public partial class CreateTask
     {
+        // ReSharper disable once MemberCanBePrivate.Global
         [Inject] public ITaskManager TaskManager { get; set; }
 
         [Parameter] public EventCallback<Todo> TaskCreated { get; set; }
-        // [Parameter] public EventCallback? CreationCanceled { get; set; }
 
         [Parameter(CaptureUnmatchedValues = true)]
+        // ReSharper disable once MemberCanBePrivate.Global
         public Dictionary<string, object> AdditionalAttributes { get; set; }
 
         private readonly Todo _task;
         private readonly EditContext _context;
 
+#pragma warning disable 8618
         public CreateTask()
+#pragma warning restore 8618
         {
             _task = new Todo();
             _context = new EditContext(_task);
