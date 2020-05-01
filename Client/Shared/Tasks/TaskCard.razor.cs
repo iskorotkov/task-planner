@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components;
 using TaskPlanner.Client.Services.Utilities;
 using TaskPlanner.Shared.Data.Tasks;
 
-namespace TaskPlanner.Client.Shared.Cards
+namespace TaskPlanner.Client.Shared.Tasks
 {
     public partial class TaskCard
     {

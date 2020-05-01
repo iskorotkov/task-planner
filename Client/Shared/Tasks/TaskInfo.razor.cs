@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
 using TaskPlanner.Shared.Data.Tasks;
 
-namespace TaskPlanner.Client.Shared.Modals
+namespace TaskPlanner.Client.Shared.Tasks
 {
     public partial class TaskInfo
     {

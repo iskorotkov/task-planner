@@ -25,7 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Shared\Modals\TaskInfo.razor">
+    <Content Update="Shared\Tasks\TaskCard.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Shared\Tasks\TaskInfo.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
   </ItemGroup>
