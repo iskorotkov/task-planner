@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+using TaskPlanner.Client.Services.Utilities;
 using TaskPlanner.Shared.Data.Tasks;
 
 namespace TaskPlanner.Client.Shared.Cards
@@ -14,18 +12,12 @@ namespace TaskPlanner.Client.Shared.Cards
 
         [Parameter] public EventCallback<Todo> TaskSelected { get; set; }
 
-        [Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object> AdditionalAttributes { get; set; }
+        [Parameter(CaptureUnmatchedValues = true)]
+        public Dictionary<string, object> AdditionalAttributes { get; set; }
 
-        private readonly string _id = "";
+        [Inject] public IRandomStringGenerator Rsg { get; set; }
 
-        public TaskCard()
-        {
-            var guid = Guid.NewGuid();
-            var chars = guid
-                .ToString()
-                .Where(c => (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
-            _id = new string(chars.ToArray());
-        }
+        private string _id;
 
         protected override void OnParametersSet()
         {
@@ -35,12 +27,9 @@ namespace TaskPlanner.Client.Shared.Cards
             }
         }
 
-        private async Task ShowTaskInfo(MouseEventArgs obj)
+        protected override void OnInitialized()
         {
-            if (TaskSelected.HasDelegate)
-            {
-                await TaskSelected.InvokeAsync(Todo!);
-            }
+            _id = Rsg.Next();
         }
     }
 }
