@@ -6,6 +6,7 @@ namespace TaskPlanner.Server.Controllers
 {
     public class OidcConfigurationController : Controller
     {
+        // ReSharper disable once NotAccessedField.Local
         private readonly ILogger<OidcConfigurationController> _logger;
 
         public OidcConfigurationController(IClientRequestParametersProvider clientRequestParametersProvider, ILogger<OidcConfigurationController> logger)
