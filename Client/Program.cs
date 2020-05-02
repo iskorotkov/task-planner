@@ -29,7 +29,7 @@ namespace TaskPlanner.Client
             builder.Services.AddTransient<IRandomStringGenerator, RandomStringGenerator>();
             builder.Services.AddSingleton<ITaskManager, TaskManager>();
 
-            await builder.Build().RunAsync();
+            await builder.Build().RunAsync().ConfigureAwait(false);
         }
     }
 }

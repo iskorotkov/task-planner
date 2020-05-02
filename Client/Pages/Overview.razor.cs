@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using TaskPlanner.Client.Services.Managers;
 using TaskPlanner.Shared.Data.Tasks;
 
@@ -12,7 +11,7 @@ namespace TaskPlanner.Client.Pages
 #pragma warning disable 8618
         // ReSharper disable once MemberCanBePrivate.Global
         [Inject] public ITaskManager TaskManager { get; set; } = null!;
-        
+
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         [Inject] public NavigationManager NavigationManager { get; set; }
 #pragma warning restore 8618
@@ -21,10 +20,10 @@ namespace TaskPlanner.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            _tasks = await TaskManager.Get();
+            _tasks = await TaskManager.Get().ConfigureAwait(false);
         }
 
-        private void CreateTask(MouseEventArgs obj)
+        private void CreateTask()
         {
             NavigationManager.NavigateTo("/tasks/create");
         }

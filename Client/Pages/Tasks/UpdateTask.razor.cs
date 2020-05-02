@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using System;
 using System.Threading.Tasks;
 using TaskPlanner.Client.Services.Managers;
@@ -22,7 +21,7 @@ namespace TaskPlanner.Client.Pages.Tasks
 #pragma warning disable 8618
         [Parameter] public string GuidStr { get; set; }
 #pragma warning restore 8618
-        
+
 #pragma warning disable 8618
         public Todo Task { get; set; }
 #pragma warning restore 8618
@@ -32,19 +31,19 @@ namespace TaskPlanner.Client.Pages.Tasks
         protected override async Task OnInitializedAsync()
         {
             _guid = Guid.Parse(GuidStr);
-            Task = await TaskManager.Find(_guid);
+            Task = await TaskManager.Find(_guid).ConfigureAwait(false);
             if (Task == null)
             {
                 throw new ArgumentException(nameof(Task));
             }
         }
 
-        private void Cancel(MouseEventArgs obj)
+        private void Cancel()
         {
             NavigationManager.NavigateTo("/overview");
         }
 
-        private void Submit(MouseEventArgs obj)
+        private void Submit()
         {
             NavigationManager.NavigateTo("/overview");
         }

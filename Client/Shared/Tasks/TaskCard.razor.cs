@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using TaskPlanner.Shared.Data.Tasks;
 
 namespace TaskPlanner.Client.Shared.Tasks
@@ -29,7 +28,7 @@ namespace TaskPlanner.Client.Shared.Tasks
             }
         }
 
-        private void CardClicked(MouseEventArgs obj)
+        private void CardClicked()
         {
             NavigationManager.NavigateTo($"/tasks/update/{Todo!.Guid}");
         }

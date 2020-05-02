@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Web;
 using TaskPlanner.Client.Services.Managers;
 using TaskPlanner.Shared.Data.Tasks;
 
@@ -35,17 +34,17 @@ namespace TaskPlanner.Client.Pages.Tasks
         {
             if (_context.Validate())
             {
-                await TaskManager.Add(_task);
+                await TaskManager.Add(_task).ConfigureAwait(false);
                 if (TaskCreated.HasDelegate)
                 {
-                    await TaskCreated.InvokeAsync(_task);
+                    await TaskCreated.InvokeAsync(_task).ConfigureAwait(false);
                 }
-                
+
                 NavigationManager.NavigateTo("/overview");
             }
         }
 
-        private void Cancel(MouseEventArgs obj)
+        private void Cancel()
         {
             NavigationManager.NavigateTo("/overview");
         }
