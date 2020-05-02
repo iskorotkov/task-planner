@@ -9,8 +9,13 @@ namespace TaskPlanner.Client.Pages
 {
     public partial class Overview
     {
+#pragma warning disable 8618
+        // ReSharper disable once MemberCanBePrivate.Global
         [Inject] public ITaskManager TaskManager { get; set; } = null!;
+        
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
         [Inject] public NavigationManager NavigationManager { get; set; }
+#pragma warning restore 8618
 
         private List<Todo> _tasks = null!;
 
