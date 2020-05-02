@@ -1,0 +1,27 @@
+﻿@page "/tasks/create"
+
+<div class="container-fluid">
+    <EditForm EditContext="@_context">
+        <DataAnnotationsValidator/>
+    
+        <h5 class="h5">New task</h5>
+        <button aria-label="Close" class="close" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    
+        <div class="form-group">
+            <label>Title</label>
+            <InputText class="form-control" @bind-Value="@_task.Title"/>
+        </div>
+    
+        <div class="form-group">
+            <label>Description</label>
+            <InputText class="form-control" @bind-Value="@_task.Description"/>
+        </div>
+    
+        <div class="row">
+            <button class="btn btn-secondary" type="button" @onclick="@Cancel">Close</button>
+            <button class="btn btn-primary" type="button" @onclick="@Submit">Save changes</button>
+        </div>
+    </EditForm>
+</div>

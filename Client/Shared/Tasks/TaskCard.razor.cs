@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
-using TaskPlanner.Client.Services.Utilities;
+using Microsoft.AspNetCore.Components.Web;
 using TaskPlanner.Shared.Data.Tasks;
 
 namespace TaskPlanner.Client.Shared.Tasks
 {
     public partial class TaskCard
     {
-        [Parameter] public Todo? Todo { get; set; }
+        [Inject] public NavigationManager NavigationManager { get; set; }
 
-        [Parameter] public EventCallback<Todo> TaskSelected { get; set; }
+        [Parameter] public Todo? Todo { get; set; }
 
         [Parameter(CaptureUnmatchedValues = true)]
         public Dictionary<string, object> AdditionalAttributes { get; set; }
-
-        [Inject] public IRandomStringGenerator Rsg { get; set; }
-
-        private string _id;
 
         protected override void OnParametersSet()
         {
@@ -27,9 +23,9 @@ namespace TaskPlanner.Client.Shared.Tasks
             }
         }
 
-        protected override void OnInitialized()
+        private void CardClicked(MouseEventArgs obj)
         {
-            _id = Rsg.Next();
+            NavigationManager.NavigateTo($"/tasks/update/{Todo.Guid}");
         }
     }
 }

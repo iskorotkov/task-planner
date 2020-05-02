@@ -1,0 +1,14 @@
+﻿@page "/tasks/update/{GuidStr}"
+
+<div class="container-fluid">
+    <h5 class="h5">@Task.Title</h5>
+
+    <div class="modal-body">
+        <p>@Task.Description</p>
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" @onclick="@Cancel">Close</button>
+        <button class="btn btn-primary" type="button" @onclick="@Submit">Save changes</button>
+    </div>
+</div>

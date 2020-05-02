@@ -28,12 +28,21 @@
     <Content Update="Shared\Tasks\TaskCard.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
-    <Content Update="Shared\Tasks\TaskInfo.razor">
+    <Content Update="Pages\Tasks\CreateTask.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
-    <Content Update="Shared\Tasks\CreateTask.razor">
+    <Content Update="Pages\Tasks\UpdateTask.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Pages\Tasks\CreateTask.razor.cs">
+      <DependentUpon>CreateTask.razor</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\Tasks\UpdateTask.razor.cs">
+      <DependentUpon>TaskInfo.razor</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

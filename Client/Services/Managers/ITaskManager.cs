@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TaskPlanner.Shared.Data.Tasks;
 
@@ -9,5 +10,6 @@ namespace TaskPlanner.Client.Services.Managers
         Task<List<Todo>> Get();
         Task Remove(Todo task);
         Task Add(Todo task);
+        Task<Todo> Find(Guid guid);
     }
 }

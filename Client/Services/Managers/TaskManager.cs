@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TaskPlanner.Shared.Data.Tasks;
 
@@ -54,6 +56,12 @@ namespace TaskPlanner.Client.Services.Managers
         {
             _tasks.Add(task);
             return Task.CompletedTask;
+        }
+
+        public Task<Todo> Find(Guid guid)
+        {
+            var task = _tasks.First(x => x.Guid == guid);
+            return Task.FromResult(task);
         }
     }
 }

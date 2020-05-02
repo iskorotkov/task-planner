@@ -2,15 +2,17 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Components.Web;
 using TaskPlanner.Client.Services.Managers;
 using TaskPlanner.Shared.Data.Tasks;
 
-namespace TaskPlanner.Client.Shared.Tasks
+namespace TaskPlanner.Client.Pages.Tasks
 {
     public partial class CreateTask
     {
         // ReSharper disable once MemberCanBePrivate.Global
         [Inject] public ITaskManager TaskManager { get; set; }
+        [Inject] public NavigationManager NavigationManager { get; set; }
 
         [Parameter] public EventCallback<Todo> TaskCreated { get; set; }
 
@@ -38,7 +40,14 @@ namespace TaskPlanner.Client.Shared.Tasks
                 {
                     await TaskCreated.InvokeAsync(_task);
                 }
+                
+                NavigationManager.NavigateTo("/overview");
             }
+        }
+
+        private void Cancel(MouseEventArgs obj)
+        {
+            NavigationManager.NavigateTo("/overview");
         }
     }
 }

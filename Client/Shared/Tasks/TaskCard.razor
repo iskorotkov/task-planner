@@ -5,9 +5,7 @@
         <p class="card-text">@Todo.Description</p>
     </div>
 
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#@_id">
+    <button type="button" class="btn btn-primary" @onclick="@CardClicked">
         View
     </button>
 </div>
-
-<TaskInfo Task="@Todo" id="@_id"/>
