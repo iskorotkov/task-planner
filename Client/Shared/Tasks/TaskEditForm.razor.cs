@@ -47,7 +47,7 @@ namespace TaskPlanner.Client.Shared.Tasks
         {
             if (Cancel.HasDelegate)
             {
-                await Cancel.InvokeAsync(EditContext);
+                await Cancel.InvokeAsync(EditContext).ConfigureAwait(false);
             }
         }
 
@@ -55,7 +55,7 @@ namespace TaskPlanner.Client.Shared.Tasks
         {
             if (Submit.HasDelegate)
             {
-                await Submit.InvokeAsync(EditContext);
+                await Submit.InvokeAsync(EditContext).ConfigureAwait(false);
             }
         }
     }
