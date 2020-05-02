@@ -1,8 +1,18 @@
 <div class="card position-relative" @attributes="@AdditionalAttributes">
     <div class="card-body">
         <h4 class="card-title">@Todo.Title</h4>
+        
         <h6 class="card-subtitle mb-2 text-muted">@Todo.Author</h6>
+        
         <p class="card-text">@Todo.Description</p>
+        <p>Importance: @Todo.Importance</p>
+        <p>Complexity: @Todo.Complexity</p>
+        
+        <p>Estimated time: @Todo.EstimatedTime</p>
+        <p>Time spent: @Todo.TimeSpent</p>
+        
+        <p>Soft deadline: @Todo.SoftDeadline</p>
+        <p>Hard deadline: @Todo.HardDeadline</p>
     </div>
 
     <button type="button" class="btn btn-primary" @onclick="@CardClicked">

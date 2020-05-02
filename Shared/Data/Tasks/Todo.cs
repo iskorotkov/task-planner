@@ -14,7 +14,7 @@ namespace TaskPlanner.Shared.Data.Tasks
         public int? Complexity { get; set; } = null;
 
         public double? EstimatedTime { get; set; } = null;
-        public double? TimeSpend { get; set; } = null;
+        public double? TimeSpent { get; set; } = null;
 
         public DateTime? SoftDeadline { get; set; } = null;
         public DateTime? HardDeadline { get; set; } = null;

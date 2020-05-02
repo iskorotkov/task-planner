@@ -20,19 +20,17 @@
                 </ul>
             </div>
             <div class="col-md-8">
-                <div class="row">
-                    <div class="col-12">
-                        <button type="button" class="btn btn-primary" @onclick="@CreateTask">
-                            <span class="oi oi-plus"></span>
-                        </button>
-                    </div>
-                    
-                    @foreach (var task in _tasks)
-                    {
-                        <div class="col-4">
+                <div class="col-12">
+                    <button type="button" class="btn btn-primary" @onclick="@CreateTask">
+                        <span class="oi oi-plus"></span>
+                    </button>
+
+                    <div class="card-columns">
+                        @foreach (var task in _tasks)
+                        {
                             <TaskCard Todo="@task"/>
-                        </div>
-                    }
+                        }
+                    </div>
                 </div>
             </div>
         </div>
