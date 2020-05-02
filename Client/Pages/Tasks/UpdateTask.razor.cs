@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components.Forms;
 using TaskPlanner.Client.Services.Managers;
 using TaskPlanner.Shared.Data.Tasks;
 
@@ -23,19 +24,25 @@ namespace TaskPlanner.Client.Pages.Tasks
 #pragma warning restore 8618
 
 #pragma warning disable 8618
-        public Todo Task { get; set; }
+        private Todo _task;
 #pragma warning restore 8618
 
         private Guid _guid;
 
+#pragma warning disable 8618
+        private EditContext _context;
+#pragma warning restore 8618
+
         protected override async Task OnInitializedAsync()
         {
             _guid = Guid.Parse(GuidStr);
-            Task = await TaskManager.Find(_guid).ConfigureAwait(false);
-            if (Task == null)
+            _task = await TaskManager.Find(_guid).ConfigureAwait(false);
+            if (_task == null)
             {
-                throw new ArgumentException(nameof(Task));
+                throw new ArgumentException(nameof(_task));
             }
+
+            _context = new EditContext(_task);
         }
 
         private void Cancel()
@@ -50,7 +57,7 @@ namespace TaskPlanner.Client.Pages.Tasks
 
         private async Task Delete()
         {
-            await TaskManager.Remove(Task).ConfigureAwait(false);
+            await TaskManager.Remove(_task).ConfigureAwait(false);
             NavigationManager.NavigateTo("/overview");
         }
     }

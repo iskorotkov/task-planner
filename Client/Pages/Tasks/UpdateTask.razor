@@ -1,14 +1,55 @@
 ﻿@page "/tasks/update/{GuidStr}"
 
 <div class="container-fluid">
-    <h5 class="h5">@Task.Title</h5>
+    <h5 class="h5">Update task</h5>
 
-    <p>@Task.Description</p>
+    <EditForm EditContext="@_context">
+        <DataAnnotationsValidator/>
 
-    <div class="row">
-        <button class="btn btn-danger ml-auto" type="button" @onclick="@Delete">Delete</button>
+        <div class="form-group">
+            <label>Title</label>
+            <InputText class="form-control" @bind-Value="@_task.Title"/>
+        </div>
 
-        <button class="btn btn-secondary" type="button" @onclick="@Cancel">Close</button>
-        <button class="btn btn-primary" type="button" @onclick="@Submit">Save changes</button>
-    </div>
+        <div class="form-group">
+            <label>Description</label>
+            <InputText class="form-control" @bind-Value="@_task.Description"/>
+        </div>
+
+        <div class="form-group">
+            <label>Importance</label>
+            <InputNumber class="form-control" @bind-Value="@_task.Importance"/>
+        </div>
+
+        <div class="form-group">
+            <label>Complexity</label>
+            <InputNumber class="form-control" @bind-Value="@_task.Complexity"/>
+        </div>
+
+        <div class="form-group">
+            <label>Estimated time</label>
+            <InputNumber class="form-control" @bind-Value="@_task.EstimatedTime"/>
+        </div>
+
+        <div class="form-group">
+            <label>Time spent</label>
+            <InputNumber class="form-control" @bind-Value="@_task.TimeSpent"/>
+        </div>
+
+        <div class="form-group">
+            <label>Soft deadline</label>
+            <InputDate class="form-control" @bind-Value="@_task.SoftDeadline"/>
+        </div>
+
+        <div class="form-group">
+            <label>Hard deadline</label>
+            <InputDate class="form-control" @bind-Value="@_task.HardDeadline"/>
+        </div>
+
+        <div class="row">
+            <button class="btn btn-danger" type="button" @onclick="@Delete">Delete</button>
+            <button class="btn btn-secondary" type="button" @onclick="@Cancel">Close</button>
+            <button class="btn btn-primary" type="button" @onclick="@Submit">Save changes</button>
+        </div>
+    </EditForm>
 </div>
