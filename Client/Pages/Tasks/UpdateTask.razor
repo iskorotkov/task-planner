@@ -3,11 +3,11 @@
 <div class="container-fluid">
     <h5 class="h5">@Task.Title</h5>
 
-    <div class="modal-body">
-        <p>@Task.Description</p>
-    </div>
+    <p>@Task.Description</p>
 
-    <div class="modal-footer">
+    <div class="row">
+        <button class="btn btn-danger ml-auto" type="button" @onclick="@Delete">Delete</button>
+
         <button class="btn btn-secondary" type="button" @onclick="@Cancel">Close</button>
         <button class="btn btn-primary" type="button" @onclick="@Submit">Save changes</button>
     </div>

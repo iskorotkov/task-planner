@@ -47,5 +47,11 @@ namespace TaskPlanner.Client.Pages.Tasks
         {
             NavigationManager.NavigateTo("/overview");
         }
+
+        private async Task Delete()
+        {
+            await TaskManager.Remove(Task).ConfigureAwait(false);
+            NavigationManager.NavigateTo("/overview");
+        }
     }
 }
