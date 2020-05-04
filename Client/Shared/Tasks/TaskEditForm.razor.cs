@@ -9,14 +9,16 @@ namespace TaskPlanner.Client.Shared.Tasks
 {
     public partial class TaskEditForm
     {
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
 #pragma warning disable 8618
         [Parameter] public Todo Model { get; set; }
+#pragma warning restore 8618
 
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
-        [Parameter] public string Title { get; set; }
+        [Parameter] public string? Title { get; set; }
 
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
-        [Parameter] public RenderFragment<EditContext> AdditionalButtons { get; set; }
+        [Parameter] public RenderFragment<EditContext>? AdditionalButtons { get; set; }
 
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         [Parameter] public EventCallback<EditContext> Cancel { get; set; }
@@ -26,8 +28,7 @@ namespace TaskPlanner.Client.Shared.Tasks
 
         [Parameter(CaptureUnmatchedValues = true)]
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
-        public Dictionary<string, object> AdditionalAttributes { get; set; }
-#pragma warning restore 8618
+        public Dictionary<string, object>? AdditionalAttributes { get; set; }
 
 #pragma warning disable 8618
         private EditContext EditContext { get; set; }

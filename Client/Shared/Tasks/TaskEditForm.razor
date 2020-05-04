@@ -45,7 +45,7 @@
         </div>
 
         <div class="row">
-            @AdditionalButtons(EditContext)
+            @AdditionalButtons?.Invoke(EditContext)
             <button class="btn btn-secondary" type="button" @onclick="@OnCancel">Close</button>
             <button class="btn btn-primary" type="button" @onclick="@OnSubmit">Save changes</button>
         </div>
