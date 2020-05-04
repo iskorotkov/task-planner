@@ -1,5 +1,8 @@
 @page "/authentication/{action}"
 
+@* ReSharper disable once RedundantUsingDirective *@
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
 <RemoteAuthenticatorView Action="@Action"/>
 
 @code{
