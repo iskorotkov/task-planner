@@ -1,12 +1,8 @@
-using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using TaskPlanner.Client.Services.Authentication;
-using TaskPlanner.Client.Services.Managers;
 using TaskPlanner.Client.Services.Utilities;
+using TaskPlanner.Client.Services.Managers;
 
 namespace TaskPlanner.Client
 {
@@ -16,18 +12,6 @@ namespace TaskPlanner.Client
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
-
-            builder.Services.AddAuthorizationCore();
-            builder.Services.AddScoped<SignOutSessionStateManager>();
-            builder.Services.AddHttpClient("Firebase");
-            builder.Services.AddTransient(sp =>
-                sp.GetRequiredService<IHttpClientFactory>().CreateClient("Firebase"));
-
-            builder.Services
-                .AddRemoteAuthentication<RemoteAuthenticationState, FirebaseAccount, FirebaseAuthenticationOptions>();
-            builder.Services
-                .AddScoped<IRemoteAuthenticationService<RemoteAuthenticationState>, FirebaseAuthenticationService>();
-            builder.Services.AddScoped<AuthenticationStateProvider, FirebaseAuthenticationStateProvider>();
 
             builder.Services.AddTransient<IRandomStringGenerator, RandomStringGenerator>();
             builder.Services.AddScoped<ITaskManager, TaskManager>();
