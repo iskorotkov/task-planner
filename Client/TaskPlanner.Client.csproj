@@ -37,7 +37,7 @@
     <Content Update="Shared\Tasks\TaskEditForm.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
-    <Content Update="Pages\Auth\Login.razor">
+    <Content Update="Pages\Auth\SignIn.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
   </ItemGroup>
