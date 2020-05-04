@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using TaskPlanner.Client.Data.Auth;
 using TaskPlanner.Client.Services.Auth;
 
@@ -23,7 +24,7 @@ namespace TaskPlanner.Client.Pages.Auth
             NavigationManager.NavigateTo("/");
         }
 
-        public async Task Submit()
+        public async Task Submit(EditContext context)
         {
             try
             {

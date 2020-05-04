@@ -1,18 +1,18 @@
 ﻿@page "/signin"
 
-<EditForm Model="@User" ValidSubmit="@Submit">
+<EditForm Model="@User" OnValidSubmit="@Submit">
     <DataAnnotationsValidator/>
 
     <div class="form-group">
         <label>Username</label>
         <input class="form-control" type="email"/>
-        <ValidationMessage For="@User.Username"/>
+        @*<ValidationMessage For="@(x => x.Username)"/>*@
     </div>
 
     <div class="form-group">
         <label>Password</label>
         <input class="form-control" type="password"/>
-        <ValidationMessage For="@User.Password"/>
+        @*<ValidationMessage For="@(x => x.Password)"/>*@
     </div>
 
     <div class="row">

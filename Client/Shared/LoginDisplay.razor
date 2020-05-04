@@ -3,13 +3,12 @@
 <a href="/profile">Hello, user!</a>
 <button class="btn btn-link nav-link" @onclick="BeginSignOut">Log out</button>
 <a href="/register">Register</a>
-<a href="/login">Log in</a>
+<a href="/signin">Log in</a>
 
-@code{
-
+@code
+{
     private void BeginSignOut(MouseEventArgs args)
     {
-        Navigation.NavigateTo("authentication/logout");
+        Navigation.NavigateTo("/logout");
     }
-
 }
