@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace TaskPlanner.Server.Controllers
 {
@@ -17,14 +16,6 @@ namespace TaskPlanner.Server.Controllers
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
-
-        // ReSharper disable once NotAccessedField.Local
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            this._logger = logger;
-        }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()

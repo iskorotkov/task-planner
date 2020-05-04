@@ -1,0 +1,6 @@
+﻿@page "/tasks/create"
+
+@* ReSharper disable once RedundantUsingDirective *@
+@using TaskPlanner.Client.Shared.Tasks
+
+<TaskEditForm Cancel="@Cancel" Submit="@Submit" Model="@_task" Title="New task"/>

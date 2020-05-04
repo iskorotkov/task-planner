@@ -1,0 +1,53 @@
+﻿<div class="container-fluid" @attributes="@AdditionalAttributes">
+    <h5 class="h5">@Title</h5>
+
+    <EditForm EditContext="@EditContext">
+        <DataAnnotationsValidator/>
+
+        <div class="form-group">
+            <label>Title</label>
+            <InputText class="form-control" @bind-Value="@Model.Title"/>
+        </div>
+
+        <div class="form-group">
+            <label>Description</label>
+            <InputTextArea class="form-control" @bind-Value="@Model.Description"/>
+        </div>
+
+        <div class="form-group">
+            <label>Importance</label>
+            <InputNumber class="form-control" @bind-Value="@Model.Importance"/>
+        </div>
+
+        <div class="form-group">
+            <label>Complexity</label>
+            <InputNumber class="form-control" @bind-Value="@Model.Complexity"/>
+        </div>
+
+        <div class="form-group">
+            <label>Estimated time</label>
+            <InputNumber class="form-control" @bind-Value="@Model.EstimatedTime"/>
+        </div>
+
+        <div class="form-group">
+            <label>Time spent</label>
+            <InputNumber class="form-control" @bind-Value="@Model.TimeSpent"/>
+        </div>
+
+        <div class="form-group">
+            <label>Soft deadline</label>
+            <InputDate class="form-control" @bind-Value="@Model.SoftDeadline"/>
+        </div>
+
+        <div class="form-group">
+            <label>Hard deadline</label>
+            <InputDate class="form-control" @bind-Value="@Model.HardDeadline"/>
+        </div>
+
+        <div class="row">
+            @AdditionalButtons?.Invoke(EditContext)
+            <button class="btn btn-secondary" type="button" @onclick="@OnCancel">Close</button>
+            <button class="btn btn-primary" type="button" @onclick="@OnSubmit">Save changes</button>
+        </div>
+    </EditForm>
+</div>

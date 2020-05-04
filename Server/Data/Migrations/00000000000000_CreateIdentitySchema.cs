@@ -16,10 +16,7 @@ namespace TaskPlanner.Server.Data.Migrations
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
+                constraints: table => table.PrimaryKey("PK_AspNetRoles", x => x.Id));
 
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
@@ -41,10 +38,7 @@ namespace TaskPlanner.Server.Data.Migrations
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
+                constraints: table => table.PrimaryKey("PK_AspNetUsers", x => x.Id));
 
             migrationBuilder.CreateTable(
                 name: "DeviceCodes",
@@ -58,10 +52,7 @@ namespace TaskPlanner.Server.Data.Migrations
                     Expiration = table.Column<DateTime>(nullable: false),
                     Data = table.Column<string>(maxLength: 50000, nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DeviceCodes", x => x.UserCode);
-                });
+                constraints: table => table.PrimaryKey("PK_DeviceCodes", x => x.UserCode));
 
             migrationBuilder.CreateTable(
                 name: "PersistedGrants",
@@ -75,10 +66,7 @@ namespace TaskPlanner.Server.Data.Migrations
                     Expiration = table.Column<DateTime>(nullable: true),
                     Data = table.Column<string>(maxLength: 50000, nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PersistedGrants", x => x.Key);
-                });
+                constraints: table => table.PrimaryKey("PK_PersistedGrants", x => x.Key));
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",

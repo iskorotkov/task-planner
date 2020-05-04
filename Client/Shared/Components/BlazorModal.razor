@@ -1,0 +1,23 @@
+﻿<div class="modal @FadeClass @ShowClass" tabindex="-1" role="dialog"
+     style="@DisplayStyle" @attributes="@AdditionalAttributes">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                @ModalHeader
+            </div>
+
+            <div class="modal-body">
+                @ModalBody
+            </div>
+
+            <div class="modal-footer">
+                @ModalFooter
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (IsShown && UseBackdrop)
+{
+    <div class="modal-backdrop @FadeClass @ShowClass"></div>
+}
