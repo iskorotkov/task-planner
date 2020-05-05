@@ -22,7 +22,8 @@ namespace TaskPlanner.Client.Services.Auth
         public async Task SignIn(SignInUser user)
         {
             var credential = await _jsRuntime
-                .InvokeAsync<FirebaseUser>("firebaseauth.signIn", user.Username, user.Password);
+                .InvokeAsync<FirebaseUser>("firebaseauth.signIn", user.Username, user.Password)
+                .ConfigureAwait(false);
             Console.WriteLine($"User {credential.Email} signed in.");
         }
 
@@ -39,7 +40,8 @@ namespace TaskPlanner.Client.Services.Auth
         public async Task Register(RegisterUser user)
         {
             var credential = await _jsRuntime
-                .InvokeAsync<FirebaseUser>("firebaseauth.register", user.Username, user.Password);
+                .InvokeAsync<FirebaseUser>("firebaseauth.register", user.Username, user.Password)
+                .ConfigureAwait(false);
             Console.WriteLine($"User {credential.Email} signed out.");
         }
 

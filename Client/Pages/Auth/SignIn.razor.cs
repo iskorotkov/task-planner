@@ -15,7 +15,7 @@ namespace TaskPlanner.Client.Pages.Auth
         {
             if (firstRender)
             {
-                await AuthManager.StartUi();
+                await AuthManager.StartUi().ConfigureAwait(false);
             }
         }
     }

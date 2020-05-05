@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TaskPlanner.Shared.Data.Tasks;
 
-namespace TaskPlanner.Client.Services.Managers
+namespace TaskPlanner.Client.Services.Tasks
 {
     public interface ITaskManager
     {

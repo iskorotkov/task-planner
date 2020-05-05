@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using TaskPlanner.Client.Services.Auth;
 using TaskPlanner.Client.Services.Utilities;
-using TaskPlanner.Client.Services.Managers;
+using TaskPlanner.Client.Services.Tasks;
 
 namespace TaskPlanner.Client
 {

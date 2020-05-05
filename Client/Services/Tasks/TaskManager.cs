@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TaskPlanner.Shared.Data.Tasks;
 
-namespace TaskPlanner.Client.Services.Managers
+namespace TaskPlanner.Client.Services.Tasks
 {
     public class TaskManager : ITaskManager
     {

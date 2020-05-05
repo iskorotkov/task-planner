@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using TaskPlanner.Client.Services.Managers;
+using TaskPlanner.Client.Services.Tasks;
 using TaskPlanner.Shared.Data.Tasks;
 
 namespace TaskPlanner.Client.Pages.Tasks

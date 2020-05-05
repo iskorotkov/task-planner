@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading.Tasks;
-using TaskPlanner.Client.Services.Managers;
+using TaskPlanner.Client.Services.Tasks;
 using TaskPlanner.Shared.Data.Tasks;
 
 namespace TaskPlanner.Client.Pages.Tasks
