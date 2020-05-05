@@ -8,5 +8,6 @@ namespace TaskPlanner.Client.Services.Auth
         Task SignOut();
         Task Register(RegisterUser user);
         Task SignIn(SignInUser user);
+        Task StartUi();
     }
 }

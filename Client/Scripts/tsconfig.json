@@ -8,6 +8,7 @@
     ],
     "types": [
       "firebase",
+      "firebaseui",
       "blazor__javascript-interop"
     ],
     "allowUmdGlobalAccess": true,

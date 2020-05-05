@@ -26,6 +26,11 @@ namespace TaskPlanner.Client.Services.Auth
             Console.WriteLine($"User {credential.Email} signed in.");
         }
 
+        public async Task StartUi()
+        {
+            await _jsRuntime.InvokeVoidAsync("firebaseauth.startUi");
+        }
+
         public async Task SignOut()
         {
             await _jsRuntime.InvokeVoidAsync("firebaseauth.signOut");
