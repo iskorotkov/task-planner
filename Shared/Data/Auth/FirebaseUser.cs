@@ -1,4 +1,7 @@
-﻿namespace TaskPlanner.Shared.Data.Auth
+﻿using System.Collections.Generic;
+using System.Security.Claims;
+
+namespace TaskPlanner.Shared.Data.Auth
 {
     public class FirebaseUser
     {
@@ -10,5 +13,16 @@
         public string? PhotoUrl { get; set; }
         public string? ProviderId { get; set; }
         public string? Uid { get; set; }
+
+        public List<Claim> Claims()
+        {
+            return new List<Claim>
+            {
+                new Claim(ClaimTypes.Authentication, "true"),
+                new Claim(ClaimTypes.Name, Email),
+                new Claim(ClaimTypes.Anonymous, IsAnonymous.ToString()),
+                new Claim(ClaimTypes.Email, Email),
+            };
+        }
     }
 }
