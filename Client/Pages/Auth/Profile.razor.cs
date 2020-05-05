@@ -17,7 +17,7 @@ namespace TaskPlanner.Client.Pages.Auth
 
         protected override async Task OnInitializedAsync()
         {
-            _user = await AuthManager.GetUser();
+            _user = await AuthManager.GetUser().ConfigureAwait(false);
             StateHasChanged();
         }
     }
