@@ -1,0 +1,20 @@
+﻿{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ES2015",
+    "sourceMap": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "types": [
+      "firebase",
+      "firebaseui",
+      "blazor__javascript-interop"
+    ],
+    "allowUmdGlobalAccess": true,
+    "outDir": "../wwwroot/js"
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

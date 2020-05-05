@@ -1,0 +1,30 @@
+@page "/profile"
+
+<div class="row">
+    <div class="col">
+        @* @if (_user != null)
+        {
+            <div class="row">
+                User is @_user.Email.
+            </div>    
+        }
+        else
+        {
+            <div>No user.</div>
+        } *@
+
+        <AuthorizeView>
+            <Authorized>
+                <div>
+                    @foreach (var item in @context.User.Claims)
+                    {
+                        <p>@item.Type : @item.Value</p>
+                    }
+                </div>
+            </Authorized>
+            <NotAuthorized>
+                Not authorized.
+            </NotAuthorized>
+        </AuthorizeView>
+    </div>
+</div>
