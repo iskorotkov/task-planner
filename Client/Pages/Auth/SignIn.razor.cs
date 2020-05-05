@@ -29,6 +29,7 @@ namespace TaskPlanner.Client.Pages.Auth
             try
             {
                 await AuthManager.SignIn(User);
+                NavigationManager.NavigateTo("/");
             }
             catch (Exception e)
             {
@@ -36,8 +37,6 @@ namespace TaskPlanner.Client.Pages.Auth
                 Console.WriteLine(e);
                 throw;
             }
-
-            NavigationManager.NavigateTo("/");
         }
     }
 }
