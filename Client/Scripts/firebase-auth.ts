@@ -1,3 +1,37 @@
+class AppUser {
+  constructor (
+    public displayName: string | null,
+    public email: string | null,
+    public emailVerified: boolean | null,
+    public isAnonymous: boolean | null,
+    public phoneNumber: string | null,
+    public photoUrl: string | null,
+    public providerId: string | null,
+    public uid: string | null,
+    public token: string | null,
+    public refreshToken: string | null,
+    public creationTime: string | null,
+    public lastSignInTime: string | null
+  ) { }
+
+  static async create (user: firebase.User): Promise<AppUser> {
+    return {
+      displayName: user.displayName,
+      email: user.email,
+      emailVerified: user.emailVerified,
+      isAnonymous: user.isAnonymous,
+      phoneNumber: user.phoneNumber,
+      photoUrl: user.photoURL,
+      providerId: user.providerId,
+      uid: user.uid,
+      token: await user.getIdToken(),
+      refreshToken: user.refreshToken,
+      creationTime: user.metadata?.creationTime,
+      lastSignInTime: user.metadata?.lastSignInTime
+    }
+  }
+}
+
 class FirebaseAuth {
   // noinspection JSUnusedGlobalSymbols
   startUi (
@@ -29,10 +63,10 @@ class FirebaseAuth {
   }
 
   // noinspection JSUnusedGlobalSymbols
-  async signIn (username: string, password: string): Promise<string | firebase.User> {
+  async signIn (username: string, password: string): Promise<string | AppUser> {
     try {
       const credential = await firebase.auth().signInWithEmailAndPassword(username, password)
-      return credential.user
+      return await AppUser.create(credential.user)
     } catch (error) {
       return await error.message
     }
@@ -44,13 +78,17 @@ class FirebaseAuth {
   }
 
   // noinspection JSUnusedGlobalSymbols
-  async register (username: string, password: string): Promise<string | firebase.User> {
+  async register (username: string, password: string): Promise<string | AppUser> {
     try {
       const credential = await firebase.auth().createUserWithEmailAndPassword(username, password)
-      return credential.user
+      return await AppUser.create(credential.user)
     } catch (error) {
       return await error.message
     }
+  }
+
+  async getToken (): Promise<string> {
+    return await firebase.auth().currentUser.getIdToken()
   }
 
   // noinspection JSUnusedGlobalSymbols
@@ -61,7 +99,8 @@ class FirebaseAuth {
   ): void {
     firebase.auth().onAuthStateChanged(async user => {
       if (user) {
-        await obj.invokeMethodAsync<firebase.User>(signedInMethod, user)
+        let appUser = await AppUser.create(user)
+        await obj.invokeMethodAsync<AppUser>(signedInMethod, appUser)
       } else {
         await obj.invokeMethodAsync(signedOutMethod)
       }

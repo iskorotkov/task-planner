@@ -11,8 +11,9 @@ namespace TaskPlanner.Shared.Data.Auth
         public string? DisplayName { get; set; }
         public string? Email { get; set; }
         public string? PhotoUrl { get; set; }
-        public string? ProviderId { get; set; }
         public string? Uid { get; set; }
+        public string? Token { get; set; }
+        public string? RefreshToken { get; set; }
 
         public List<Claim> Claims()
         {
@@ -21,7 +22,7 @@ namespace TaskPlanner.Shared.Data.Auth
                 new Claim(ClaimTypes.Authentication, "true"),
                 new Claim(ClaimTypes.Name, Email),
                 new Claim(ClaimTypes.Anonymous, IsAnonymous.ToString()),
-                new Claim(ClaimTypes.Email, Email),
+                new Claim(ClaimTypes.Email, Email)
             };
         }
     }
