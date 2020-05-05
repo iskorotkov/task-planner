@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using TaskPlanner.Client.Data.Auth;
+using TaskPlanner.Shared.Data.Auth;
 
 namespace TaskPlanner.Client.Services.Auth
 {
@@ -9,5 +10,6 @@ namespace TaskPlanner.Client.Services.Auth
         Task Register(RegisterUser user);
         Task SignIn(SignInUser user);
         Task StartUi();
+        Task<FirebaseUser?> GetUser();
     }
 }

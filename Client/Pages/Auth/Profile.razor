@@ -1,0 +1,16 @@
+@page "/profile"
+
+<div class="row">
+    <div class="col">
+        @if (_user != null)
+        {
+            <div class="row">
+                User is @_user.Email.
+            </div>    
+        }
+        else
+        {
+            <div>No user.</div>
+        }
+    </div>
+</div>
