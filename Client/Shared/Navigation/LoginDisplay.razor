@@ -12,14 +12,6 @@
 
     <NotAuthorized>
         <a href="/signin">Sign in</a>
-        <a href="/signup">Sign up</a>
+        <a href="/signin">Sign up</a>
     </NotAuthorized>
 </AuthorizeView>
-
-@code
-{
-    private void BeginSignOut(MouseEventArgs args)
-    {
-        Navigation.NavigateTo("/logout");
-    }
-}
