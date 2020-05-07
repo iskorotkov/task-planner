@@ -10,7 +10,7 @@ namespace TaskPlanner.Client.Services.Tasks
         Task<List<Todo>> GetAll();
         Task Remove(Todo task);
         Task Add(Todo task);
-        Task<Todo?> Find(Guid guid);
+        Task<Todo?> Find(string id);
         Task Update(Todo task);
     }
 }

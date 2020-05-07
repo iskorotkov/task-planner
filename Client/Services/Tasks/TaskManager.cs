@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components.Authorization;
+using TaskPlanner.Client.Services.Storage;
 using TaskPlanner.Shared.Data.Tasks;
 
 namespace TaskPlanner.Client.Services.Tasks
@@ -10,36 +10,40 @@ namespace TaskPlanner.Client.Services.Tasks
     public class TaskManager : ITaskManager
     {
         private List<Todo>? _tasks;
-        private readonly AuthenticationStateProvider _authenticationStateProvider;
+        private readonly ITaskStorage _storage;
 
-        public TaskManager(AuthenticationStateProvider authenticationStateProvider)
+        public TaskManager(ITaskStorage storage)
         {
-            _authenticationStateProvider = authenticationStateProvider;
+            _storage = storage;
         }
 
         public async Task<List<Todo>> GetAll()
         {
-            return new List<Todo>();
+            var items = await _storage.GetAll();
+            return _tasks ??= items.ToList();
         }
 
         public async Task Remove(Todo task)
         {
             _tasks?.Remove(task);
+            await _storage.Delete(task);
         }
 
         public async Task Add(Todo task)
         {
             _tasks?.Add(task);
+            await _storage.Save(task);
         }
 
         public async Task Update(Todo task)
         {
+            await _storage.Save(task);
         }
 
-        public Task<Todo?> Find(Guid guid)
+        public async Task<Todo?> Find(string id)
         {
-            var task = _tasks?.FirstOrDefault(x => x.Guid == guid);
-            return Task.FromResult(task);
+            var task = (await GetAll()).FirstOrDefault(x => x.Id == id);
+            return task;
         }
     }
 }
