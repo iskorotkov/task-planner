@@ -38,25 +38,27 @@ namespace TaskPlanner.Client.Services.Storage
         public async Task<Todo> Get(string id)
         {
             var path = $"tasks/{id}";
-            return await _jsRuntime.InvokeAsync<Todo>("firestore.getDoc", path);
+            return await _jsRuntime.InvokeAsync<Todo>("firestore.getDoc", path)
+                .ConfigureAwait(false);
         }
 
         public async Task<List<Todo>> GetAll()
         {
-            return await FetchTasks();
+            return await FetchTasks().ConfigureAwait(false);
         }
 
         private async Task<List<Todo>> FetchTasks()
         {
             const string tasksPath = "tasks";
-            var items = await _jsRuntime.InvokeAsync<IEnumerable<Todo>>("firestore.getCollection", tasksPath);
+            var items = await _jsRuntime.InvokeAsync<IEnumerable<Todo>>("firestore.getCollection", tasksPath)
+                .ConfigureAwait(false);
             return items.ToList();
         }
 
         public async Task Add(Todo task)
         {
             task.Id = Guid.NewGuid().ToString();
-            await Save(task);
+            await Save(task).ConfigureAwait(false);
         }
     }
 }

@@ -5,7 +5,7 @@ namespace TaskPlanner.Shared.Data.Auth
     public class RegisterUser
     {
         // ReSharper disable UnusedAutoPropertyAccessor.Global
-        
+
         [Required, EmailAddress]
         public string? Username { get; set; }
 

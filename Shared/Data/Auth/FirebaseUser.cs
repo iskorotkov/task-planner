@@ -16,7 +16,7 @@ namespace TaskPlanner.Shared.Data.Auth
         public string? Uid { get; set; }
         public string? Token { get; set; }
         public string? RefreshToken { get; set; }
-        
+
         // ReSharper restore UnusedAutoPropertyAccessor.Global
 
         public IEnumerable<Claim> Claims()

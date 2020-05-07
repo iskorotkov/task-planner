@@ -42,7 +42,7 @@ namespace TaskPlanner.Client.Services.Auth
 
         public async Task SignIn(SignInUser user)
         {
-            await EnsureInitialized();
+            await EnsureInitialized().ConfigureAwait(false);
             var credential = await _jsRuntime
                 .InvokeAsync<FirebaseUser>("firebaseauth.signIn", user.Username, user.Password)
                 .ConfigureAwait(false);
@@ -51,19 +51,19 @@ namespace TaskPlanner.Client.Services.Auth
 
         public async Task StartUi()
         {
-            await EnsureInitialized();
+            await EnsureInitialized().ConfigureAwait(false);
             await _jsRuntime.InvokeVoidAsync("firebaseauth.startUi");
         }
 
         public async Task SignOut()
         {
-            await EnsureInitialized();
+            await EnsureInitialized().ConfigureAwait(false);
             await _jsRuntime.InvokeVoidAsync("firebaseauth.signOut");
         }
 
         public async Task Register(RegisterUser user)
         {
-            await EnsureInitialized();
+            await EnsureInitialized().ConfigureAwait(false);
             var credential = await _jsRuntime
                 .InvokeAsync<FirebaseUser>("firebaseauth.register", user.Username, user.Password)
                 .ConfigureAwait(false);
@@ -103,7 +103,7 @@ namespace TaskPlanner.Client.Services.Auth
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            await EnsureInitialized();
+            await EnsureInitialized().ConfigureAwait(false);
             return _currentUser;
         }
     }

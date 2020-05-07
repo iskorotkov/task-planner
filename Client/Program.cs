@@ -28,7 +28,7 @@ namespace TaskPlanner.Client
                 provider.GetRequiredService<FirebaseAuthManager>());
             builder.Services.AddScoped<AuthenticationStateProvider>(provider =>
                 provider.GetRequiredService<FirebaseAuthManager>());
-            
+
             builder.Services.AddFirestore();
 
             await builder.Build().RunAsync().ConfigureAwait(false);
