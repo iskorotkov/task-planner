@@ -1,5 +1,4 @@
 ﻿using Microsoft.JSInterop;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -57,7 +56,6 @@ namespace TaskPlanner.Client.Services.Storage
 
         public async Task Add(Todo task)
         {
-            task.Metadata.Id = Guid.NewGuid().ToString();
             await Save(task).ConfigureAwait(false);
         }
     }

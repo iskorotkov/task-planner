@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components.Authorization;
 using TaskPlanner.Client.Services.Storage;
 using TaskPlanner.Shared.Data.Tasks;
 
@@ -10,10 +13,12 @@ namespace TaskPlanner.Client.Services.Tasks
     {
         private List<Todo>? _tasks;
         private readonly ITaskStorage _storage;
+        private readonly AuthenticationStateProvider _authenticationStateProvider;
 
-        public TaskManager(ITaskStorage storage)
+        public TaskManager(ITaskStorage storage, AuthenticationStateProvider authenticationStateProvider)
         {
             _storage = storage;
+            _authenticationStateProvider = authenticationStateProvider;
         }
 
         public async Task<List<Todo>> GetAll()
@@ -35,6 +40,10 @@ namespace TaskPlanner.Client.Services.Tasks
 
         public async Task Add(Todo task)
         {
+            var state = await _authenticationStateProvider.GetAuthenticationStateAsync();
+            task.Metadata.Id = Guid.NewGuid().ToString();
+            task.Metadata.Owner = state.User.FindFirst(claim => claim.Type == ClaimTypes.Email).Value;
+
             await _storage.Add(task).ConfigureAwait(false);
             _tasks?.Add(task);
         }
