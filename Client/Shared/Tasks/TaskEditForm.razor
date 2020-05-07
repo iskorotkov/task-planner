@@ -1,53 +1,117 @@
-﻿<div class="container-fluid" @attributes="@AdditionalAttributes">
+﻿@* ReSharper disable once RedundantUsingDirective *@
+@using TaskPlanner.Shared.Data.Tasks.Properties
+
+<div class="container-fluid" @attributes="@AdditionalAttributes">
     <h5 class="h5">@Title</h5>
 
     <EditForm EditContext="@EditContext">
         <DataAnnotationsValidator/>
 
-        <div class="form-group">
-            <label>Title</label>
-            <InputText class="form-control" @bind-Value="@Model.Title"/>
+        <div class="row">
+            <div class="col form-group">
+                <label>Title</label>
+                <InputText class="form-control" @bind-Value="@Model.Content.Title"/>
+            </div>
+
+            <div class="col form-group">
+                <label>Description</label>
+                <InputTextArea class="form-control" @bind-Value="@Model.Content.Description"/>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label>Description</label>
-            <InputTextArea class="form-control" @bind-Value="@Model.Description"/>
-        </div>
+        @if (Model.ExecutionTime != null)
+        {
+            <div class="row">
+                <div class="col form-group">
+                    <label>Estimated time</label>
+                    <InputDate class="form-control" @bind-Value="@Model.ExecutionTime.EstimatedTime"/>
+                </div>
 
-        <div class="form-group">
-            <label>Importance</label>
-            <InputNumber class="form-control" @bind-Value="@Model.Importance"/>
-        </div>
+                <div class="col form-group">
+                    <label>Time spent</label>
+                    <InputDate class="form-control" @bind-Value="@Model.ExecutionTime.TimeSpent"/>
+                </div>
+            </div>
+        }
+        else
+        {
+            <button type="button" class="btn btn-outline-success" @onclick="@(() => Model.ExecutionTime = new ExecutionTime())">
+                Add execution time
+            </button>
+        }
 
-        <div class="form-group">
-            <label>Complexity</label>
-            <InputNumber class="form-control" @bind-Value="@Model.Complexity"/>
-        </div>
+        @if (Model.Metrics != null)
+        {
+            <div class="row">
+                <div class="col form-group">
+                    <label>Importance</label>
+                    <InputNumber class="form-control" @bind-Value="@Model.Metrics.Importance"/>
+                </div>
 
-        <div class="form-group">
-            <label>Estimated time</label>
-            <InputNumber class="form-control" @bind-Value="@Model.EstimatedTime"/>
-        </div>
+                <div class="col form-group">
+                    <label>Complexity</label>
+                    <InputNumber class="form-control" @bind-Value="@Model.Metrics.Complexity"/>
+                </div>
+            </div>
+        }
+        else
+        {
+            <button type="button" class="btn btn-outline-success" @onclick="@(() => Model.Metrics = new Metrics())">
+                Add metrics
+            </button>
+        }
 
-        <div class="form-group">
-            <label>Time spent</label>
-            <InputNumber class="form-control" @bind-Value="@Model.TimeSpent"/>
-        </div>
+        @if (Model.Deadlines != null)
+        {
+            <div class="row">
+                <div class="col form-group">
+                    <label>Soft deadline</label>
+                    <InputDate class="form-control" @bind-Value="@Model.Deadlines.SoftDeadline"/>
+                </div>
 
-        <div class="form-group">
-            <label>Soft deadline</label>
-            <InputDate class="form-control" @bind-Value="@Model.SoftDeadline"/>
-        </div>
+                <div class="col form-group">
+                    <label>Hard deadline</label>
+                    <InputDate class="form-control" @bind-Value="@Model.Deadlines.HardDeadline"/>
+                </div>
+            </div>
+        }
+        else
+        {
+            <button type="button" class="btn btn-outline-success" @onclick="@(() => Model.Deadlines = new Deadlines())">
+                Add deadlines
+            </button>
+        }
 
-        <div class="form-group">
-            <label>Hard deadline</label>
-            <InputDate class="form-control" @bind-Value="@Model.HardDeadline"/>
-        </div>
+        @if (Model.Iterations != null)
+        {
+            <div class="row">
+                <div class="col form-group">
+                    <label>Iterations executed</label>
+                    <InputNumber class="form-control" @bind-Value="@Model.Iterations.Executed"/>
+                </div>
+
+                <div class="col form-group">
+                    <label>Iterations total</label>
+                    <InputNumber class="form-control" @bind-Value="@Model.Iterations.Required"/>
+                </div>
+
+                <div class="col form-group">
+                    <label>Time per iteration</label>
+                    <InputDate class="form-control" @bind-Value="@Model.Iterations.TimePerIteration"/>
+                </div>
+            </div>
+        }
+        else
+        {
+            <button type="button" class="btn btn-outline-success" @onclick="@(() => Model.Iterations = new Iterations())">
+                Add iterations
+            </button>
+        }
 
         <div class="row">
             @AdditionalButtons?.Invoke(EditContext)
-            <button class="btn btn-secondary" type="button" @onclick="@OnCancel">Close</button>
-            <button class="btn btn-primary" type="button" @onclick="@OnSubmit">Save changes</button>
+            <button class="btn btn-secondary" type="reset" @onclick="@OnCancel">Close</button>
+            <button class="btn btn-primary" type="submit" @onclick="@OnSubmit">Save changes</button>
         </div>
     </EditForm>
 </div>

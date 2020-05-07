@@ -37,8 +37,9 @@ namespace TaskPlanner.Client.Pages.Tasks
             NavigationManager.NavigateTo("/overview");
         }
 
-        private void Submit()
+        private async Task Submit()
         {
+            await TaskManager.Update(_task).ConfigureAwait(false);
             NavigationManager.NavigateTo("/overview");
         }
 

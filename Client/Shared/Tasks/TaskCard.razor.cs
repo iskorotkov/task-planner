@@ -10,9 +10,6 @@ namespace TaskPlanner.Client.Shared.Tasks
 #pragma warning disable 8618
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         [Inject] public NavigationManager NavigationManager { get; set; }
-#pragma warning restore 8618
-
-#pragma warning disable 8618
         [Parameter] public Todo Todo { get; set; }
 #pragma warning restore 8618
 
@@ -30,7 +27,7 @@ namespace TaskPlanner.Client.Shared.Tasks
 
         private void CardClicked()
         {
-            NavigationManager.NavigateTo($"/tasks/update/{Todo!.Id}");
+            NavigationManager.NavigateTo($"/tasks/update/{Todo.Metadata.Id}");
         }
     }
 }

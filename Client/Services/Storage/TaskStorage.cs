@@ -25,13 +25,13 @@ namespace TaskPlanner.Client.Services.Storage
 
         public async Task Save(Todo task)
         {
-            var path = $"tasks/{task.Id}";
+            var path = $"tasks/{task.Metadata.Id}";
             await _jsRuntime.InvokeVoidAsync("firestore.save", path, task);
         }
 
         public async Task Delete(Todo task)
         {
-            var path = $"tasks/{task.Id}";
+            var path = $"tasks/{task.Metadata.Id}";
             await _jsRuntime.InvokeVoidAsync("firestore.delete", path);
         }
 
@@ -57,7 +57,7 @@ namespace TaskPlanner.Client.Services.Storage
 
         public async Task Add(Todo task)
         {
-            task.Id = Guid.NewGuid().ToString();
+            task.Metadata.Id = Guid.NewGuid().ToString();
             await Save(task).ConfigureAwait(false);
         }
     }

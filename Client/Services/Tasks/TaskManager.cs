@@ -47,7 +47,7 @@ namespace TaskPlanner.Client.Services.Tasks
         public async Task<Todo?> Find(string id)
         {
             var tasks = await GetAll().ConfigureAwait(false);
-            return tasks.Find(x => x.Id == id);
+            return tasks.Find(x => x.Metadata.Id == id);
         }
     }
 }
