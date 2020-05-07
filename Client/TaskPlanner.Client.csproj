@@ -64,4 +64,26 @@
     </Compile>
   </ItemGroup>
 
+  <ItemGroup>
+    <TypeScriptCompile Remove="Scripts\firebase-auth.ts" />
+    <TypeScriptCompile Include="Scripts\firebase\auth.ts" />
+    <TypeScriptCompile Remove="Scripts\firebase-firestore.ts" />
+    <TypeScriptCompile Include="Scripts\firebase\firestore.ts" />
+    <TypeScriptCompile Remove="Scripts\firebase-init.ts" />
+    <TypeScriptCompile Include="Scripts\firebase\init.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\firebase\firebase-auth.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\firebase\firebase-auth.js.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\firebase\firebase-firestore.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\firebase\firebase-firestore.js.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\firebase\firebase-init.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\firebase\firebase-init.js.map" />
+  </ItemGroup>
+
 </Project>

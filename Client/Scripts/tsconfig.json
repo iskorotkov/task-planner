@@ -12,7 +12,10 @@
       "blazor__javascript-interop"
     ],
     "allowUmdGlobalAccess": true,
-    "outDir": "../wwwroot/js"
+    "outDir": "../wwwroot/js",
+    "sourceRoot": "./",
+    "removeComments": true,
+    "rootDir": "./"
   },
   "exclude": [
     "node_modules"
