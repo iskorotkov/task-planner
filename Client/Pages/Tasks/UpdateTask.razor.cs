@@ -26,16 +26,10 @@ namespace TaskPlanner.Client.Pages.Tasks
         private Todo _task;
 #pragma warning restore 8618
 
-        private Guid _guid;
-
         protected override async Task OnInitializedAsync()
         {
-            _guid = Guid.Parse(GuidStr);
-            _task = await TaskManager.Find(_guid).ConfigureAwait(false);
-            if (_task == null)
-            {
-                throw new ArgumentException(nameof(_task));
-            }
+            _task = await TaskManager.Find(GuidStr).ConfigureAwait(false)
+                ?? throw new ArgumentException(nameof(_task));
         }
 
         private void Cancel()

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using TaskPlanner.Client.Data.Auth;
+using TaskPlanner.Shared.Data.Auth;
 
 namespace TaskPlanner.Client.Services.Auth
 {

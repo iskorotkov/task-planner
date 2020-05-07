@@ -30,7 +30,7 @@ namespace TaskPlanner.Client.Shared.Tasks
 
         private void CardClicked()
         {
-            NavigationManager.NavigateTo($"/tasks/update/{Todo!.Guid}");
+            NavigationManager.NavigateTo($"/tasks/update/{Todo!.Id}");
         }
     }
 }

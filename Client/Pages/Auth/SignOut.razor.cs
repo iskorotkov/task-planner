@@ -9,11 +9,12 @@ namespace TaskPlanner.Client.Pages.Auth
     public partial class SignOut
     {
 #pragma warning disable 8618
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
         [Inject] public NavigationManager NavigationManager { get; set; }
+        // ReSharper disable once UnusedAutoPropertyAccessor.Global
         [Inject] public IAuthManager AuthManager { get; set; }
-#pragma warning restore 8618
-
         [CascadingParameter] public Task<AuthenticationState> State { get; set; }
+#pragma warning restore 8618
 
         protected override async Task OnInitializedAsync()
         {

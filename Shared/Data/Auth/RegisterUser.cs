@@ -1,13 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TaskPlanner.Client.Data.Auth
+namespace TaskPlanner.Shared.Data.Auth
 {
     public class RegisterUser
     {
+        // ReSharper disable UnusedAutoPropertyAccessor.Global
+
         [Required, EmailAddress]
         public string? Username { get; set; }
 
         [Required, DataType(DataType.Password)]
         public string? Password { get; set; }
+
+        // ReSharper restore UnusedAutoPropertyAccessor.Global
     }
 }

@@ -4,19 +4,24 @@ namespace TaskPlanner.Shared.Data.Tasks
 {
     public class Todo
     {
-        public Guid Guid { get; } = Guid.NewGuid();
+        // ReSharper disable UnusedAutoPropertyAccessor.Global
+
+        public string? Id { get; set; }
+        public string? Owner { get; set; }
 
         public string? Title { get; set; }
         public string? Description { get; set; }
         public string? Author { get; set; }
 
-        public int? Importance { get; set; } = null;
-        public int? Complexity { get; set; } = null;
+        public int? Importance { get; set; }
+        public int? Complexity { get; set; }
 
-        public double? EstimatedTime { get; set; } = null;
-        public double? TimeSpent { get; set; } = null;
+        public double? EstimatedTime { get; set; }
+        public double? TimeSpent { get; set; }
 
-        public DateTime? SoftDeadline { get; set; } = null;
-        public DateTime? HardDeadline { get; set; } = null;
+        public DateTime? SoftDeadline { get; set; }
+        public DateTime? HardDeadline { get; set; }
+
+        // ReSharper restore UnusedAutoPropertyAccessor.Global
     }
 }

@@ -1,67 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TaskPlanner.Client.Services.Storage;
 using TaskPlanner.Shared.Data.Tasks;
 
 namespace TaskPlanner.Client.Services.Tasks
 {
     public class TaskManager : ITaskManager
     {
-        private readonly List<Todo> _tasks;
+        private List<Todo>? _tasks;
+        private readonly ITaskStorage _storage;
 
-        public TaskManager()
+        public TaskManager(ITaskStorage storage)
         {
-            _tasks = new List<Todo>
-            {
-                new Todo
-                {
-                    Title = "Task #1",
-                    Description = "A simple task",
-                    Author = "Ivan Korotkov"
-                },
-                new Todo
-                {
-                    Title = "Task #2",
-                    Description = "A complex task",
-                    Author = "Ivan Korotkov"
-                },
-                new Todo
-                {
-                    Title = "Task #3",
-                    Description = "Just a reminder to do smth...",
-                    Author = "Ivan Korotkov"
-                },
-                new Todo
-                {
-                    Title = "Task #4",
-                    Description = "Grocery list:\n1. ...;\n2. ...",
-                    Author = "Ivan Korotkov"
-                }
-            };
+            _storage = storage;
         }
 
-        public Task<List<Todo>> Get()
+        public async Task<List<Todo>> GetAll()
         {
-            return Task.FromResult(_tasks);
+            return _tasks ??= await FetchTasks().ConfigureAwait(false);
         }
 
-        public Task Remove(Todo task)
+        private async Task<List<Todo>> FetchTasks()
         {
-            _tasks.Remove(task);
-            return Task.CompletedTask;
+            var items = await _storage.GetAll().ConfigureAwait(false);
+            return items.ToList();
         }
 
-        public Task Add(Todo task)
+        public async Task Remove(Todo task)
         {
-            _tasks.Add(task);
-            return Task.CompletedTask;
+            await _storage.Delete(task).ConfigureAwait(false);
+            _tasks?.Remove(task);
         }
 
-        public Task<Todo> Find(Guid guid)
+        public async Task Add(Todo task)
         {
-            var task = _tasks.First(x => x.Guid == guid);
-            return Task.FromResult(task);
+            await _storage.Add(task).ConfigureAwait(false);
+            _tasks?.Add(task);
+        }
+
+        public async Task Update(Todo task)
+        {
+            await _storage.Save(task).ConfigureAwait(false);
+        }
+
+        public async Task<Todo?> Find(string id)
+        {
+            var tasks = await GetAll().ConfigureAwait(false);
+            return tasks.Find(x => x.Id == id);
         }
     }
 }
