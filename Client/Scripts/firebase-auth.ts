@@ -1,18 +1,16 @@
 class AppUser {
-  constructor (
-    public displayName: string | null,
-    public email: string | null,
-    public emailVerified: boolean | null,
-    public isAnonymous: boolean | null,
-    public phoneNumber: string | null,
-    public photoUrl: string | null,
-    public providerId: string | null,
-    public uid: string | null,
-    public token: string | null,
-    public refreshToken: string | null,
-    public creationTime: string | null,
-    public lastSignInTime: string | null
-  ) { }
+  displayName: string | null
+  email: string | null
+  emailVerified: boolean | null
+  isAnonymous: boolean | null
+  phoneNumber: string | null
+  photoUrl: string | null
+  providerId: string | null
+  uid: string | null
+  token: string | null
+  refreshToken: string | null
+  creationTime: string | null
+  lastSignInTime: string | null
 
   static async create (user: firebase.User): Promise<AppUser> {
     return {
@@ -99,7 +97,7 @@ class FirebaseAuth {
   ): void {
     firebase.auth().onAuthStateChanged(async user => {
       if (user) {
-        let appUser = await AppUser.create(user)
+        const appUser = await AppUser.create(user)
         await obj.invokeMethodAsync<AppUser>(signedInMethod, appUser)
       } else {
         await obj.invokeMethodAsync(signedOutMethod)

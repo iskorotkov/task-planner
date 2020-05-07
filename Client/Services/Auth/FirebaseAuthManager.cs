@@ -9,6 +9,7 @@ using TaskPlanner.Shared.Data.Auth;
 
 namespace TaskPlanner.Client.Services.Auth
 {
+    // TODO: Move class to different project.
     public class FirebaseAuthManager : AuthenticationStateProvider, IAuthJsInterop, IAuthManager
     {
         private readonly IJSRuntime _jsRuntime;

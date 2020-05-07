@@ -26,7 +26,7 @@ namespace TaskPlanner.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            _tasks = await TaskManager.Get().ConfigureAwait(false)
+            _tasks = await TaskManager.GetAll().ConfigureAwait(false)
                      ?? throw new ArgumentException("List of tasks is null", nameof(_tasks));
         }
 

@@ -2,6 +2,7 @@
 
 namespace TaskPlanner.Client.Data.Auth
 {
+    // TODO: Move class to Shared project.
     public class RegisterUser
     {
         [Required, EmailAddress]

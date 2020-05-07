@@ -2,65 +2,43 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components.Authorization;
 using TaskPlanner.Shared.Data.Tasks;
 
 namespace TaskPlanner.Client.Services.Tasks
 {
     public class TaskManager : ITaskManager
     {
-        private readonly List<Todo> _tasks;
+        private List<Todo>? _tasks;
+        private readonly AuthenticationStateProvider _authenticationStateProvider;
 
-        public TaskManager()
+        public TaskManager(AuthenticationStateProvider authenticationStateProvider)
         {
-            _tasks = new List<Todo>
-            {
-                new Todo
-                {
-                    Title = "Task #1",
-                    Description = "A simple task",
-                    Author = "Ivan Korotkov"
-                },
-                new Todo
-                {
-                    Title = "Task #2",
-                    Description = "A complex task",
-                    Author = "Ivan Korotkov"
-                },
-                new Todo
-                {
-                    Title = "Task #3",
-                    Description = "Just a reminder to do smth...",
-                    Author = "Ivan Korotkov"
-                },
-                new Todo
-                {
-                    Title = "Task #4",
-                    Description = "Grocery list:\n1. ...;\n2. ...",
-                    Author = "Ivan Korotkov"
-                }
-            };
+            _authenticationStateProvider = authenticationStateProvider;
         }
 
-        public Task<List<Todo>> Get()
+        public async Task<List<Todo>> GetAll()
         {
-            return Task.FromResult(_tasks);
+            return new List<Todo>();
         }
 
-        public Task Remove(Todo task)
+        public async Task Remove(Todo task)
         {
-            _tasks.Remove(task);
-            return Task.CompletedTask;
+            _tasks?.Remove(task);
         }
 
-        public Task Add(Todo task)
+        public async Task Add(Todo task)
         {
-            _tasks.Add(task);
-            return Task.CompletedTask;
+            _tasks?.Add(task);
         }
 
-        public Task<Todo> Find(Guid guid)
+        public async Task Update(Todo task)
         {
-            var task = _tasks.First(x => x.Guid == guid);
+        }
+
+        public Task<Todo?> Find(Guid guid)
+        {
+            var task = _tasks?.FirstOrDefault(x => x.Guid == guid);
             return Task.FromResult(task);
         }
     }
