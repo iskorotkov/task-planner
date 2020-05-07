@@ -5,6 +5,7 @@ using TaskPlanner.Client.Services.Auth;
 using TaskPlanner.Client.Services.Utilities;
 using TaskPlanner.Client.Services.Tasks;
 using Microsoft.AspNetCore.Components.Authorization;
+using TaskPlanner.Client.Services.Storage;
 
 namespace TaskPlanner.Client
 {
@@ -17,17 +18,18 @@ namespace TaskPlanner.Client
 
             builder.Services.AddTransient<IRandomStringGenerator, RandomStringGenerator>();
             builder.Services.AddScoped<ITaskManager, TaskManager>();
-            builder.Services.AddScoped<IAuthManager, FirebaseAuthManager>();
 
+            // TODO: Extract into extension method
             builder.Services.AddOptions();
             builder.Services.AddAuthenticationCore();
             builder.Services.AddAuthorizationCore();
-
             builder.Services.AddScoped<FirebaseAuthManager>();
             builder.Services.AddScoped<IAuthManager>(provider =>
                 provider.GetRequiredService<FirebaseAuthManager>());
             builder.Services.AddScoped<AuthenticationStateProvider>(provider =>
                 provider.GetRequiredService<FirebaseAuthManager>());
+            
+            builder.Services.AddFirestore();
 
             await builder.Build().RunAsync().ConfigureAwait(false);
         }
