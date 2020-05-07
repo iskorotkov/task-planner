@@ -4,6 +4,8 @@ namespace TaskPlanner.Shared.Data.Tasks
 {
     public class Todo
     {
+        // ReSharper disable UnusedAutoPropertyAccessor.Global
+
         public string? Id { get; set; }
         public string? Owner { get; set; }
 
@@ -19,5 +21,7 @@ namespace TaskPlanner.Shared.Data.Tasks
 
         public DateTime? SoftDeadline { get; set; }
         public DateTime? HardDeadline { get; set; }
+
+        // ReSharper restore UnusedAutoPropertyAccessor.Global
     }
 }

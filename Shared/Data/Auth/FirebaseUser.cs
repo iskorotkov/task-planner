@@ -5,6 +5,8 @@ namespace TaskPlanner.Shared.Data.Auth
 {
     public class FirebaseUser
     {
+        // ReSharper disable UnusedAutoPropertyAccessor.Global
+
         public bool EmailVerified { get; set; }
         public bool IsAnonymous { get; set; }
         public string? PhoneNumber { get; set; }
@@ -14,8 +16,10 @@ namespace TaskPlanner.Shared.Data.Auth
         public string? Uid { get; set; }
         public string? Token { get; set; }
         public string? RefreshToken { get; set; }
+        
+        // ReSharper restore UnusedAutoPropertyAccessor.Global
 
-        public List<Claim> Claims()
+        public IEnumerable<Claim> Claims()
         {
             return new List<Claim>
             {

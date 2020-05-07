@@ -3,7 +3,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
-using TaskPlanner.Client.Data.Auth;
 using TaskPlanner.Shared.Data.Auth;
 
 namespace TaskPlanner.Client.Services.Auth
