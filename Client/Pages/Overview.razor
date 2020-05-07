@@ -8,12 +8,19 @@
         <span class="oi oi-plus"></span>
     </button>
 
-    <div class="row">
+    @if(_tasks != null)
+    {
+        <div class="row">
         @foreach (var task in _tasks)
         {
             <div class="col-4">
                 <TaskCard Todo="@task"/>
             </div>
         }
-    </div>
+        </div>
+    }
+    else
+    {
+        <text>No tasks were created.</text>
+    }
 </div>
