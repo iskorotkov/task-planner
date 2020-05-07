@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TaskPlanner.Client.Services.Storage;
@@ -19,20 +18,25 @@ namespace TaskPlanner.Client.Services.Tasks
 
         public async Task<List<Todo>> GetAll()
         {
+            return _tasks ??= await FetchTasks();
+        }
+
+        private async Task<List<Todo>> FetchTasks()
+        {
             var items = await _storage.GetAll();
-            return _tasks ??= items.ToList();
+            return items.ToList();
         }
 
         public async Task Remove(Todo task)
         {
-            _tasks?.Remove(task);
             await _storage.Delete(task);
+            _tasks?.Remove(task);
         }
 
         public async Task Add(Todo task)
         {
+            await _storage.Add(task);
             _tasks?.Add(task);
-            await _storage.Save(task);
         }
 
         public async Task Update(Todo task)
@@ -42,7 +46,8 @@ namespace TaskPlanner.Client.Services.Tasks
 
         public async Task<Todo?> Find(string id)
         {
-            var task = (await GetAll()).FirstOrDefault(x => x.Id == id);
+            var tasks = await GetAll();
+            var task = tasks.FirstOrDefault(x => x.Id == id);
             return task;
         }
     }

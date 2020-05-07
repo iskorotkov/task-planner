@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.JSInterop;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.JSInterop;
 using TaskPlanner.Shared.Data.Tasks;
 
 namespace TaskPlanner.Client.Services.Storage
@@ -21,10 +23,10 @@ namespace TaskPlanner.Client.Services.Storage
             _reference.Dispose();
         }
 
-        public async Task<string> Save(Todo task)
+        public async Task Save(Todo task)
         {
             var path = $"tasks/{task.Id}";
-            return await _jsRuntime.InvokeAsync<string>("firestore.save", path, task);
+            await _jsRuntime.InvokeVoidAsync("firestore.save", path, task);
         }
 
         public async Task Delete(Todo task)
@@ -39,10 +41,22 @@ namespace TaskPlanner.Client.Services.Storage
             return await _jsRuntime.InvokeAsync<Todo>("firestore.getDoc", path);
         }
 
-        public async Task<IEnumerable<Todo>> GetAll()
+        public async Task<List<Todo>> GetAll()
         {
-            const string path = "tasks";
-            return await _jsRuntime.InvokeAsync<IEnumerable<Todo>>("firestore.getCollection", path);
+            return await FetchTasks();
+        }
+
+        private async Task<List<Todo>> FetchTasks()
+        {
+            const string tasksPath = "tasks";
+            var items = await _jsRuntime.InvokeAsync<IEnumerable<Todo>>("firestore.getCollection", tasksPath);
+            return items.ToList();
+        }
+
+        public async Task Add(Todo task)
+        {
+            task.Id = Guid.NewGuid().ToString();
+            await Save(task);
         }
     }
 }

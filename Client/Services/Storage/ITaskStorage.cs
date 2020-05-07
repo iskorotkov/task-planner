@@ -6,9 +6,10 @@ namespace TaskPlanner.Client.Services.Storage
 {
     public interface ITaskStorage
     {
-        Task<string> Save(Todo task);
+        Task Save(Todo task);
         Task Delete(Todo task);
+        Task Add(Todo task);
         Task<Todo> Get(string id);
-        Task<IEnumerable<Todo>> GetAll();
+        Task<List<Todo>> GetAll();
     }
 }

@@ -27,6 +27,18 @@ class Firestore {
     }
   }
 
+  async addToCollection (path: string, obj: object): Promise<string> {
+    try {
+      const collection = await this.db.collection(path)
+      const doc = await collection.add(obj)
+      console.log(doc)
+      return doc.id
+    } catch (e) {
+      console.log(e)
+      return null
+    }
+  }
+
   async save (path: string, obj: any): Promise<void> {
     try {
       const doc = this.db.doc(path)
