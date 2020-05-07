@@ -4,13 +4,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 using TaskPlanner.Client.Data.Auth;
-using TaskPlanner.Client.Interop;
 using TaskPlanner.Shared.Data.Auth;
 
 namespace TaskPlanner.Client.Services.Auth
 {
     // TODO: Move class to different project.
-    public class FirebaseAuthManager : AuthenticationStateProvider, IAuthJsInterop, IAuthManager
+    public class FirebaseAuthManager : AuthenticationStateProvider, IAuthManager
     {
         private readonly IJSRuntime _jsRuntime;
         private readonly DotNetObjectReference<FirebaseAuthManager> _objectReference;
