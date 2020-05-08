@@ -1,0 +1,17 @@
+<SectionCardTemplate Model="@ExecutionTime" TValue="ExecutionTime" RemoveSection="@RemoveSection">
+    <Header>
+        Execution time
+    </Header>
+    
+    <EditFields>
+        <div class="col form-group">
+            <label>Estimated time</label>
+            <InputDate class="form-control" @bind-Value="@ExecutionTime.EstimatedTime"/>
+        </div>
+
+        <div class="col form-group">
+            <label>Time spent</label>
+            <InputDate class="form-control" @bind-Value="@ExecutionTime.TimeSpent"/>
+        </div>
+    </EditFields>
+</SectionCardTemplate>
