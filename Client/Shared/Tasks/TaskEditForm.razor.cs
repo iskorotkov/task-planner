@@ -48,19 +48,19 @@ namespace TaskPlanner.Client.Shared.Tasks
             {
                 new ActionButton(
                     "Add deadlines",
-                    () => Model.Deadlines = new Deadlines(),
+                    () => { Model.Deadlines = new Deadlines(); return Task.CompletedTask; },
                     () => Model.Deadlines == null),
                 new ActionButton(
                     "Add execution time",
-                    () => Model.ExecutionTime = new ExecutionTime(),
+                    () => { Model.ExecutionTime = new ExecutionTime(); return Task.CompletedTask; },
                     () => Model.ExecutionTime == null),
                 new ActionButton(
                     "Add iterations",
-                    () => Model.Iterations = new Iterations(),
+                    () => { Model.Iterations = new Iterations(); return Task.CompletedTask; },
                     () => Model.Iterations == null),
                 new ActionButton(
                     "Add metrics",
-                    () => Model.Metrics = new Metrics(),
+                    () => { Model.Metrics = new Metrics(); return Task.CompletedTask; },
                     () => Model.Metrics == null)
             };
         }

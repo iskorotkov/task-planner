@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using TaskPlanner.Client.Services.Tasks;
 using TaskPlanner.Shared.Data.Tasks;
+using TaskPlanner.Shared.Data.Ui;
 
 namespace TaskPlanner.Client.Pages.Tasks
 {
@@ -24,13 +25,17 @@ namespace TaskPlanner.Client.Pages.Tasks
         // ReSharper disable once MemberCanBePrivate.Global
         public Dictionary<string, object>? AdditionalAttributes { get; set; }
 
-#pragma warning disable 8618
         private Todo _task;
-#pragma warning restore 8618
+        private readonly List<ActionButton> _actions;
 
-        protected override void OnInitialized()
+        public CreateTask()
         {
             _task = new Todo();
+            _actions = new List<ActionButton>
+            {
+                new ActionButton("Save", Submit, () => true, "btn-success", "submit"),
+                new ActionButton("Cancel", Cancel, () => true, "btn-secondary", "cancel")
+            };
         }
 
         private async Task Submit()
@@ -44,9 +49,10 @@ namespace TaskPlanner.Client.Pages.Tasks
             NavigationManager.NavigateTo("/overview");
         }
 
-        private void Cancel()
+        private Task Cancel()
         {
             NavigationManager.NavigateTo("/overview");
+            return Task.CompletedTask;
         }
     }
 }
