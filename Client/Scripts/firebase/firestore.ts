@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 class Condition {
   attribute: string
   operation: firebase.firestore.WhereFilterOp
@@ -11,6 +12,7 @@ class Firestore {
     this.db = firebase.firestore()
   }
 
+  // noinspection JSUnusedGlobalSymbols
   async getDoc (path: string): Promise<firebase.firestore.DocumentData | null> {
     try {
       const doc = await this.db.doc(path).get()
@@ -21,6 +23,7 @@ class Firestore {
     }
   }
 
+  // noinspection JSUnusedGlobalSymbols
   async getCollection (path: string, conditions?: Condition[]): Promise<firebase.firestore.DocumentData[] | null> {
     try {
       let query: firebase.firestore.Query = this.db.collection(path)
@@ -40,9 +43,10 @@ class Firestore {
     }
   }
 
+  // noinspection JSUnusedGlobalSymbols
   async addToCollection (path: string, obj: object): Promise<string> {
     try {
-      const collection = await this.db.collection(path)
+      const collection = this.db.collection(path)
       const doc = await collection.add(obj)
       console.log(doc)
       return doc.id
@@ -52,6 +56,7 @@ class Firestore {
     }
   }
 
+  // noinspection JSUnusedGlobalSymbols
   async save (path: string, obj: any): Promise<void> {
     try {
       const doc = this.db.doc(path)
@@ -61,11 +66,13 @@ class Firestore {
     }
   }
 
+  // noinspection JSUnusedGlobalSymbols
   delete (path: string) {
     const doc = this.db.doc(path)
     doc.delete().catch(error => console.log(error))
   }
 
+  // noinspection JSUnusedGlobalSymbols
   subscribeToCollection (subscriber: DotNet.DotNetObject,
     path: string,
     onSnapshotMethod = 'OnCollectionSnapshot',
@@ -78,6 +85,7 @@ class Firestore {
     })
   }
 
+  // noinspection JSUnusedGlobalSymbols
   subscribeToDocument (subscriber: DotNet.DotNetObject,
     path: string,
     onSnapshotMethod = 'OnDocSnapshot',
