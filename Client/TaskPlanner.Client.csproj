@@ -25,24 +25,10 @@
 
   <ItemGroup>
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+	<Folder Include="wwwroot\js" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Shared\Tasks\TaskCard.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Pages\Tasks\CreateTask.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Pages\Tasks\UpdateTask.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Shared\Tasks\TaskEditForm.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Pages\Auth\SignIn.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
     <Content Update="Scripts\tsconfig.json">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -53,44 +39,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Update="Shared\Components\CardTemplate.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-    <Content Update="Shared\Sections\AddSection.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Pages\Tasks\CreateTask.razor.cs">
-      <DependentUpon>CreateTask.razor</DependentUpon>
-    </Compile>
-    <Compile Update="Pages\Tasks\UpdateTask.razor.cs">
-      <DependentUpon>TaskInfo.razor</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Remove="Scripts\firebase-auth.ts" />
-    <TypeScriptCompile Include="Scripts\firebase\auth.ts" />
-    <TypeScriptCompile Remove="Scripts\firebase-firestore.ts" />
-    <TypeScriptCompile Include="Scripts\firebase\firestore.ts" />
-    <TypeScriptCompile Remove="Scripts\firebase-init.ts" />
-    <TypeScriptCompile Include="Scripts\firebase\init.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="wwwroot\js\firebase\firebase-auth.js" />
-    <_ContentIncludedByDefault Remove="wwwroot\js\firebase\firebase-auth.js.map" />
-    <_ContentIncludedByDefault Remove="wwwroot\js\firebase\firebase-firestore.js" />
-    <_ContentIncludedByDefault Remove="wwwroot\js\firebase\firebase-firestore.js.map" />
-    <_ContentIncludedByDefault Remove="wwwroot\js\firebase\firebase-init.js" />
-    <_ContentIncludedByDefault Remove="wwwroot\js\firebase\firebase-init.js.map" />
-    <_ContentIncludedByDefault Remove="Shared\Tasks\Sections\ExecutionTimeSection.razor" />
   </ItemGroup>
 
 </Project>
