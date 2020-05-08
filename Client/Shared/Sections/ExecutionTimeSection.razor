@@ -4,14 +4,16 @@
     </Header>
     
     <EditFields>
-        <div class="col form-group">
-            <label>Estimated time</label>
-            <InputDate class="form-control" @bind-Value="@ExecutionTime.EstimatedTime"/>
-        </div>
+        <div class="row">
+            <div class="col form-group">
+                <label>Estimated time</label>
+                <InputDate class="form-control" @bind-Value="@ExecutionTime.EstimatedTime" />
+            </div>
 
-        <div class="col form-group">
-            <label>Time spent</label>
-            <InputDate class="form-control" @bind-Value="@ExecutionTime.TimeSpent"/>
+            <div class="col form-group">
+                <label>Time spent</label>
+                <InputDate class="form-control" @bind-Value="@ExecutionTime.TimeSpent" />
+            </div>
         </div>
     </EditFields>
 </SectionCardTemplate>

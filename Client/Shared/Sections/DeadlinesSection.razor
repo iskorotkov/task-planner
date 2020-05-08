@@ -1,0 +1,19 @@
+﻿<SectionCardTemplate Model="@Deadlines" TValue="Deadlines" RemoveSection="@RemoveSection">
+    <Header>
+        Metrics
+    </Header>
+
+    <EditFields>
+        <div class="row">
+            <div class="col form-group">
+                <label>Soft deadline</label>
+                <InputDate class="form-control" @bind-Value="@Deadlines.SoftDeadline" />
+            </div>
+
+            <div class="col form-group">
+                <label>Hard deadline</label>
+                <InputDate class="form-control" @bind-Value="@Deadlines.HardDeadline" />
+            </div>
+        </div>
+    </EditFields>
+</SectionCardTemplate>

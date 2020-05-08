@@ -1,0 +1,24 @@
+﻿<SectionCardTemplate Model="@Iterations" TValue="Iterations" RemoveSection="@RemoveSection">
+    <Header>
+        Metrics
+    </Header>
+
+    <EditFields>
+        <div class="row">
+            <div class="col form-group">
+                <label>Iterations executed</label>
+                <InputNumber class="form-control" @bind-Value="@Iterations.Executed" />
+            </div>
+
+            <div class="col form-group">
+                <label>Iterations total</label>
+                <InputNumber class="form-control" @bind-Value="@Iterations.Required" />
+            </div>
+
+            <div class="col form-group">
+                <label>Time per iteration</label>
+                <InputDate class="form-control" @bind-Value="@Iterations.TimePerIteration" />
+            </div>
+        </div>
+    </EditFields>
+</SectionCardTemplate>

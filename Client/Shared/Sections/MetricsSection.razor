@@ -1,0 +1,19 @@
+﻿<SectionCardTemplate Model="@Metrics" TValue="Metrics" RemoveSection="@RemoveSection">
+    <Header>
+        Metrics
+    </Header>
+
+    <EditFields>
+        <div class="row">
+            <div class="col form-group">
+                <label>Importance</label>
+                <InputNumber class="form-control" @bind-Value="@Metrics.Importance" />
+            </div>
+
+            <div class="col form-group">
+                <label>Complexity</label>
+                <InputNumber class="form-control" @bind-Value="@Metrics.Complexity" />
+            </div>
+        </div>
+    </EditFields>
+</SectionCardTemplate>

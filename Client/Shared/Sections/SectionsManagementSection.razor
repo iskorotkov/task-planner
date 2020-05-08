@@ -1,0 +1,13 @@
+﻿<CardTemplate>
+    <Body>
+        <div class="row m-2">
+            @foreach (var section in Sections)
+            {
+                if (section.CanBeAdded())
+                {
+                    <AddSection OnClick="@section.OnAdded" Text="@section.TextOnCreateButton" />
+                }
+            }
+        </div>
+    </Body>
+</CardTemplate>
