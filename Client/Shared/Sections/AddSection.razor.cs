@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace TaskPlanner.Client.Shared.Tasks
+namespace TaskPlanner.Client.Shared.Sections
 {
     public partial class AddSection
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
 
-namespace TaskPlanner.Client.Shared.Components
+namespace TaskPlanner.Client.Shared.Templates
 {
     public partial class BlazorModal
     {

@@ -1,5 +1,7 @@
 ﻿@* ReSharper disable once RedundantUsingDirective *@
 @using TaskPlanner.Shared.Data.Properties
+@* ReSharper disable once RedundantUsingDirective *@
+@using TaskPlanner.Client.Shared.Sections
 
 <div class="container-fluid" @attributes="@AdditionalAttributes">
     <h5 class="h5">@Title</h5>
@@ -21,17 +23,7 @@
 
         @if (Model.ExecutionTime != null)
         {
-            <div class="row">
-                <div class="col form-group">
-                    <label>Estimated time</label>
-                    <InputDate class="form-control" @bind-Value="@Model.ExecutionTime.EstimatedTime"/>
-                </div>
-
-                <div class="col form-group">
-                    <label>Time spent</label>
-                    <InputDate class="form-control" @bind-Value="@Model.ExecutionTime.TimeSpent"/>
-                </div>
-            </div>
+            
         }
 
         @if (Model.Metrics != null)

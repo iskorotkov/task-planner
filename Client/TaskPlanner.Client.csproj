@@ -53,6 +53,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Update="Shared\Components\CardTemplate.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Update="Shared\Sections\AddSection.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -84,6 +90,7 @@
     <_ContentIncludedByDefault Remove="wwwroot\js\firebase\firebase-firestore.js.map" />
     <_ContentIncludedByDefault Remove="wwwroot\js\firebase\firebase-init.js" />
     <_ContentIncludedByDefault Remove="wwwroot\js\firebase\firebase-init.js.map" />
+    <_ContentIncludedByDefault Remove="Shared\Tasks\Sections\ExecutionTimeSection.razor" />
   </ItemGroup>
 
 </Project>
