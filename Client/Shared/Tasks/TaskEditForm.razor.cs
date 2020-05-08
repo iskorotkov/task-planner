@@ -4,8 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TaskPlanner.Shared.Data.Properties;
-using TaskPlanner.Shared.Data.Sections;
 using TaskPlanner.Shared.Data.Tasks;
+using TaskPlanner.Shared.Data.Ui;
 
 namespace TaskPlanner.Client.Shared.Tasks
 {
@@ -20,13 +20,7 @@ namespace TaskPlanner.Client.Shared.Tasks
         [Parameter] public string? Title { get; set; }
 
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
-        [Parameter] public RenderFragment<EditContext>? AdditionalButtons { get; set; }
-
-        // ReSharper disable once UnusedAutoPropertyAccessor.Global
-        [Parameter] public EventCallback<EditContext> Cancel { get; set; }
-
-        // ReSharper disable once UnusedAutoPropertyAccessor.Global
-        [Parameter] public EventCallback<EditContext> Submit { get; set; }
+        [Parameter] public List<ActionButton>? Actions { get; set; }
 
         [Parameter(CaptureUnmatchedValues = true)]
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
@@ -36,7 +30,7 @@ namespace TaskPlanner.Client.Shared.Tasks
         private EditContext EditContext { get; set; }
 #pragma warning restore 8618
 
-        private List<Section> Sections { get; set; }
+        private List<ActionButton> Sections { get; }
 
         protected override void OnParametersSet()
         {
@@ -50,41 +44,25 @@ namespace TaskPlanner.Client.Shared.Tasks
 
         public TaskEditForm()
         {
-            Sections = new List<Section>
+            Sections = new List<ActionButton>
             {
-                new Section(
+                new ActionButton(
                     "Add deadlines",
                     () => Model.Deadlines = new Deadlines(),
                     () => Model.Deadlines == null),
-                new Section(
+                new ActionButton(
                     "Add execution time",
                     () => Model.ExecutionTime = new ExecutionTime(),
                     () => Model.ExecutionTime == null),
-                new Section(
+                new ActionButton(
                     "Add iterations",
                     () => Model.Iterations = new Iterations(),
                     () => Model.Iterations == null),
-                new Section(
+                new ActionButton(
                     "Add metrics",
                     () => Model.Metrics = new Metrics(),
                     () => Model.Metrics == null)
             };
-        }
-
-        private async Task OnCancel()
-        {
-            if (Cancel.HasDelegate)
-            {
-                await Cancel.InvokeAsync(EditContext).ConfigureAwait(false);
-            }
-        }
-
-        private async Task OnSubmit()
-        {
-            if (Submit.HasDelegate)
-            {
-                await Submit.InvokeAsync(EditContext).ConfigureAwait(false);
-            }
         }
     }
 }

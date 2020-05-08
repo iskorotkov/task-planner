@@ -19,34 +19,39 @@
         @if (Model.Deadlines != null)
         {
             <DeadlinesSection Deadlines="@Model.Deadlines"
-                              RemoveSection="@(() => Model.Deadlines = null)"/>
+                              RemoveSection="@(() => Model.Deadlines = null)" />
         }
 
         @if (Model.ExecutionTime != null)
         {
             <ExecutionTimeSection ExecutionTime="@Model.ExecutionTime"
-                                  RemoveSection="@(() => Model.ExecutionTime = null)"/>
+                                  RemoveSection="@(() => Model.ExecutionTime = null)" />
         }
 
         @if (Model.Iterations != null)
         {
             <IterationsSection Iterations="@Model.Iterations"
-                               RemoveSection="@(() => Model.Iterations = null)"/>
+                               RemoveSection="@(() => Model.Iterations = null)" />
         }
 
         @if (Model.Metrics != null)
         {
             <MetricsSection Metrics="@Model.Metrics"
-                            RemoveSection="@(() => Model.Metrics = null)"/>
+                            RemoveSection="@(() => Model.Metrics = null)" />
         }
 
-        <SectionsManagementSection Sections="@Sections"/>
+        <SectionsManagementSection Sections="@Sections" />
 
-        <div class="row">
-            @* TODO: use Eventcallbacks here for each operation to determine if it's available *@
-            @AdditionalButtons?.Invoke(EditContext)
-            <button class="btn btn-secondary" type="reset" @onclick="@OnCancel">Close</button>
-            <button class="btn btn-primary" type="submit" @onclick="@OnSubmit">Save changes</button>
-        </div>
+        @if (Actions != null)
+        {
+            <div class="row">
+                @foreach (var action in Actions)
+                {
+                    <button class="btn @action.ButtonClass" type="@action.ButtonType" @onclick="@action.OnClick">
+                        @action.ButtonText
+                    </button>
+                }
+            </div>
+        }
     </EditForm>
 </div>

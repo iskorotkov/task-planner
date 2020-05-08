@@ -3,9 +3,9 @@
         <div class="row m-2">
             @foreach (var section in Sections)
             {
-                if (section.CanBeAdded())
+                if (section.IsActive())
                 {
-                    <AddSection OnClick="@section.OnAdded" Text="@section.TextOnCreateButton" />
+                    <AddSection OnClick="@section.OnClick" Text="@section.ButtonText" />
                 }
             }
         </div>

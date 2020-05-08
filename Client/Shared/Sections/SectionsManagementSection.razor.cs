@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Collections.Generic;
-using TaskPlanner.Shared.Data.Sections;
+using TaskPlanner.Shared.Data.Ui;
 
 namespace TaskPlanner.Client.Shared.Sections
 {
     public partial class SectionsManagementSection
     {
-        [Parameter] public List<Section> Sections { get; set; }
+        [Parameter] public List<ActionButton> Sections { get; set; }
     }
 }
