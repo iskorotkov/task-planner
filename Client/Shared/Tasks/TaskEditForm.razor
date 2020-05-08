@@ -1,5 +1,5 @@
 ﻿@* ReSharper disable once RedundantUsingDirective *@
-@using TaskPlanner.Shared.Data.Properties 
+@using TaskPlanner.Shared.Data.Properties
 
 <div class="container-fluid" @attributes="@AdditionalAttributes">
     <h5 class="h5">@Title</h5>
@@ -33,12 +33,6 @@
                 </div>
             </div>
         }
-        else
-        {
-            <button type="button" class="btn btn-outline-success" @onclick="@(() => Model.ExecutionTime = new ExecutionTime())">
-                Add execution time
-            </button>
-        }
 
         @if (Model.Metrics != null)
         {
@@ -54,12 +48,6 @@
                 </div>
             </div>
         }
-        else
-        {
-            <button type="button" class="btn btn-outline-success" @onclick="@(() => Model.Metrics = new Metrics())">
-                Add metrics
-            </button>
-        }
 
         @if (Model.Deadlines != null)
         {
@@ -74,12 +62,6 @@
                     <InputDate class="form-control" @bind-Value="@Model.Deadlines.HardDeadline"/>
                 </div>
             </div>
-        }
-        else
-        {
-            <button type="button" class="btn btn-outline-success" @onclick="@(() => Model.Deadlines = new Deadlines())">
-                Add deadlines
-            </button>
         }
 
         @if (Model.Iterations != null)
@@ -101,12 +83,28 @@
                 </div>
             </div>
         }
-        else
-        {
-            <button type="button" class="btn btn-outline-success" @onclick="@(() => Model.Iterations = new Iterations())">
-                Add iterations
-            </button>
-        }
+
+        <div class="row m-2">
+            @if (Model.ExecutionTime == null)
+            {
+                <AddSection OnClick="@(() => Model.ExecutionTime = new ExecutionTime())" Text="Add execution time"/>
+            }
+
+            @if (Model.Metrics == null)
+            {
+                <AddSection OnClick="@(() => Model.Metrics = new Metrics())" Text="Add metrics"/>
+            }
+
+            @if (Model.Deadlines == null)
+            {
+                <AddSection OnClick="@(() => Model.Deadlines = new Deadlines())" Text="Add deadlines"/>
+            }
+
+            @if (Model.Iterations == null)
+            {
+                <AddSection OnClick="@(() => Model.Iterations = new Iterations())" Text="Add iterations"/>
+            }
+        </div>
 
         <div class="row">
             @AdditionalButtons?.Invoke(EditContext)
