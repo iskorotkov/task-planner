@@ -1,6 +1,6 @@
 using System;
 
-namespace TaskPlanner.Shared.Data.Tasks.Properties
+namespace TaskPlanner.Shared.Data.Properties
 {
     public class ExecutionTime
     {

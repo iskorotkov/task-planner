@@ -1,4 +1,4 @@
-﻿using TaskPlanner.Shared.Data.Tasks.Properties;
+﻿using TaskPlanner.Shared.Data.Properties;
 
 namespace TaskPlanner.Shared.Data.Tasks
 {
@@ -7,7 +7,7 @@ namespace TaskPlanner.Shared.Data.Tasks
         public Metadata Metadata { get; set; } = new Metadata();
         public Content Content { get; set; } = new Content();
         public Participants Participants { get; set; } = new Participants();
-        
+
         public ExecutionTime? ExecutionTime { get; set; }
         public Deadlines? Deadlines { get; set; }
         public Iterations? Iterations {get;set;}
