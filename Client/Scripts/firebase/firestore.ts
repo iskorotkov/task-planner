@@ -1,8 +1,8 @@
 // eslint-disable-next-line
 class Condition {
-  attribute: string
-  operation: firebase.firestore.WhereFilterOp
-  value: object
+  attribute: string | undefined
+  operation: firebase.firestore.WhereFilterOp | undefined
+  value: object | undefined
 }
 
 class Firestore {
@@ -16,9 +16,9 @@ class Firestore {
   async getDoc (path: string): Promise<firebase.firestore.DocumentData | null> {
     try {
       const doc = await this.db.doc(path).get()
-      return doc.data()
+      return doc.data() ?? null
     } catch (e) {
-      console.log(e)
+      console.error(e)
       return null
     }
   }
@@ -29,29 +29,30 @@ class Firestore {
       let query: firebase.firestore.Query = this.db.collection(path)
       if (conditions) {
         for (const condition of conditions) {
-          query = query.where(condition.attribute, condition.operation, condition.value)
+          if (condition.attribute && condition.operation && condition.value) {
+            query = query.where(condition.attribute, condition.operation, condition.value)
+          } else {
+            console.warn('Conditions is malformed')
+          }
         }
       }
 
       const snapshot = await query.get()
-      const docs = snapshot.docs.map(x => x.data())
-      console.log(docs)
-      return docs
+      return snapshot.docs.map(x => x.data())
     } catch (e) {
-      console.log(e)
+      console.error(e)
       return null
     }
   }
 
   // noinspection JSUnusedGlobalSymbols
-  async addToCollection (path: string, obj: object): Promise<string> {
+  async addToCollection (path: string, obj: object): Promise<string | null> {
     try {
       const collection = this.db.collection(path)
       const doc = await collection.add(obj)
-      console.log(doc)
       return doc.id
     } catch (e) {
-      console.log(e)
+      console.error(e)
       return null
     }
   }
@@ -62,14 +63,18 @@ class Firestore {
       const doc = this.db.doc(path)
       await doc.set(obj)
     } catch (e) {
-      console.log(e)
+      console.error(e)
     }
   }
 
   // noinspection JSUnusedGlobalSymbols
-  delete (path: string) {
+  async delete (path: string) {
     const doc = this.db.doc(path)
-    doc.delete().catch(error => console.log(error))
+    try {
+      await doc.delete()
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   // noinspection JSUnusedGlobalSymbols

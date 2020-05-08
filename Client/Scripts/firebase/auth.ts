@@ -1,16 +1,16 @@
 class AppUser {
-  displayName: string | null
-  email: string | null
-  emailVerified: boolean | null
-  isAnonymous: boolean | null
-  phoneNumber: string | null
-  photoUrl: string | null
-  providerId: string | null
-  uid: string | null
-  token: string | null
-  refreshToken: string | null
-  creationTime: string | null
-  lastSignInTime: string | null
+  displayName: string | null | undefined
+  email: string | null | undefined
+  emailVerified: boolean | null | undefined
+  isAnonymous: boolean | null | undefined
+  phoneNumber: string | null | undefined
+  photoUrl: string | null | undefined
+  providerId: string | null | undefined
+  uid: string | null | undefined
+  token: string | null | undefined
+  refreshToken: string | null | undefined
+  creationTime: string | null | undefined
+  lastSignInTime: string | null | undefined
 
   static async create (user: firebase.User): Promise<AppUser> {
     return {
@@ -24,8 +24,8 @@ class AppUser {
       uid: user.uid,
       token: await user.getIdToken(),
       refreshToken: user.refreshToken,
-      creationTime: user.metadata?.creationTime,
-      lastSignInTime: user.metadata?.lastSignInTime
+      creationTime: user.metadata?.creationTime ?? null,
+      lastSignInTime: user.metadata?.lastSignInTime ?? null
     }
   }
 }
@@ -61,12 +61,15 @@ class FirebaseAuth {
   }
 
   // noinspection JSUnusedGlobalSymbols
-  async signIn (username: string, password: string): Promise<string | AppUser> {
+  async signIn (username: string, password: string): Promise<AppUser | null> {
     try {
       const credential = await firebase.auth().signInWithEmailAndPassword(username, password)
-      return await AppUser.create(credential.user)
+      if (credential.user) {
+        return await AppUser.create(credential.user)
+      }
+      return null
     } catch (error) {
-      return await error.message
+      return null
     }
   }
 
@@ -76,17 +79,21 @@ class FirebaseAuth {
   }
 
   // noinspection JSUnusedGlobalSymbols
-  async register (username: string, password: string): Promise<string | AppUser> {
+  async register (username: string, password: string): Promise<AppUser | null> {
     try {
       const credential = await firebase.auth().createUserWithEmailAndPassword(username, password)
-      return await AppUser.create(credential.user)
+      if (credential.user) {
+        return await AppUser.create(credential.user)
+      }
+      return null
     } catch (error) {
-      return await error.message
+      return null
     }
   }
 
-  async getToken (): Promise<string> {
-    return await firebase.auth().currentUser.getIdToken()
+  // noinspection JSUnusedGlobalSymbols
+  async getToken (): Promise<string | null> {
+    return await firebase.auth().currentUser?.getIdToken() ?? null
   }
 
   // noinspection JSUnusedGlobalSymbols

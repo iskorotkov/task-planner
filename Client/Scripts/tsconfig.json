@@ -15,7 +15,15 @@
     "outDir": "../wwwroot/js",
     "sourceRoot": "./",
     "removeComments": true,
-    "rootDir": "./"
+    "rootDir": "./",
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noFallthroughCasesInSwitch": true,
+    "strictBindCallApply": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "strict": true
   },
   "exclude": [
     "node_modules"
