@@ -1,3 +1,9 @@
+class Condition {
+  attribute: string
+  operation: firebase.firestore.WhereFilterOp
+  value: object
+}
+
 class Firestore {
   private db: firebase.firestore.Firestore
 
@@ -15,10 +21,17 @@ class Firestore {
     }
   }
 
-  async getCollection (path: string): Promise<firebase.firestore.DocumentData[] | null> {
+  async getCollection (path: string, conditions?: Condition[]): Promise<firebase.firestore.DocumentData[] | null> {
     try {
-      const collection = await this.db.collection(path).get()
-      const docs = collection.docs.map(x => x.data())
+      let query: firebase.firestore.Query = this.db.collection(path)
+      if (conditions) {
+        for (const condition of conditions) {
+          query = query.where(condition.attribute, condition.operation, condition.value)
+        }
+      }
+
+      const snapshot = await query.get()
+      const docs = snapshot.docs.map(x => x.data())
       console.log(docs)
       return docs
     } catch (e) {

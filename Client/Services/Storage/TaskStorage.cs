@@ -1,7 +1,10 @@
-﻿using Microsoft.JSInterop;
+﻿using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.JSInterop;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using TaskPlanner.Shared.Data.Conditions;
 using TaskPlanner.Shared.Data.Tasks;
 
 namespace TaskPlanner.Client.Services.Storage
@@ -10,11 +13,13 @@ namespace TaskPlanner.Client.Services.Storage
     {
         private readonly IJSRuntime _jsRuntime;
         private readonly DotNetObjectReference<TaskStorage> _reference;
+        private readonly AuthenticationStateProvider _authenticationStateProvider;
 
-        public TaskStorage(IJSRuntime jsRuntime)
+        public TaskStorage(IJSRuntime jsRuntime, AuthenticationStateProvider authenticationStateProvider)
         {
             _jsRuntime = jsRuntime;
             _reference = DotNetObjectReference.Create(this);
+            _authenticationStateProvider = authenticationStateProvider;
         }
 
         public void Dispose()
@@ -49,7 +54,16 @@ namespace TaskPlanner.Client.Services.Storage
         private async Task<List<Todo>> FetchTasks()
         {
             const string tasksPath = "tasks";
-            var items = await _jsRuntime.InvokeAsync<IEnumerable<Todo>>("firestore.getCollection", tasksPath)
+
+            var state = await _authenticationStateProvider.GetAuthenticationStateAsync();
+            var email = state.User.FindFirst(claim => claim.Type == ClaimTypes.Email);
+            var conditions = new[]
+            {
+                new Condition("metadata.owner", "==", email?.Value ?? "user@mail.com")
+            };
+
+            var items = await _jsRuntime
+                .InvokeAsync<IEnumerable<Todo>>("firestore.getCollection", tasksPath, conditions)
                 .ConfigureAwait(false);
             return items.ToList();
         }
