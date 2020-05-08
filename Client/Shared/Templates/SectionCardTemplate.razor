@@ -1,0 +1,18 @@
+﻿@* ReSharper disable once UnusedTypeParameter *@
+@typeparam TValue
+
+<CardTemplate>
+    <Header>
+        @Header(Value)
+    </Header>
+
+    <Body>
+        <EditForm Model="@Value">
+            @EditFields(Value)
+        </EditForm>
+    </Body>
+
+    <Footer>
+        <button class="btn btn-link" @onclick="@RemoveSection">Remove card</button>
+    </Footer>
+</CardTemplate>
