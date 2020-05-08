@@ -16,27 +16,34 @@
             </div>
         </div>
 
-        @if (Model.ExecutionTime == null)
+        @if (Model.Deadlines != null)
         {
-            <AddSection OnClick="@(() => Model.ExecutionTime = new ExecutionTime())" Text="Add execution time" />
+            <DeadlinesSection Deadlines="@Model.Deadlines"
+                              RemoveSection="@(() => Model.Deadlines = null)"/>
         }
 
-        @if (Model.Metrics == null)
+        @if (Model.ExecutionTime != null)
         {
-            <AddSection OnClick="@(() => Model.Metrics = new Metrics())" Text="Add metrics" />
+            <ExecutionTimeSection ExecutionTime="@Model.ExecutionTime"
+                                  RemoveSection="@(() => Model.ExecutionTime = null)"/>
         }
 
-        @if (Model.Deadlines == null)
+        @if (Model.Iterations != null)
         {
-            <AddSection OnClick="@(() => Model.Deadlines = new Deadlines())" Text="Add deadlines" />
+            <IterationsSection Iterations="@Model.Iterations"
+                               RemoveSection="@(() => Model.Iterations = null)"/>
         }
 
-        @if (Model.Iterations == null)
+        @if (Model.Metrics != null)
         {
-            <AddSection OnClick="@(() => Model.Iterations = new Iterations())" Text="Add iterations" />
+            <MetricsSection Metrics="@Model.Metrics"
+                            RemoveSection="@(() => Model.Metrics = null)"/>
         }
+
+        <SectionsManagementSection Sections="@Sections"/>
 
         <div class="row">
+            @* TODO: use Eventcallbacks here for each operation to determine if it's available *@
             @AdditionalButtons?.Invoke(EditContext)
             <button class="btn btn-secondary" type="reset" @onclick="@OnCancel">Close</button>
             <button class="btn btn-primary" type="submit" @onclick="@OnSubmit">Save changes</button>

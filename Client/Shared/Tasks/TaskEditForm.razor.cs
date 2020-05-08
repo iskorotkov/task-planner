@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
+using TaskPlanner.Shared.Data.Properties;
+using TaskPlanner.Shared.Data.Sections;
 using TaskPlanner.Shared.Data.Tasks;
 
 namespace TaskPlanner.Client.Shared.Tasks
@@ -34,6 +36,8 @@ namespace TaskPlanner.Client.Shared.Tasks
         private EditContext EditContext { get; set; }
 #pragma warning restore 8618
 
+        private List<Section> Sections { get; set; }
+
         protected override void OnParametersSet()
         {
             if (Model == null)
@@ -42,6 +46,29 @@ namespace TaskPlanner.Client.Shared.Tasks
             }
 
             EditContext = new EditContext(Model);
+        }
+
+        public TaskEditForm()
+        {
+            Sections = new List<Section>
+            {
+                new Section(
+                    "Add deadlines",
+                    () => Model.Deadlines = new Deadlines(),
+                    () => Model.Deadlines == null),
+                new Section(
+                    "Add execution time",
+                    () => Model.ExecutionTime = new ExecutionTime(),
+                    () => Model.ExecutionTime == null),
+                new Section(
+                    "Add iterations",
+                    () => Model.Iterations = new Iterations(),
+                    () => Model.Iterations == null),
+                new Section(
+                    "Add metrics",
+                    () => Model.Metrics = new Metrics(),
+                    () => Model.Metrics == null)
+            };
         }
 
         private async Task OnCancel()
