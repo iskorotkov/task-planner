@@ -40,7 +40,9 @@ namespace TaskPlanner.Client.Services.Tasks
 
         public async Task Add(Todo task)
         {
-            var state = await _authenticationStateProvider.GetAuthenticationStateAsync();
+            var state = await _authenticationStateProvider
+                .GetAuthenticationStateAsync()
+                .ConfigureAwait(false);
             task.Metadata.Id = Guid.NewGuid().ToString();
             task.Metadata.Owner = state.User.FindFirst(claim => claim.Type == ClaimTypes.Email).Value;
 

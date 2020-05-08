@@ -54,18 +54,23 @@ namespace TaskPlanner.Client.Services.Storage
         private async Task<List<Todo>> FetchTasks()
         {
             const string tasksPath = "tasks";
-
-            var state = await _authenticationStateProvider.GetAuthenticationStateAsync();
-            var email = state.User.FindFirst(claim => claim.Type == ClaimTypes.Email);
-            var conditions = new[]
-            {
-                new Condition("metadata.owner", "==", email?.Value ?? "user@mail.com")
-            };
-
+            var conditions = await GetConditionsForFetch().ConfigureAwait(false);
             var items = await _jsRuntime
                 .InvokeAsync<IEnumerable<Todo>>("firestore.getCollection", tasksPath, conditions)
                 .ConfigureAwait(false);
             return items.ToList();
+        }
+
+        private async Task<Condition[]> GetConditionsForFetch()
+        {
+            var state = await _authenticationStateProvider
+                            .GetAuthenticationStateAsync()
+                            .ConfigureAwait(false);
+            var email = state.User.FindFirst(claim => claim.Type == ClaimTypes.Email);
+            return new[]
+            {
+                new Condition("metadata.owner", "==", email?.Value ?? "user@mail.com")
+            };
         }
 
         public async Task Add(Todo task)
