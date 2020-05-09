@@ -1,12 +1,11 @@
 ﻿@page "/overview"
 
-@* ReSharper disable once RedundantUsingDirective *@
-@using TaskPlanner.Client.Shared.Tasks
-
 <div class="container">
-    <button type="button" class="btn btn-primary" @onclick="@CreateTask">
-        <span class="oi oi-plus"></span>
-    </button>
+    <div class="container p-2">
+        <button type="button" class="btn btn-primary" @onclick="@CreateTask">
+            <span class="oi oi-plus"></span>
+        </button>
+    </div>
 
     @if(_tasks != null)
     {

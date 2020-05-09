@@ -1,115 +1,74 @@
-﻿@* ReSharper disable once RedundantUsingDirective *@
-@using TaskPlanner.Shared.Data.Properties
+﻿<div class="container-fluid" @attributes="@AdditionalAttributes">
+    <div class="row pl-4">
+        <h2 class="mr-auto">@Title</h2>
 
-<div class="container-fluid" @attributes="@AdditionalAttributes">
-    <h5 class="h5">@Title</h5>
+        @if (Actions != null)
+        {
+            @foreach (var action in Actions)
+            {
+                <div class="p-1">
+                    <button class="btn @action.ButtonClass" type="@action.ButtonType" @onclick="@action.OnClick">
+                        @action.ButtonText
+                    </button>
+                </div>
+            }
+        }
+    </div>
 
     <EditForm EditContext="@EditContext">
-        <DataAnnotationsValidator/>
+        <DataAnnotationsValidator />
 
         <div class="row">
-            <div class="col form-group">
+            <div class="col form-group ml-3">
                 <label>Title</label>
-                <InputText class="form-control" @bind-Value="@Model.Content.Title"/>
+                <InputText class="form-control" @bind-Value="@Model.Content.Title" />
             </div>
-
-            <div class="col form-group">
-                <label>Description</label>
-                <InputTextArea class="form-control" @bind-Value="@Model.Content.Description"/>
-            </div>
-        </div>
-
-        @if (Model.ExecutionTime != null)
-        {
-            <div class="row">
-                <div class="col form-group">
-                    <label>Estimated time</label>
-                    <InputDate class="form-control" @bind-Value="@Model.ExecutionTime.EstimatedTime"/>
-                </div>
-
-                <div class="col form-group">
-                    <label>Time spent</label>
-                    <InputDate class="form-control" @bind-Value="@Model.ExecutionTime.TimeSpent"/>
-                </div>
-            </div>
-        }
-
-        @if (Model.Metrics != null)
-        {
-            <div class="row">
-                <div class="col form-group">
-                    <label>Importance</label>
-                    <InputNumber class="form-control" @bind-Value="@Model.Metrics.Importance"/>
-                </div>
-
-                <div class="col form-group">
-                    <label>Complexity</label>
-                    <InputNumber class="form-control" @bind-Value="@Model.Metrics.Complexity"/>
-                </div>
-            </div>
-        }
-
-        @if (Model.Deadlines != null)
-        {
-            <div class="row">
-                <div class="col form-group">
-                    <label>Soft deadline</label>
-                    <InputDate class="form-control" @bind-Value="@Model.Deadlines.SoftDeadline"/>
-                </div>
-
-                <div class="col form-group">
-                    <label>Hard deadline</label>
-                    <InputDate class="form-control" @bind-Value="@Model.Deadlines.HardDeadline"/>
-                </div>
-            </div>
-        }
-
-        @if (Model.Iterations != null)
-        {
-            <div class="row">
-                <div class="col form-group">
-                    <label>Iterations executed</label>
-                    <InputNumber class="form-control" @bind-Value="@Model.Iterations.Executed"/>
-                </div>
-
-                <div class="col form-group">
-                    <label>Iterations total</label>
-                    <InputNumber class="form-control" @bind-Value="@Model.Iterations.Required"/>
-                </div>
-
-                <div class="col form-group">
-                    <label>Time per iteration</label>
-                    <InputDate class="form-control" @bind-Value="@Model.Iterations.TimePerIteration"/>
-                </div>
-            </div>
-        }
-
-        <div class="row m-2">
-            @if (Model.ExecutionTime == null)
-            {
-                <AddSection OnClick="@(() => Model.ExecutionTime = new ExecutionTime())" Text="Add execution time"/>
-            }
-
-            @if (Model.Metrics == null)
-            {
-                <AddSection OnClick="@(() => Model.Metrics = new Metrics())" Text="Add metrics"/>
-            }
-
-            @if (Model.Deadlines == null)
-            {
-                <AddSection OnClick="@(() => Model.Deadlines = new Deadlines())" Text="Add deadlines"/>
-            }
-
-            @if (Model.Iterations == null)
-            {
-                <AddSection OnClick="@(() => Model.Iterations = new Iterations())" Text="Add iterations"/>
-            }
         </div>
 
         <div class="row">
-            @AdditionalButtons?.Invoke(EditContext)
-            <button class="btn btn-secondary" type="reset" @onclick="@OnCancel">Close</button>
-            <button class="btn btn-primary" type="submit" @onclick="@OnSubmit">Save changes</button>
+            <div class="col-6">
+                <ContentSection Content="@Model.Content" />
+            </div>
+
+            <div class="col-6">
+                <div class="mb-3 ml-1">
+                    <SectionsManagementSection Sections="@Sections" />
+                </div>
+
+                <div class="row no-gutters">
+                    @if (Model.Deadlines != null)
+                    {
+                        <div class="col-6 p-2">
+                            <DeadlinesSection Deadlines="@Model.Deadlines"
+                                              RemoveSection="@(() => Model.Deadlines = null)" />
+                        </div>
+                    }
+
+                    @if (Model.ExecutionTime != null)
+                    {
+                        <div class="col-6 p-2">
+                            <ExecutionTimeSection ExecutionTime="@Model.ExecutionTime"
+                                                  RemoveSection="@(() => Model.ExecutionTime = null)" />
+                        </div>
+                    }
+
+                    @if (Model.Iterations != null)
+                    {
+                        <div class="col-6 p-2">
+                            <IterationsSection Iterations="@Model.Iterations"
+                                               RemoveSection="@(() => Model.Iterations = null)" />
+                        </div>
+                    }
+
+                    @if (Model.Metrics != null)
+                    {
+                        <div class="col-6 p-2">
+                            <MetricsSection Metrics="@Model.Metrics"
+                                            RemoveSection="@(() => Model.Metrics = null)" />
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
     </EditForm>
 </div>

@@ -1,10 +1,3 @@
 ﻿@page "/tasks/update/{GuidStr}"
 
-@* ReSharper disable once RedundantUsingDirective *@
-@using TaskPlanner.Client.Shared.Tasks
-
-<TaskEditForm Cancel="@Cancel" Submit="@Submit" Model="@_task" Title="Update task">
-    <AdditionalButtons>
-        <button class="btn btn-danger" type="button" @onclick="@Delete">Delete</button>
-    </AdditionalButtons>
-</TaskEditForm>
+<TaskEditForm Model="@_task" Title="Update task" Actions="@_actions"/>

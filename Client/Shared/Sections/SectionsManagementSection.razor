@@ -1,0 +1,17 @@
+﻿@{
+    var sectionsToShow = Sections.Where(s => s.IsActive()).ToList();
+}
+
+@if (sectionsToShow.Count > 0)
+{
+    <CardTemplate @attributes="@AdditionalAttributes">
+        <Body>
+            <div class="row p-0 m-0">
+                @foreach (var section in sectionsToShow)
+                {
+                    <AddSection OnClick="@section.OnClick" Text="@section.ButtonText" />
+                }
+            </div>
+        </Body>
+    </CardTemplate>
+}
