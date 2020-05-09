@@ -18,14 +18,16 @@
         @if (Todo.Deadlines?.SoftDeadline != null)
         {
             <li class="list-group-item">
-                Soft deadline: @Todo.Deadlines.SoftDeadline.Value.ToString()
+                Soft deadline: @Todo.Deadlines.SoftDeadline.Value
+                (left @(Todo.Deadlines.SoftDeadline.Value - DateTime.Now))
             </li>
         }
 
         @if (Todo.Deadlines?.HardDeadline != null)
         {
             <li class="list-group-item">
-                Hard deadline: @Todo.Deadlines.HardDeadline.Value.ToString()
+                Hard deadline: @Todo.Deadlines.HardDeadline.Value
+                (left @(Todo.Deadlines.HardDeadline.Value - DateTime.Now))
             </li>
         }
 
