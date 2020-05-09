@@ -5,57 +5,60 @@
         <DataAnnotationsValidator />
 
         <div class="row">
-            <div class="col form-group">
+            <div class="col form-group ml-3">
                 <label>Title</label>
                 <InputText class="form-control" @bind-Value="@Model.Content.Title" />
             </div>
         </div>
 
         <div class="row">
-            <div class="col">
-                <div class="col form-group">
-                    <label>Description</label>
-                    <InputTextArea class="form-control" @bind-Value="@Model.Content.Description" />
-                </div>
+            <div class="col-6">
+                <ContentSection Content="@Model.Content" />
             </div>
 
-            <div class="col">
-                <SectionsManagementSection Sections="@Sections" />
+            <div class="col-6">
+                <div class="mb-3">
+                    <SectionsManagementSection Sections="@Sections" />
+                </div>
 
-                @if (Model.Deadlines != null)
-                {
-                    <DeadlinesSection Deadlines="@Model.Deadlines"
-                                      RemoveSection="@(() => Model.Deadlines = null)" />
-                }
+                <div class="card-columns">
+                    @if (Model.Deadlines != null)
+                    {
+                        <DeadlinesSection Deadlines="@Model.Deadlines"
+                                          RemoveSection="@(() => Model.Deadlines = null)" />
+                    }
 
-                @if (Model.ExecutionTime != null)
-                {
-                    <ExecutionTimeSection ExecutionTime="@Model.ExecutionTime"
-                                          RemoveSection="@(() => Model.ExecutionTime = null)" />
-                }
+                    @if (Model.ExecutionTime != null)
+                    {
+                        <ExecutionTimeSection ExecutionTime="@Model.ExecutionTime"
+                                              RemoveSection="@(() => Model.ExecutionTime = null)" />
+                    }
 
-                @if (Model.Iterations != null)
-                {
-                    <IterationsSection Iterations="@Model.Iterations"
-                                       RemoveSection="@(() => Model.Iterations = null)" />
-                }
+                    @if (Model.Iterations != null)
+                    {
+                        <IterationsSection Iterations="@Model.Iterations"
+                                           RemoveSection="@(() => Model.Iterations = null)" />
+                    }
 
-                @if (Model.Metrics != null)
-                {
-                    <MetricsSection Metrics="@Model.Metrics"
-                                    RemoveSection="@(() => Model.Metrics = null)" />
-                }
+                    @if (Model.Metrics != null)
+                    {
+                        <MetricsSection Metrics="@Model.Metrics"
+                                        RemoveSection="@(() => Model.Metrics = null)" />
+                    }
+                </div>
             </div>
         </div>
 
         @if (Actions != null)
         {
-            <div class="row">
+            <div class="row ml-3">
                 @foreach (var action in Actions)
                 {
-                    <button class="btn @action.ButtonClass" type="@action.ButtonType" @onclick="@action.OnClick">
-                        @action.ButtonText
-                    </button>
+                    <div class="p-1">
+                        <button class="btn @action.ButtonClass" type="@action.ButtonType" @onclick="@action.OnClick">
+                            @action.ButtonText
+                        </button>
+                    </div>
                 }
             </div>
         }
