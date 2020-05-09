@@ -1,4 +1,4 @@
-using System;
+using TaskPlanner.Shared.Data.Spans;
 
 namespace TaskPlanner.Shared.Data.Properties
 {
@@ -7,6 +7,6 @@ namespace TaskPlanner.Shared.Data.Properties
         public int Executed { get; set; }
         public int Required { get; set; }
 
-        public DateTime? TimePerIteration { get; set; }
+        public TaskTimeSpan? TimePerIteration { get; set; } = new TaskTimeSpan();
     }
 }

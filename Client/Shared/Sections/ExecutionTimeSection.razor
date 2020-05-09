@@ -7,12 +7,12 @@
         <div class="row">
             <div class="col form-group">
                 <label>Estimated time</label>
-                <input type="time" class="form-control" @bind="@ExecutionTime.EstimatedTime" />
+                <InputTimeSpan class="form-control" Value="@ExecutionTime.EstimatedTime" />
             </div>
 
             <div class="col form-group">
                 <label>Time spent</label>
-                <input type="time" class="form-control" @bind="@ExecutionTime.TimeSpent" />
+                <InputTimeSpan class="form-control" Value="@ExecutionTime.TimeSpent" />
             </div>
         </div>
     </Content>

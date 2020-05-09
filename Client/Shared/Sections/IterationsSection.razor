@@ -17,7 +17,9 @@
 
             <div class="col form-group">
                 <label>Time per iteration</label>
-                <input type="time" class="form-control" @bind="@Iterations.TimePerIteration" />
+                <div class="row">
+                    <InputTimeSpan Value="@Iterations.TimePerIteration" />
+                </div>
             </div>
         </div>
     </Content>

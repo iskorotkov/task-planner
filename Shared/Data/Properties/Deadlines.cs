@@ -4,7 +4,7 @@ namespace TaskPlanner.Shared.Data.Properties
 {
     public class Deadlines
     {
-        public DateTime? SoftDeadline { get; set; }
-        public DateTime? HardDeadline { get; set; }
+        public DateTime? SoftDeadline { get; set; } = DateTime.Now;
+        public DateTime? HardDeadline { get; set; } = DateTime.Now;
     }
 }

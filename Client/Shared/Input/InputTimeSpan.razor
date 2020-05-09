@@ -1,0 +1,11 @@
+﻿<input type="number" @bind="@Value.Amount" @attributes="@AdditionalAttributes" />
+
+<select @bind="@Value.Length">
+    <option value="@SpanLength.Seconds">second(s)</option>
+    <option value="@SpanLength.Minutes">minute(s)</option>
+    <option value="@SpanLength.Hours">hour(s)</option>
+    <option value="@SpanLength.Days">day(s)</option>
+    <option value="@SpanLength.Weeks">week(s)</option>
+    <option value="@SpanLength.Months">month(s)</option>
+    <option value="@SpanLength.Years">year(s)</option>
+</select>
