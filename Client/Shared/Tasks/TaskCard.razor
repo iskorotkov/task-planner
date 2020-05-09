@@ -32,8 +32,11 @@
 
         @if (Todo.Iterations != null)
         {
+            var timeSpan = Todo.Iterations.TimePerIteration != null
+                ? " (" + Todo.Iterations.TimePerIteration.ToShortString() + ")"
+                : "";
             <li class="list-group-item">
-                Iterations (@Todo.Iterations.TimePerIteration): @(Todo.Iterations.Executed.ToString() ?? "-") / @(Todo.Iterations.Required.ToString() ?? "-")
+                Iterations@(timeSpan): @(Todo.Iterations.Executed.ToString() ?? "-") / @(Todo.Iterations.Required.ToString() ?? "-")
                 <button class="btn badge badge-pill badge-success" @onclick="@IncrementIterations">
                     +1
                 </button>
