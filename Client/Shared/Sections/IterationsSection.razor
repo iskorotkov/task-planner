@@ -5,19 +5,19 @@
 
     <Content>
         <div class="row">
-            <div class="col form-group">
+            <div class="form-group">
                 <label>Iterations executed</label>
                 <InputNumber class="form-control" @bind-Value="@Iterations.Executed" />
             </div>
 
-            <div class="col form-group">
+            <div class="form-group">
                 <label>Iterations total</label>
                 <InputNumber class="form-control" @bind-Value="@Iterations.Required" />
             </div>
 
-            <div class="col form-group">
-                <label>Time per iteration</label>
-                <InputTimeSpan class="form-control" Value="@Iterations.TimePerIteration" />
+            <div class="form-group">
+                <label class="d-block">Time per iteration</label>
+                <InputTimeSpan class="form-control d-inline" Value="@Iterations.TimePerIteration" />
             </div>
         </div>
     </Content>

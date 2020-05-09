@@ -31,33 +31,41 @@
             </div>
 
             <div class="col-6">
-                <div class="mb-3">
+                <div class="mb-3 ml-1">
                     <SectionsManagementSection Sections="@Sections" />
                 </div>
 
-                <div class="card-columns">
+                <div class="row no-gutters">
                     @if (Model.Deadlines != null)
                     {
-                        <DeadlinesSection Deadlines="@Model.Deadlines"
-                                          RemoveSection="@(() => Model.Deadlines = null)" />
+                        <div class="col-6 p-2">
+                            <DeadlinesSection Deadlines="@Model.Deadlines"
+                                              RemoveSection="@(() => Model.Deadlines = null)" />
+                        </div>
                     }
 
                     @if (Model.ExecutionTime != null)
                     {
-                        <ExecutionTimeSection ExecutionTime="@Model.ExecutionTime"
-                                              RemoveSection="@(() => Model.ExecutionTime = null)" />
+                        <div class="col-6 p-2">
+                            <ExecutionTimeSection ExecutionTime="@Model.ExecutionTime"
+                                                  RemoveSection="@(() => Model.ExecutionTime = null)" />
+                        </div>
                     }
 
                     @if (Model.Iterations != null)
                     {
-                        <IterationsSection Iterations="@Model.Iterations"
-                                           RemoveSection="@(() => Model.Iterations = null)" />
+                        <div class="col-6 p-2">
+                            <IterationsSection Iterations="@Model.Iterations"
+                                               RemoveSection="@(() => Model.Iterations = null)" />
+                        </div>
                     }
 
                     @if (Model.Metrics != null)
                     {
-                        <MetricsSection Metrics="@Model.Metrics"
-                                        RemoveSection="@(() => Model.Metrics = null)" />
+                        <div class="col-6 p-2">
+                            <MetricsSection Metrics="@Model.Metrics"
+                                            RemoveSection="@(() => Model.Metrics = null)" />
+                        </div>
                     }
                 </div>
             </div>
