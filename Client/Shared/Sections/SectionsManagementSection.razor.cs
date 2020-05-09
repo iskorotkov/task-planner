@@ -7,5 +7,8 @@ namespace TaskPlanner.Client.Shared.Sections
     public partial class SectionsManagementSection
     {
         [Parameter] public List<ActionButton> Sections { get; set; }
+
+        [Parameter(CaptureUnmatchedValues = true)]
+        public Dictionary<string, object>? AdditionalAttributes { get; set; }
     }
 }

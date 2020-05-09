@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using System.Collections.Generic;
 
 namespace TaskPlanner.Client.Shared.Templates
 {
@@ -12,5 +13,8 @@ namespace TaskPlanner.Client.Shared.Templates
 
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         [Parameter] public RenderFragment? Footer { get; set; }
+
+        [Parameter(CaptureUnmatchedValues = true)]
+        public Dictionary<string, object>? AdditionalAttributes { get; set; }
     }
 }

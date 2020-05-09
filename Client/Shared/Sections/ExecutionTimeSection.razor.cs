@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using System.Collections.Generic;
 using TaskPlanner.Shared.Data.Properties;
 
 namespace TaskPlanner.Client.Shared.Sections
@@ -7,5 +8,8 @@ namespace TaskPlanner.Client.Shared.Sections
     {
         [Parameter] public ExecutionTime ExecutionTime { get; set; }
         [Parameter] public EventCallback RemoveSection { get; set; }
+
+        [Parameter(CaptureUnmatchedValues = true)]
+        public Dictionary<string, object>? AdditionalAttributes { get; set; }
     }
 }

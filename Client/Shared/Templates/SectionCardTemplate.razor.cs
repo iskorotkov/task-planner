@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using System.Collections.Generic;
 
 namespace TaskPlanner.Client.Shared.Templates
 {
@@ -8,5 +9,8 @@ namespace TaskPlanner.Client.Shared.Templates
         [Parameter] public RenderFragment Content { get; set; }
         [Parameter] public RenderFragment Header { get; set; }
         [Parameter] public EventCallback RemoveSection { get; set; }
+
+        [Parameter(CaptureUnmatchedValues = true)]
+        public Dictionary<string, object>? AdditionalAttributes { get; set; }
     }
 }
