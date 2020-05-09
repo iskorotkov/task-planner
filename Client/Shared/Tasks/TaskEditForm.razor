@@ -9,38 +9,44 @@
                 <label>Title</label>
                 <InputText class="form-control" @bind-Value="@Model.Content.Title" />
             </div>
-
-            <div class="col form-group">
-                <label>Description</label>
-                <InputTextArea class="form-control" @bind-Value="@Model.Content.Description" />
-            </div>
         </div>
 
-        @if (Model.Deadlines != null)
-        {
-            <DeadlinesSection Deadlines="@Model.Deadlines"
-                              RemoveSection="@(() => Model.Deadlines = null)" />
-        }
+        <div class="row">
+            <div class="col">
+                <div class="col form-group">
+                    <label>Description</label>
+                    <InputTextArea class="form-control" @bind-Value="@Model.Content.Description" />
+                </div>
+            </div>
 
-        @if (Model.ExecutionTime != null)
-        {
-            <ExecutionTimeSection ExecutionTime="@Model.ExecutionTime"
-                                  RemoveSection="@(() => Model.ExecutionTime = null)" />
-        }
+            <div class="col">
+                <SectionsManagementSection Sections="@Sections" />
 
-        @if (Model.Iterations != null)
-        {
-            <IterationsSection Iterations="@Model.Iterations"
-                               RemoveSection="@(() => Model.Iterations = null)" />
-        }
+                @if (Model.Deadlines != null)
+                {
+                    <DeadlinesSection Deadlines="@Model.Deadlines"
+                                      RemoveSection="@(() => Model.Deadlines = null)" />
+                }
 
-        @if (Model.Metrics != null)
-        {
-            <MetricsSection Metrics="@Model.Metrics"
-                            RemoveSection="@(() => Model.Metrics = null)" />
-        }
+                @if (Model.ExecutionTime != null)
+                {
+                    <ExecutionTimeSection ExecutionTime="@Model.ExecutionTime"
+                                          RemoveSection="@(() => Model.ExecutionTime = null)" />
+                }
 
-        <SectionsManagementSection Sections="@Sections" />
+                @if (Model.Iterations != null)
+                {
+                    <IterationsSection Iterations="@Model.Iterations"
+                                       RemoveSection="@(() => Model.Iterations = null)" />
+                }
+
+                @if (Model.Metrics != null)
+                {
+                    <MetricsSection Metrics="@Model.Metrics"
+                                    RemoveSection="@(() => Model.Metrics = null)" />
+                }
+            </div>
+        </div>
 
         @if (Actions != null)
         {

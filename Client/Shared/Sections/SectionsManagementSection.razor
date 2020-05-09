@@ -1,13 +1,17 @@
-﻿<CardTemplate>
-    <Body>
-        <div class="row m-2">
-            @foreach (var section in Sections)
-            {
-                if (section.IsActive())
+﻿@{
+    var sectionsToShow = Sections.Where(s => s.IsActive()).ToList();
+}
+
+@if (sectionsToShow.Count > 0)
+{
+    <CardTemplate>
+        <Body>
+            <div class="row m-2">
+                @foreach (var section in sectionsToShow)
                 {
                     <AddSection OnClick="@section.OnClick" Text="@section.ButtonText" />
                 }
-            }
-        </div>
-    </Body>
-</CardTemplate>
+            </div>
+        </Body>
+    </CardTemplate>
+}
