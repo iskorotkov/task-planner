@@ -8,8 +8,55 @@
         <p class="card-text">@Todo.Content.Description</p>
     </div>
 
+    <ul class="list-group list-group-flush">
+        @if (Todo.Deadlines?.SoftDeadline != null)
+        {
+            <li class="list-group-item">
+                Soft deadline: @Todo.Deadlines.SoftDeadline.Value.ToString()
+            </li>
+        }
+
+        @if (Todo.Deadlines?.HardDeadline != null)
+        {
+            <li class="list-group-item">
+                Hard deadline: @Todo.Deadlines.HardDeadline.Value.ToString()
+            </li>
+        }
+
+        @if (Todo.ExecutionTime != null)
+        {
+            <li class="list-group-item">
+                Time: @(Todo.ExecutionTime?.TimeSpent?.ToString() ?? "-") / @(Todo.ExecutionTime?.EstimatedTime?.ToString() ?? "-")
+            </li>
+        }
+
+        @if (Todo.Iterations != null)
+        {
+            <li class="list-group-item">
+                Iterations (@Todo.Iterations.TimePerIteration): @(Todo.Iterations.Executed.ToString() ?? "-") / @(Todo.Iterations.Required.ToString() ?? "-")
+                <button class="btn badge badge-pill badge-success" @onclick="@IncrementIterations">
+                    +1
+                </button>
+            </li>
+        }
+
+        @if (Todo.Metrics?.Complexity != null)
+        {
+            <li class="list-group-item">
+                Complexity: @Todo.Metrics.Complexity
+            </li>
+        }
+
+        @if (Todo.Metrics?.Importance != null)
+        {
+            <li class="list-group-item">
+                Importance: @Todo.Metrics.Importance
+            </li>
+        }
+    </ul>
+
     <div class="card-footer">
-        <button type="button" class="btn btn-primary stretched-link" @onclick="@CardClicked">
+        <button type="button" class="btn btn-link" @onclick="@CardClicked">
             View
         </button>
     </div>

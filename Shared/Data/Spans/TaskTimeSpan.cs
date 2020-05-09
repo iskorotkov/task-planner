@@ -5,31 +5,36 @@ namespace TaskPlanner.Shared.Data.Spans
     public class TaskTimeSpan
     {
         public double Amount { get; set; } = 1.0;
-        public SpanLength Length { get; set; } = SpanLength.Hours;
+        public TimePeriod Period { get; set; } = TimePeriod.Hours;
 
         public TaskTimeSpan()
         {
         }
 
-        public TaskTimeSpan(double amount, SpanLength length)
+        public TaskTimeSpan(double amount, TimePeriod length)
         {
             Amount = amount;
-            Length = length;
+            Period = length;
         }
 
         public TimeSpan ToTimeSpan()
         {
-            return Amount * Length switch
+            return Amount * Period switch
             {
-                SpanLength.Seconds => TimeSpan.FromSeconds(1),
-                SpanLength.Minutes => TimeSpan.FromMinutes(1),
-                SpanLength.Hours => TimeSpan.FromHours(1),
-                SpanLength.Days => TimeSpan.FromDays(1),
-                SpanLength.Weeks => TimeSpan.FromDays(7),
-                SpanLength.Months => TimeSpan.FromDays(DaysInCurrentMonth()),
-                SpanLength.Years => TimeSpan.FromDays(DaysInCurrentYear()),
-                _ => throw new ArgumentException($"Provided variant of {nameof(SpanLength)} isn't supported."),
+                TimePeriod.Seconds => TimeSpan.FromSeconds(1),
+                TimePeriod.Minutes => TimeSpan.FromMinutes(1),
+                TimePeriod.Hours => TimeSpan.FromHours(1),
+                TimePeriod.Days => TimeSpan.FromDays(1),
+                TimePeriod.Weeks => TimeSpan.FromDays(7),
+                TimePeriod.Months => TimeSpan.FromDays(DaysInCurrentMonth()),
+                TimePeriod.Years => TimeSpan.FromDays(DaysInCurrentYear()),
+                _ => throw new ArgumentException($"Provided variant of {nameof(TimePeriod)} isn't supported."),
             };
+        }
+
+        public override string ToString()
+        {
+            return $"{Amount} {Period}";
         }
 
         private static int DaysInCurrentMonth()
