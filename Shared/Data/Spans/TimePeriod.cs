@@ -1,6 +1,6 @@
 ﻿namespace TaskPlanner.Shared.Data.Spans
 {
-    public enum SpanLength
+    public enum TimePeriod
     {
         Seconds,
         Minutes,

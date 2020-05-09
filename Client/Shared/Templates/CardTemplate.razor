@@ -1,24 +1,22 @@
 <div class="card" @attributes="@AdditionalAttributes">
-    <div>
-        @if (Header != null)
-        {
-            <div class="card-header">
-                @Header
-            </div>
-        }
+    @if (Header != null)
+    {
+        <div class="card-header">
+            @Header
+        </div>
+    }
 
-        @if (Body != null)
-        {
-            <div class="card-body">
-                @Body
-            </div>
-        }
+    @if (Body != null)
+    {
+        <div class="card-body">
+            @Body
+        </div>
+    }
 
-        @if (Footer != null)
-        {
-            <div class="card-footer">
-                @Footer
-            </div>
-        }
-    </div>
+    @if (Footer != null)
+    {
+        <div class="card-footer">
+            @Footer
+        </div>
+    }
 </div>

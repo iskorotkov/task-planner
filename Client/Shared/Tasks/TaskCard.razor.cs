@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using TaskPlanner.Client.Services.Tasks;
 using TaskPlanner.Shared.Data.Tasks;
 
 namespace TaskPlanner.Client.Shared.Tasks
@@ -10,6 +12,7 @@ namespace TaskPlanner.Client.Shared.Tasks
 #pragma warning disable 8618
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         [Inject] public NavigationManager NavigationManager { get; set; }
+        [Inject] public ITaskManager TaskManager { get; set; }
         [Parameter] public Todo Todo { get; set; }
 #pragma warning restore 8618
 
@@ -28,6 +31,18 @@ namespace TaskPlanner.Client.Shared.Tasks
         private void CardClicked()
         {
             NavigationManager.NavigateTo($"/tasks/update/{Todo.Metadata.Id}");
+        }
+
+        private async Task IncrementIterations()
+        {
+            if (Todo.Iterations == null)
+            {
+                throw new InvalidOperationException(
+                    "Can't increment number of iterations as iterations are not added to the task.");
+            }
+
+            Todo.Iterations.Executed++;
+            await TaskManager.Update(Todo).ConfigureAwait(false);
         }
     }
 }
