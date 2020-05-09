@@ -4,7 +4,7 @@ namespace TaskPlanner.Shared.Data.Properties
 {
     public class ExecutionTime
     {
-        public TimeSpan? EstimatedTime { get; set; }
-        public TimeSpan? TimeSpent { get; set; }
+        public DateTime? EstimatedTime { get; set; }
+        public DateTime? TimeSpent { get; set; }
     }
 }

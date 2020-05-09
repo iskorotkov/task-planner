@@ -7,6 +7,6 @@ namespace TaskPlanner.Shared.Data.Properties
         public int Executed { get; set; }
         public int Required { get; set; }
 
-        public TimeSpan? TimePerIteration { get; set; }
+        public DateTime? TimePerIteration { get; set; }
     }
 }
