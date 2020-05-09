@@ -1,5 +1,19 @@
 ﻿<div class="container-fluid" @attributes="@AdditionalAttributes">
-    <h5 class="h5">@Title</h5>
+    <div class="row pl-4">
+        <h2 class="mr-auto">@Title</h2>
+
+        @if (Actions != null)
+        {
+            @foreach (var action in Actions)
+            {
+                <div class="p-1">
+                    <button class="btn @action.ButtonClass" type="@action.ButtonType" @onclick="@action.OnClick">
+                        @action.ButtonText
+                    </button>
+                </div>
+            }
+        }
+    </div>
 
     <EditForm EditContext="@EditContext">
         <DataAnnotationsValidator />
@@ -48,19 +62,5 @@
                 </div>
             </div>
         </div>
-
-        @if (Actions != null)
-        {
-            <div class="row ml-3">
-                @foreach (var action in Actions)
-                {
-                    <div class="p-1">
-                        <button class="btn @action.ButtonClass" type="@action.ButtonType" @onclick="@action.OnClick">
-                            @action.ButtonText
-                        </button>
-                    </div>
-                }
-            </div>
-        }
     </EditForm>
 </div>
