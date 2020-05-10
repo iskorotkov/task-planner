@@ -19,7 +19,8 @@
         {
             <li class="list-group-item">
                 Soft deadline: @Todo.Deadlines.SoftDeadline.Value
-                (left @(Todo.Deadlines.SoftDeadline.Value - DateTime.Now))
+                <br />
+                (@Todo.Deadlines.SoftDeadline.Value.GetTimeLeftMessage())
             </li>
         }
 
@@ -27,7 +28,8 @@
         {
             <li class="list-group-item">
                 Hard deadline: @Todo.Deadlines.HardDeadline.Value
-                (left @(Todo.Deadlines.HardDeadline.Value - DateTime.Now))
+                <br />
+                (@Todo.Deadlines.HardDeadline.Value.GetTimeLeftMessage())
             </li>
         }
 
