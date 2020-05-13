@@ -1,0 +1,19 @@
+﻿<div class="row">
+    @foreach (var refType in _referenceTypes)
+    {
+        <CardTemplate>
+            <Header>
+                @refType.ToString()
+            </Header>
+
+            <Body>
+                <ul>
+                    @foreach (var item in GetReferencesOfType(refType))
+                    {
+                        <li>@item.Target.Content.Title</li>
+                    }
+                </ul>
+            </Body>
+        </CardTemplate>
+    }
+</div>
