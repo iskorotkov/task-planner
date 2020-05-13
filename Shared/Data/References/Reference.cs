@@ -4,8 +4,18 @@ namespace TaskPlanner.Shared.Data.References
 {
     public class Reference
     {
-        public Todo Self { get; set; }
-        public Todo Other { get; set; }
+        public Todo Target { get; set; }
         public ReferenceType Type { get; set; }
+
+        public Reference()
+        {
+
+        }
+
+        public Reference(Todo target, ReferenceType type)
+        {
+            Target = target;
+            Type = type;
+        }
     }
 }
