@@ -2,23 +2,23 @@
     <Body>
         @if (_tasks != null)
         {
-            <select @bind="@OtherTask">
+            <select @bind="@OtherTaskId">
                 @foreach (var task in _tasks)
                 {
                     @* TODO: #6 Provide a way to distinct different tasks with the same title *@
-                    <option value="@task">@task.Content.Title</option>
+                    <option value="@task.Metadata.Id">@task.Content.Title</option>
                 }
             </select>
         }
 
         @if (_referenceInfo != null)
         {
-            @foreach (var info in _referenceInfo)
-            {
-                <select @bind="@AddReferenceFn">
-                    <option value="@info.Task">@info.Label</option>
-                </select>
-            }
+            <select @bind="@TypeLabel">
+                @foreach (var info in _referenceInfo)
+                {
+                    <option value="@info.Label">@info.Label</option>
+                }
+            </select>
         }
 
         <button type="button" @onclick="@Submit">Add</button>

@@ -5,8 +5,8 @@ namespace Shared.Data.Ui
 {
     public struct ActionWithLabel
     {
-        public Func<Task> Task { get; set; }
-        public string Label { get; set; }
+        public Func<Task> Task { get; }
+        public string Label { get; }
 
         public ActionWithLabel(Func<Task> task, string label)
         {
