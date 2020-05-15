@@ -10,15 +10,15 @@ namespace TaskPlanner.Client.Services.References
     {
         public async Task AddChild(Todo child, Todo parent)
         {
-            child.References.Add(new Reference(parent, ReferenceType.Parent));
-            parent.References.Add(new Reference(child, ReferenceType.Child));
+            child.References.Add(new Reference(parent.Metadata.Id!, ReferenceType.Parent));
+            parent.References.Add(new Reference(child.Metadata.Id!, ReferenceType.Child));
             // TODO: Save to DB
         }
 
         public async Task AddDependency(Todo dependency, Todo dependant)
         {
-            dependency.References.Add(new Reference(dependant, ReferenceType.Dependant));
-            dependant.References.Add(new Reference(dependency, ReferenceType.Dependency));
+            dependency.References.Add(new Reference(dependant.Metadata.Id!, ReferenceType.Dependant));
+            dependant.References.Add(new Reference(dependency.Metadata.Id!, ReferenceType.Dependency));
             // TODO: Save to DB
         }
 
@@ -33,7 +33,7 @@ namespace TaskPlanner.Client.Services.References
                         continue;
                     }
 
-                    alternative.References.Add(new Reference(other, ReferenceType.Alternative));
+                    alternative.References.Add(new Reference(other.Metadata.Id!, ReferenceType.Alternative));
                     // TODO: Save to DB
                 }
             }
@@ -50,7 +50,7 @@ namespace TaskPlanner.Client.Services.References
                         continue;
                     }
 
-                    task.References.Add(new Reference(other, ReferenceType.Similar));
+                    task.References.Add(new Reference(other.Metadata.Id!, ReferenceType.Similar));
                     // TODO: Save to DB
                 }
             }
@@ -58,8 +58,8 @@ namespace TaskPlanner.Client.Services.References
 
         public async Task AddTest(Todo test, Todo tested)
         {
-            test.References.Add(new Reference(tested, ReferenceType.TestFor));
-            tested.References.Add(new Reference(test, ReferenceType.TestedBy));
+            test.References.Add(new Reference(tested.Metadata.Id!, ReferenceType.TestFor));
+            tested.References.Add(new Reference(test.Metadata.Id!, ReferenceType.TestedBy));
             // TODO: Save to DB
         }
 

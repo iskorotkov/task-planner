@@ -1,19 +1,22 @@
 ﻿<div class="row">
-    @foreach (var refType in _referenceTypes)
+    @if (ReferencedTasks != null)
     {
-        <CardTemplate>
-            <Header>
-                @refType.ToString()
-            </Header>
+        @foreach (var referencedTasks in ReferencedTasks)
+        {
+            <CardTemplate>
+                <Header>
+                    @referencedTasks.ReferenceType
+                </Header>
 
-            <Body>
-                <ul>
-                    @foreach (var item in GetReferencesOfType(refType))
-                    {
-                        <li>@item.Target.Content.Title</li>
-                    }
-                </ul>
-            </Body>
-        </CardTemplate>
+                <Body>
+                    <ul>
+                        @foreach (var item in referencedTasks.Tasks)
+                        {
+                            <li>@item.Content.Title</li>
+                        }
+                    </ul>
+                </Body>
+            </CardTemplate>
+        }
     }
 </div>

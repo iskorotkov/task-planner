@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Shared.Data.References;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TaskPlanner.Client.Services.References;
-using TaskPlanner.Shared.Data.References;
+using System.Threading.Tasks;
+using TaskPlanner.Client.Services.Tasks;
 using TaskPlanner.Shared.Data.Tasks;
 
 namespace TaskPlanner.Client.Shared.Sections
@@ -12,26 +13,42 @@ namespace TaskPlanner.Client.Shared.Sections
     {
         [Parameter] public Todo Task { get; set; }
 
-        [Inject] public IReferenceManager ReferenceManager { get; set; }
+        [Inject] public ITaskManager TaskManager { get; set; }
 
-        private List<ReferenceType> _referenceTypes;
+        private List<ReferencedTasks>? ReferencedTasks { get; set; }
 
-        protected override void OnParametersSet()
+        protected override async Task OnParametersSetAsync()
         {
             if (Task == null)
             {
                 throw new ArgumentNullException(nameof(Task));
             }
 
-            _referenceTypes = Task.References
+            // TODO: #10 Move fetching referenced tasks into separate service
+            var referenceTypes = Task.References
                 .Select(r => r.Type)
                 .Distinct()
                 .ToList();
-        }
 
-        private IEnumerable<Reference> GetReferencesOfType(ReferenceType t)
-        {
-            return Task.References.Where(r => r.Type == t);
+            var referencedTasks = new List<ReferencedTasks>();
+            foreach (var type in referenceTypes)
+            {
+                var ids = Task.References
+                    .Where(reference => reference.Type == type)
+                    .Select(reference => reference.TargetId);
+
+                var tasks = new List<Todo>();
+                foreach (var id in ids)
+                {
+                    var task = await TaskManager.Find(id).ConfigureAwait(false)
+                              ?? throw new ArgumentException("Task with provided Id wasn't found");
+                    tasks.Add(task);
+                }
+
+                referencedTasks.Add(new ReferencedTasks(type, tasks));
+            }
+
+            ReferencedTasks = referencedTasks;
         }
     }
 }

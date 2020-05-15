@@ -1,10 +1,8 @@
-﻿using TaskPlanner.Shared.Data.Tasks;
-
-namespace TaskPlanner.Shared.Data.References
+﻿namespace TaskPlanner.Shared.Data.References
 {
     public class Reference
     {
-        public Todo Target { get; set; }
+        public string TargetId { get; set; }
         public ReferenceType Type { get; set; }
 
         public Reference()
@@ -12,9 +10,9 @@ namespace TaskPlanner.Shared.Data.References
 
         }
 
-        public Reference(Todo target, ReferenceType type)
+        public Reference(string targetId, ReferenceType type)
         {
-            Target = target;
+            TargetId = targetId ?? throw new System.ArgumentNullException(nameof(targetId));
             Type = type;
         }
     }
