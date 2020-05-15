@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using TaskPlanner.Client.Services.Tasks;
 using TaskPlanner.Shared.Data.Tasks;
 using TaskPlanner.Shared.Data.Ui;
@@ -16,6 +19,7 @@ namespace TaskPlanner.Client.Pages.Tasks
 
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         [Inject] public NavigationManager NavigationManager { get; set; }
+        [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 #pragma warning restore 8618
 
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
@@ -36,6 +40,16 @@ namespace TaskPlanner.Client.Pages.Tasks
                 new ActionButton("Save", Submit, () => true, "btn-success", "submit"),
                 new ActionButton("Cancel", Cancel, () => true, "btn-secondary", "cancel")
             };
+        }
+
+        protected override async Task OnInitializedAsync()
+        {
+            // TODO: #11 Move task metadata initialization into separate service
+            var state = await AuthenticationStateProvider
+                .GetAuthenticationStateAsync()
+                .ConfigureAwait(false);
+            _task.Metadata.Id = Guid.NewGuid().ToString();
+            _task.Metadata.Owner = state.User.FindFirst(claim => claim.Type == ClaimTypes.Email).Value;
         }
 
         private async Task Submit()
