@@ -50,7 +50,7 @@ namespace TaskPlanner.Client.Services.References
                         continue;
                     }
 
-                    task.References.Add(new Reference(other, ReferenceType.Alternative));
+                    task.References.Add(new Reference(other, ReferenceType.Similar));
                     // TODO: Save to DB
                 }
             }
