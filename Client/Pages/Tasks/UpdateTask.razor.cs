@@ -43,7 +43,7 @@ namespace TaskPlanner.Client.Pages.Tasks
 
         protected override async Task OnInitializedAsync()
         {
-            _task = await TaskManager.Find(GuidStr).ConfigureAwait(false)
+            _task = (await TaskManager.Find(GuidStr).ConfigureAwait(false))
                 ?? throw new ArgumentException(nameof(_task));
             _taskEditingState.ModifiedTasks.Add(_task);
         }

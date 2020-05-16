@@ -1,5 +1,12 @@
 ﻿@page "/tasks/update/{GuidStr}"
 
 <CascadingValue Value="@_taskEditingState">
-    <TaskEditForm Model="@_task" Title="Update task" Actions="@_actions"/>
+    @if (_task != null)
+    {
+        <TaskEditForm Model="@_task" Title="Update task" Actions="@_actions"/>
+    }
+    else
+    {
+        <div>Loading...</div>
+    }
 </CascadingValue>
