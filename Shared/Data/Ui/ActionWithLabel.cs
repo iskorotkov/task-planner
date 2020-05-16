@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Shared.Data.Ui
 {
-    public struct ActionWithLabel
+    public class ActionWithLabel
     {
         public Func<Task> Task { get; }
         public string Label { get; }

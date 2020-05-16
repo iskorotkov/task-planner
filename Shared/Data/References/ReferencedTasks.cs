@@ -4,7 +4,7 @@ using TaskPlanner.Shared.Data.Tasks;
 
 namespace Shared.Data.References
 {
-    public struct ReferencedTasks
+    public class ReferencedTasks
     {
         public ReferenceType ReferenceType { get; }
         public List<Todo> Tasks { get; }
