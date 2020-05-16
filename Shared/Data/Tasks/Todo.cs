@@ -1,4 +1,6 @@
-﻿using TaskPlanner.Shared.Data.Properties;
+﻿using System.Collections.Generic;
+using TaskPlanner.Shared.Data.Properties;
+using TaskPlanner.Shared.Data.References;
 
 namespace TaskPlanner.Shared.Data.Tasks
 {
@@ -12,5 +14,7 @@ namespace TaskPlanner.Shared.Data.Tasks
         public Deadlines? Deadlines { get; set; }
         public Iterations? Iterations {get;set;}
         public Metrics? Metrics { get; set; }
+
+        public List<Reference> References { get; set; } = new List<Reference>();
     }
 }

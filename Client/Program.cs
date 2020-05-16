@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TaskPlanner.Client.Services.Auth;
 using TaskPlanner.Client.Services.Tasks;
 using TaskPlanner.Client.Services.Storage;
+using TaskPlanner.Client.Services.References;
 
 namespace TaskPlanner.Client
 {
@@ -15,6 +16,7 @@ namespace TaskPlanner.Client
             builder.RootComponents.Add<App>("app");
 
             builder.Services.AddScoped<ITaskManager, TaskManager>();
+            builder.Services.AddScoped<IReferenceManager, ReferenceManager>();
 
             builder.Services.AddFirebaseAuthentication();
             builder.Services.AddFirestore();

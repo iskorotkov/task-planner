@@ -1,6 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
+using Shared.Data.State;
+using TaskPlanner.Client.Extensions;
 using TaskPlanner.Client.Services.Tasks;
 using TaskPlanner.Shared.Data.Tasks;
 using TaskPlanner.Shared.Data.Ui;
@@ -16,6 +21,7 @@ namespace TaskPlanner.Client.Pages.Tasks
 
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
         [Inject] public NavigationManager NavigationManager { get; set; }
+        [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 #pragma warning restore 8618
 
         // ReSharper disable once UnusedAutoPropertyAccessor.Global
@@ -26,11 +32,15 @@ namespace TaskPlanner.Client.Pages.Tasks
         public Dictionary<string, object>? AdditionalAttributes { get; set; }
 
         private Todo _task;
+        private readonly TaskEditingState _taskEditingState;
         private readonly List<ActionButton> _actions;
 
         public CreateTask()
         {
             _task = new Todo();
+            _taskEditingState = new TaskEditingState();
+            _taskEditingState.AddedTasks.Add(_task);
+
             _actions = new List<ActionButton>
             {
                 new ActionButton("Save", Submit, () => true, "btn-success", "submit"),
@@ -38,12 +48,23 @@ namespace TaskPlanner.Client.Pages.Tasks
             };
         }
 
+        protected override async Task OnInitializedAsync()
+        {
+            // TODO: #11 Move task metadata initialization into separate service
+            var state = await AuthenticationStateProvider
+                .GetAuthenticationStateAsync()
+                .ConfigureAwait(false);
+            _task.Metadata.Id = Guid.NewGuid().ToString();
+            _task.Metadata.Owner = state.User.FindFirst(claim => claim.Type == ClaimTypes.Email).Value;
+        }
+
         private async Task Submit()
         {
-            await TaskManager.Add(_task!).ConfigureAwait(false);
+            await TaskManager.ApplyChanges(_taskEditingState)
+                .ConfigureAwait(false);
             if (TaskCreated.HasDelegate)
             {
-                await TaskCreated.InvokeAsync(_task!).ConfigureAwait(false);
+                await TaskCreated.InvokeAsync(_task).ConfigureAwait(false);
             }
 
             NavigationManager.NavigateTo("/overview");

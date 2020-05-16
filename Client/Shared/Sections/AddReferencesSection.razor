@@ -1,0 +1,26 @@
+﻿<CardTemplate>
+    <Body>
+        @if (_tasks != null)
+        {
+            <select @bind="@OtherTaskId">
+                @foreach (var task in _tasks)
+                {
+                    @* TODO: #6 Provide a way to distinct different tasks with the same title *@
+                    <option value="@task.Metadata.Id">@task.Content.Title</option>
+                }
+            </select>
+        }
+
+        @if (_referenceInfo != null)
+        {
+            <select @bind="@TypeLabel">
+                @foreach (var info in _referenceInfo)
+                {
+                    <option value="@info.Label">@info.Label</option>
+                }
+            </select>
+        }
+
+        <button type="button" @onclick="@Submit">Add</button>
+    </Body>
+</CardTemplate>
