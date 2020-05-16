@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Shared.Data.State;
 using Shared.Data.Ui;
 using TaskPlanner.Client.Services.References;
 using TaskPlanner.Client.Services.Tasks;
@@ -15,26 +16,27 @@ namespace TaskPlanner.Client.Shared.Sections
         [Inject] public ITaskManager TaskManager { get; set; }
 
         [Parameter] public Todo SelectedTask { get; set; }
+        [CascadingParameter] private TaskEditingState TaskEditingState { get; set; }
 
         private string? OtherTaskId { get; set; }
         private string? TypeLabel { get; set; }
 
         private List<Todo> _tasks;
-        private readonly List<ActionWithLabel> _referenceInfo;
+        private readonly List<ActionWithLabel<Todo>> _referenceInfo;
 
         public AddReferencesSection()
         {
             // TODO: #7 Avoid listing all types of references (code duplication)
-            _referenceInfo = new List<ActionWithLabel>
+            _referenceInfo = new List<ActionWithLabel<Todo>>
             {
-                new ActionWithLabel(AddChild, "Child"),
-                new ActionWithLabel(AddParent, "Parent"),
-                new ActionWithLabel(AddDependency, "Dependency"),
-                new ActionWithLabel(AddDependant, "Dependant"),
-                new ActionWithLabel(AddAlternative, "Alternative"),
-                new ActionWithLabel(AddSimilar, "Similar"),
-                new ActionWithLabel(AddTestFor, "Test for"),
-                new ActionWithLabel(AddTestedBy, "Tested by")
+                new ActionWithLabel<Todo>(AddChild, "Child"),
+                new ActionWithLabel<Todo>(AddParent, "Parent"),
+                new ActionWithLabel<Todo>(AddDependency, "Dependency"),
+                new ActionWithLabel<Todo>(AddDependant, "Dependant"),
+                new ActionWithLabel<Todo>(AddAlternative, "Alternative"),
+                new ActionWithLabel<Todo>(AddSimilar, "Similar"),
+                new ActionWithLabel<Todo>(AddTestFor, "Test for"),
+                new ActionWithLabel<Todo>(AddTestedBy, "Tested by")
             };
             TypeLabel = _referenceInfo[0].Label;
         }
@@ -44,6 +46,11 @@ namespace TaskPlanner.Client.Shared.Sections
             if (SelectedTask == null)
             {
                 throw new ArgumentNullException(nameof(SelectedTask));
+            }
+
+            if (TaskEditingState == null)
+            {
+                throw new ArgumentNullException(nameof(TaskEditingState));
             }
         }
 
@@ -79,56 +86,56 @@ namespace TaskPlanner.Client.Shared.Sections
             // TODO: #9 Do not use label as an identifier for type of task reference
             var referenceType = _referenceInfo.Find(x => x.Label == TypeLabel);
             var createReferenceFn = referenceType.Task;
-            await createReferenceFn().ConfigureAwait(false);
+
+            var task = await GetOtherTask().ConfigureAwait(false);
+            if (task == null)
+            {
+                throw new KeyNotFoundException("Task with provided id wasn't found.");
+            }
+
+            TaskEditingState.ModifiedTasks.Add(task);
+            await createReferenceFn(task).ConfigureAwait(false);
         }
 
-        private async Task AddChild()
+        private async Task AddChild(Todo task)
         {
-            var task = await GetOtherTask().ConfigureAwait(false);
             await ReferenceManager.AddChild(task, SelectedTask).ConfigureAwait(false);
         }
 
-        private async Task AddParent()
+        private async Task AddParent(Todo task)
         {
-            var task = await GetOtherTask().ConfigureAwait(false);
             await ReferenceManager.AddChild(SelectedTask, task).ConfigureAwait(false);
         }
 
-        private async Task AddDependency()
+        private async Task AddDependency(Todo task)
         {
-            var task = await GetOtherTask().ConfigureAwait(false);
             await ReferenceManager.AddDependency(task, SelectedTask).ConfigureAwait(false);
         }
 
-        private async Task AddDependant()
+        private async Task AddDependant(Todo task)
         {
-            var task = await GetOtherTask().ConfigureAwait(false);
             await ReferenceManager.AddDependency(SelectedTask, task).ConfigureAwait(false);
         }
 
-        private async Task AddAlternative()
+        private async Task AddAlternative(Todo task)
         {
-            var task = await GetOtherTask().ConfigureAwait(false);
             await ReferenceManager.AddAlternatives(new List<Todo> { SelectedTask, task })
                 .ConfigureAwait(false);
         }
 
-        private async Task AddSimilar()
+        private async Task AddSimilar(Todo task)
         {
-            var task = await GetOtherTask().ConfigureAwait(false);
             await ReferenceManager.AddSimilar(new List<Todo> { SelectedTask, task })
                 .ConfigureAwait(false);
         }
 
-        private async Task AddTestFor()
+        private async Task AddTestFor(Todo task)
         {
-            var task = await GetOtherTask().ConfigureAwait(false);
             await ReferenceManager.AddTest(SelectedTask, task).ConfigureAwait(false);
         }
 
-        private async Task AddTestedBy()
+        private async Task AddTestedBy(Todo task)
         {
-            var task = await GetOtherTask().ConfigureAwait(false);
             await ReferenceManager.AddTest(task, SelectedTask).ConfigureAwait(false);
         }
     }

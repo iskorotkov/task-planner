@@ -1,3 +1,5 @@
 ﻿@page "/tasks/create"
 
-<TaskEditForm Model="@_task" Title="New task" Actions="@_actions"/>
+<CascadingValue Value="@_taskEditingState">
+    <TaskEditForm Model="@_task" Title="New task" Actions="@_actions"/>
+</CascadingValue>

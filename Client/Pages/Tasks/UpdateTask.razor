@@ -1,3 +1,5 @@
 ﻿@page "/tasks/update/{GuidStr}"
 
-<TaskEditForm Model="@_task" Title="Update task" Actions="@_actions"/>
+<CascadingValue Value="@_taskEditingState">
+    <TaskEditForm Model="@_task" Title="Update task" Actions="@_actions"/>
+</CascadingValue>

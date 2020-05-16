@@ -12,14 +12,12 @@ namespace TaskPlanner.Client.Services.References
         {
             child.References.Add(new Reference(parent.Metadata.Id!, ReferenceType.Parent));
             parent.References.Add(new Reference(child.Metadata.Id!, ReferenceType.Child));
-            // TODO: Save to DB
         }
 
         public async Task AddDependency(Todo dependency, Todo dependant)
         {
             dependency.References.Add(new Reference(dependant.Metadata.Id!, ReferenceType.Dependant));
             dependant.References.Add(new Reference(dependency.Metadata.Id!, ReferenceType.Dependency));
-            // TODO: Save to DB
         }
 
         public async Task AddAlternatives(List<Todo> alternatives)
@@ -34,7 +32,6 @@ namespace TaskPlanner.Client.Services.References
                     }
 
                     alternative.References.Add(new Reference(other.Metadata.Id!, ReferenceType.Alternative));
-                    // TODO: Save to DB
                 }
             }
         }
@@ -51,7 +48,6 @@ namespace TaskPlanner.Client.Services.References
                     }
 
                     task.References.Add(new Reference(other.Metadata.Id!, ReferenceType.Similar));
-                    // TODO: Save to DB
                 }
             }
         }
@@ -60,9 +56,9 @@ namespace TaskPlanner.Client.Services.References
         {
             test.References.Add(new Reference(tested.Metadata.Id!, ReferenceType.TestFor));
             tested.References.Add(new Reference(test.Metadata.Id!, ReferenceType.TestedBy));
-            // TODO: Save to DB
         }
 
+        // TODO: #12 Implement removing of task references
         public async Task RemoveAlternatives(List<Todo> alternatives)
         {
             throw new NotImplementedException();

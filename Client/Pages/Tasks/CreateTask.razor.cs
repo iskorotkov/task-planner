@@ -4,6 +4,8 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Shared.Data.State;
+using TaskPlanner.Client.Extensions;
 using TaskPlanner.Client.Services.Tasks;
 using TaskPlanner.Shared.Data.Tasks;
 using TaskPlanner.Shared.Data.Ui;
@@ -30,11 +32,15 @@ namespace TaskPlanner.Client.Pages.Tasks
         public Dictionary<string, object>? AdditionalAttributes { get; set; }
 
         private Todo _task;
+        private readonly TaskEditingState _taskEditingState;
         private readonly List<ActionButton> _actions;
 
         public CreateTask()
         {
             _task = new Todo();
+            _taskEditingState = new TaskEditingState();
+            _taskEditingState.AddedTasks.Add(_task);
+
             _actions = new List<ActionButton>
             {
                 new ActionButton("Save", Submit, () => true, "btn-success", "submit"),
@@ -54,10 +60,11 @@ namespace TaskPlanner.Client.Pages.Tasks
 
         private async Task Submit()
         {
-            await TaskManager.Add(_task!).ConfigureAwait(false);
+            await TaskManager.ApplyChanges(_taskEditingState)
+                .ConfigureAwait(false);
             if (TaskCreated.HasDelegate)
             {
-                await TaskCreated.InvokeAsync(_task!).ConfigureAwait(false);
+                await TaskCreated.InvokeAsync(_task).ConfigureAwait(false);
             }
 
             NavigationManager.NavigateTo("/overview");

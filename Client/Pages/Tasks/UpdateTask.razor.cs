@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Shared.Data.State;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TaskPlanner.Client.Extensions;
 using TaskPlanner.Client.Services.Tasks;
 using TaskPlanner.Shared.Data.Tasks;
 using TaskPlanner.Shared.Data.Ui;
@@ -26,6 +28,7 @@ namespace TaskPlanner.Client.Pages.Tasks
         private Todo _task;
 #pragma warning restore 8618
 
+        private readonly TaskEditingState _taskEditingState = new TaskEditingState();
         private readonly List<ActionButton> _actions;
 
         public UpdateTask()
@@ -42,6 +45,7 @@ namespace TaskPlanner.Client.Pages.Tasks
         {
             _task = await TaskManager.Find(GuidStr).ConfigureAwait(false)
                 ?? throw new ArgumentException(nameof(_task));
+            _taskEditingState.ModifiedTasks.Add(_task);
         }
 
         private Task Cancel()
@@ -52,7 +56,7 @@ namespace TaskPlanner.Client.Pages.Tasks
 
         private async Task Submit()
         {
-            await TaskManager.Update(_task).ConfigureAwait(false);
+            await TaskManager.ApplyChanges(_taskEditingState).ConfigureAwait(false);
             NavigationManager.NavigateTo("/overview");
         }
 
