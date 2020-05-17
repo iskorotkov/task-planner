@@ -1,4 +1,7 @@
-﻿using TaskPlanner.Shared.Data.Coordinates;
+﻿using System;
+using System.Collections.Generic;
+using TaskPlanner.Shared.Data.Coordinates;
+using TaskPlanner.Shared.Data.Tasks;
 using TaskPlanner.TaskGraph.Data.Config;
 using TaskPlanner.TaskGraph.Data.Placement;
 using TaskPlanner.TaskGraph.Data.Render;
@@ -7,14 +10,62 @@ namespace TaskPlanner.TaskGraph.Analyzers
 {
     public class Analyzer
     {
-        private readonly Config _config;
-
-        private PlacementGraph BuildPlacementGraph()
+        public RenderGraph Analyze(List<Todo> tasks, Config config)
         {
-            return null;
+            var placementGraph = BuildPlacementGraph(tasks, config);
+            return BuildRenderGraph(placementGraph, config);
         }
 
-        private RenderGraph BuildRenderGraph(PlacementGraph graph)
+        private PlacementGraph BuildPlacementGraph(List<Todo> tasks, Config config)
+        {
+            if (tasks == null)
+            {
+                throw new ArgumentNullException(nameof(tasks));
+            }
+
+            var graph = new PlacementGraph();
+            if (tasks.Count == 0)
+            {
+                return graph;
+            }
+
+            var queue = new Queue<(Todo Task, int Depth, int Count)>();
+            queue.Enqueue((tasks[0], 0, 0));
+
+            while (queue.Count > 0)
+            {
+                var (task, depth, count) = queue.Dequeue();
+                graph.Nodes.Add(new PlacementNode
+                {
+                    Task = task,
+                    Position = new Position(depth, count)
+                });
+
+                var referencedDepth = depth + 1;
+                var referencedCount = 0;
+                foreach (var reference in task.References)
+                {
+                    var referencedTask = tasks.Find(x => x.Metadata.Id == reference.TargetId);
+                    if (referencedTask == null)
+                    {
+                        throw new ArgumentException("One of the provided tasks has unresolved reference to other task. Probably referenced task was deleted or wasn't created at all.");
+                    }
+
+                    graph.Edges.Add(new PlacementEdge
+                    {
+                        From = new Position(depth, count),
+                        To = new Position(referencedDepth, referencedCount)
+                    });
+
+                    queue.Enqueue((referencedTask, referencedDepth, referencedCount));
+                    referencedCount++;
+                }
+            }
+
+            return graph;
+        }
+
+        private RenderGraph BuildRenderGraph(PlacementGraph graph, Config config)
         {
             var renderGraph = new RenderGraph();
 
@@ -24,12 +75,12 @@ namespace TaskPlanner.TaskGraph.Analyzers
                 {
                     Task = node.Task,
                     Position = new Position(
-                        x: _config.LeftOffset + node.Position.X * (_config.NodeWidth + _config.HorizontalInterval),
-                        y: _config.TopOffset + node.Position.Y * (_config.NodeHeight + _config.VerticalInterval)
+                        x: config.LeftOffset + node.Position.X * (config.NodeWidth + config.HorizontalInterval),
+                        y: config.TopOffset + node.Position.Y * (config.NodeHeight + config.VerticalInterval)
                     ),
                     Dimensions = new Dimensions(
-                        width: _config.NodeWidth,
-                        height: _config.NodeHeight
+                        width: config.NodeWidth,
+                        height: config.NodeHeight
                     )
                 };
                 renderGraph.Nodes.Add(renderNode);
@@ -40,19 +91,19 @@ namespace TaskPlanner.TaskGraph.Analyzers
                 var renderEdge = new RenderEdge
                 {
                     From = new Position(
-                        x: _config.LeftOffset
-                            + edge.From.X * (_config.NodeWidth + _config.HorizontalInterval)
-                            + _config.NodeWidth,
-                        y: _config.TopOffset
-                            + edge.From.Y * (_config.NodeHeight + _config.VerticalInterval)
-                            + _config.NodeHeight / 2
+                        x: config.LeftOffset
+                            + edge.From.X * (config.NodeWidth + config.HorizontalInterval)
+                            + config.NodeWidth,
+                        y: config.TopOffset
+                            + edge.From.Y * (config.NodeHeight + config.VerticalInterval)
+                            + config.NodeHeight / 2
                     ),
                     To = new Position(
-                        x: _config.LeftOffset
-                            + edge.To.X * (_config.NodeWidth + _config.HorizontalInterval),
-                        y: _config.TopOffset
-                            + edge.To.Y * (_config.NodeHeight + _config.VerticalInterval)
-                            + _config.NodeHeight / 2
+                        x: config.LeftOffset
+                            + edge.To.X * (config.NodeWidth + config.HorizontalInterval),
+                        y: config.TopOffset
+                            + edge.To.Y * (config.NodeHeight + config.VerticalInterval)
+                            + config.NodeHeight / 2
                     )
                 };
                 renderGraph.Edges.Add(renderEdge);
