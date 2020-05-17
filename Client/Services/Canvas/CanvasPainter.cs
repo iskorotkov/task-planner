@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Blazor.Extensions;
 using Blazor.Extensions.Canvas.Canvas2D;
+using TaskPlanner.Shared.Data.Coordinates;
 
 namespace TaskPlanner.Client.Services.Canvas
 {
@@ -19,7 +20,7 @@ namespace TaskPlanner.Client.Services.Canvas
             }
         }
 
-        public async Task DrawNode(Point point, Dimensions dimensions)
+        public async Task DrawNode(Position point, Dimensions dimensions)
         {
             EnsureInitialized();
             await _context.SetStrokeStyleAsync("green");
@@ -27,7 +28,7 @@ namespace TaskPlanner.Client.Services.Canvas
             await _context.FillRectAsync(point.X, point.Y, dimensions.Width, dimensions.Height);
         }
 
-        public async Task DrawEdge(Point from, Point to)
+        public async Task DrawEdge(Position from, Position to)
         {
             EnsureInitialized();
             await _context.BeginPathAsync();
@@ -45,29 +46,5 @@ namespace TaskPlanner.Client.Services.Canvas
                     $"{nameof(CanvasPainter)} wasn't initialized yet. Call {nameof(Init)} before using it.");
             }
         }
-    }
-
-    public readonly struct Point
-    {
-        public Point(double x, double y)
-        {
-            X = x;
-            Y = y;
-        }
-
-        public double X { get; }
-        public double Y { get; }
-    }
-
-    public readonly struct Dimensions
-    {
-        public Dimensions(double width, double height)
-        {
-            Width = width;
-            Height = height;
-        }
-
-        public double Width { get; }
-        public double Height { get; }
     }
 }
