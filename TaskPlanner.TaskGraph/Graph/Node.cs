@@ -2,17 +2,13 @@
 {
     public class Node
     {
-        public Node(string id, string name, string nodeType, int cluster)
+        public Node(string id, string caption)
         {
             Id = id;
-            Name = name;
-            NodeType = nodeType;
-            Cluster = cluster;
+            Caption = caption;
         }
 
         public string Id { get; }
-        public string Name { get; }
-        public string NodeType { get; }
-        public int Cluster { get; }
+        public string Caption { get; }
     }
 }
