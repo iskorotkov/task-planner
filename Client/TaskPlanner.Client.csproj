@@ -41,4 +41,8 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <TypeScriptCompile Include="Scripts\alchemy\alchemy.ts" />
+  </ItemGroup>
+
 </Project>

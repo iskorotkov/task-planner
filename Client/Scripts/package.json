@@ -2,8 +2,6 @@
   "name": "task-planner",
   "version": "1.0.0",
   "dependencies": {
-    "firebase": "^7.14.2",
-    "firebaseui": "^4.5.0"
   },
   "devDependencies": {
     "typescript": "3.9.1-rc",
@@ -15,6 +13,8 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "@types/blazor__javascript-interop": "^3.1.0"
+    "@types/blazor__javascript-interop": "^3.1.0",
+    "firebase": "^7.14.2",
+    "firebaseui": "^4.5.0"
   }
 }

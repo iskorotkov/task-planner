@@ -6,9 +6,9 @@ namespace TaskPlanner.TaskGraph
 {
     public class Analyzer
     {
-        public Tree Analyze(List<Todo> tasks)
+        public Graph.Graph Analyze(List<Todo> tasks)
         {
-            var tree = new Tree();
+            var tree = new Graph.Graph();
 
             foreach (var task in tasks)
             {
