@@ -64,7 +64,6 @@ namespace TaskPlanner.TaskGraph.Analyzers
                     }
                     else
                     {
-                        // TODO: Edges for circular references are drawn incorrectly
                         graph.Edges.Add(new PlacementEdge
                         {
                             From = new Position(depth, count),
