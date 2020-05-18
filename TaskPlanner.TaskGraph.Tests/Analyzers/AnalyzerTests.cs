@@ -40,7 +40,33 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
             Assert.Equal(new Position(1, 0), placementGraph.Edges[1].From);
             Assert.Equal(new Position(0, 0), placementGraph.Edges[1].To);
 
-            var renderGraph = _analyzer.BuildRenderGraph(placementGraph, new Config());
+            var config = new Config
+            {
+                HorizontalInterval = 20,
+                VerticalInterval = 30,
+                LeftOffset = 40,
+                TopOffset = 50,
+                NodeHeight = 200,
+                NodeWidth = 160
+            };
+            var renderGraph = _analyzer.BuildRenderGraph(placementGraph, config);
+
+            Assert.Equal(2, renderGraph.Nodes.Count);
+            Assert.Equal(2, renderGraph.Edges.Count);
+
+            Assert.Equal(task1, renderGraph.Nodes[0].Task);
+            Assert.Equal(new Position(40, 50), renderGraph.Nodes[0].Position);
+            Assert.Equal(new Dimensions(160, 200), renderGraph.Nodes[0].Dimensions);
+
+            Assert.Equal(task2, renderGraph.Nodes[1].Task);
+            Assert.Equal(new Position(220, 50), renderGraph.Nodes[1].Position);
+            Assert.Equal(new Dimensions(160, 200), renderGraph.Nodes[1].Dimensions);
+
+            Assert.Equal(new Position(200, 150), renderGraph.Edges[0].From);
+            Assert.Equal(new Position(220, 150), renderGraph.Edges[0].To);
+
+            Assert.Equal(new Position(220, 150), renderGraph.Edges[1].From);
+            Assert.Equal(new Position(200, 150), renderGraph.Edges[1].To);
         }
     }
 }

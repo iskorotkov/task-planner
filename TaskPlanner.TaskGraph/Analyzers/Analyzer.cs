@@ -64,6 +64,7 @@ namespace TaskPlanner.TaskGraph.Analyzers
                     }
                     else
                     {
+                        // TODO: Edges for circular references are drawn incorrectly
                         graph.Edges.Add(new PlacementEdge
                         {
                             From = new Position(depth, count),
@@ -102,25 +103,52 @@ namespace TaskPlanner.TaskGraph.Analyzers
 
             foreach (var edge in graph.Edges)
             {
-                var renderEdge = new RenderEdge
+                if (edge.From.X < edge.To.X)
                 {
-                    From = new Position(
-                        x: config.LeftOffset
-                            + edge.From.X * (config.NodeWidth + config.HorizontalInterval)
-                            + config.NodeWidth,
-                        y: config.TopOffset
-                            + edge.From.Y * (config.NodeHeight + config.VerticalInterval)
-                            + config.NodeHeight / 2
-                    ),
-                    To = new Position(
-                        x: config.LeftOffset
-                            + edge.To.X * (config.NodeWidth + config.HorizontalInterval),
-                        y: config.TopOffset
-                            + edge.To.Y * (config.NodeHeight + config.VerticalInterval)
-                            + config.NodeHeight / 2
-                    )
-                };
-                renderGraph.Edges.Add(renderEdge);
+                    renderGraph.Edges.Add(new RenderEdge
+                    {
+                        From = new Position(
+                            x: config.LeftOffset
+                                + edge.From.X * (config.NodeWidth + config.HorizontalInterval)
+                                + config.NodeWidth,
+                            y: config.TopOffset
+                                + edge.From.Y * (config.NodeHeight + config.VerticalInterval)
+                                + config.NodeHeight / 2
+                        ),
+                        To = new Position(
+                            x: config.LeftOffset
+                                + edge.To.X * (config.NodeWidth + config.HorizontalInterval),
+                            y: config.TopOffset
+                                + edge.To.Y * (config.NodeHeight + config.VerticalInterval)
+                                + config.NodeHeight / 2
+                        )
+                    });
+                }
+                else if (edge.From.X > edge.To.X)
+                {
+                    renderGraph.Edges.Add(new RenderEdge
+                    {
+                        From = new Position(
+                            x: config.LeftOffset
+                                + edge.From.X * (config.NodeWidth + config.HorizontalInterval),
+                            y: config.TopOffset
+                                + edge.From.Y * (config.NodeHeight + config.VerticalInterval)
+                                + config.NodeHeight / 2
+                        ),
+                        To = new Position(
+                            x: config.LeftOffset
+                                + edge.To.X * (config.NodeWidth + config.HorizontalInterval)
+                                + config.NodeWidth,
+                            y: config.TopOffset
+                                + edge.To.Y * (config.NodeHeight + config.VerticalInterval)
+                                + config.NodeHeight / 2
+                        )
+                    });
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
             }
 
             return renderGraph;
