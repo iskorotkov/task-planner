@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Blazor.Extensions;
 using Blazor.Extensions.Canvas.Canvas2D;
-using TaskPlanner.Shared.Data.Coordinates;
+using TaskPlanner.TaskGraph.Data.Render;
 
 namespace TaskPlanner.Client.Services.Canvas
 {
@@ -20,20 +20,33 @@ namespace TaskPlanner.Client.Services.Canvas
             }
         }
 
-        public async Task DrawNode(Position point, Dimensions dimensions)
+        public async Task DrawGraph(RenderGraph graph)
+        {
+            foreach (var node in graph.Nodes)
+            {
+                await DrawNode(node);
+            }
+
+            foreach (var edge in graph.Edges)
+            {
+                await DrawEdge(edge);
+            }
+        }
+
+        public async Task DrawNode(RenderNode node)
         {
             EnsureInitialized();
             await _context.SetStrokeStyleAsync("green");
             await _context.SetFillStyleAsync("blue");
-            await _context.FillRectAsync(point.X, point.Y, dimensions.Width, dimensions.Height);
+            await _context.FillRectAsync(node.Position.X, node.Position.Y, node.Dimensions.Width, node.Dimensions.Height);
         }
 
-        public async Task DrawEdge(Position from, Position to)
+        public async Task DrawEdge(RenderEdge edge)
         {
             EnsureInitialized();
             await _context.BeginPathAsync();
-            await _context.MoveToAsync(from.X, from.Y);
-            await _context.LineToAsync(to.X, to.Y);
+            await _context.MoveToAsync(edge.From.X, edge.From.Y);
+            await _context.LineToAsync(edge.To.X, edge.To.Y);
             await _context.ClosePathAsync();
             await _context.StrokeAsync();
         }

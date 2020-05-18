@@ -6,6 +6,7 @@ using TaskPlanner.Client.Services.Canvas;
 using TaskPlanner.Client.Services.Tasks;
 using TaskPlanner.Client.Services.Storage;
 using TaskPlanner.Client.Services.References;
+using TaskPlanner.TaskGraph.Analyzers;
 
 namespace TaskPlanner.Client
 {
@@ -18,7 +19,9 @@ namespace TaskPlanner.Client
 
             builder.Services.AddScoped<ITaskManager, TaskManager>();
             builder.Services.AddScoped<IReferenceManager, ReferenceManager>();
+
             builder.Services.AddTransient<CanvasPainter>();
+            builder.Services.AddTransient<ReferencesAnalyzer>();
 
             builder.Services.AddFirebaseAuthentication();
             builder.Services.AddFirestore();

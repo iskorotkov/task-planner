@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TaskPlanner.Shared.Data.Coordinates;
 using TaskPlanner.Shared.Data.Tasks;
 using TaskPlanner.TaskGraph.Data.Config;
@@ -8,15 +9,15 @@ using TaskPlanner.TaskGraph.Data.Render;
 
 namespace TaskPlanner.TaskGraph.Analyzers
 {
-    public class Analyzer
+    public class ReferencesAnalyzer
     {
-        public RenderGraph Analyze(List<Todo> tasks, Config config)
+        public async Task<RenderGraph> Analyze(List<Todo> tasks, Config config)
         {
-            var placementGraph = BuildPlacementGraph(tasks);
-            return BuildRenderGraph(placementGraph, config);
+            var placementGraph = await BuildPlacementGraph(tasks);
+            return await BuildRenderGraph(placementGraph, config);
         }
 
-        public PlacementGraph BuildPlacementGraph(List<Todo> tasks)
+        public Task<PlacementGraph> BuildPlacementGraph(List<Todo> tasks)
         {
             if (tasks == null)
             {
@@ -26,7 +27,7 @@ namespace TaskPlanner.TaskGraph.Analyzers
             var graph = new PlacementGraph();
             if (tasks.Count == 0)
             {
-                return graph;
+                return Task.FromResult(graph);
             }
 
             var queue = new Queue<(Todo Task, int Depth, int Count)>();
@@ -76,10 +77,10 @@ namespace TaskPlanner.TaskGraph.Analyzers
                 }
             }
 
-            return graph;
+            return Task.FromResult(graph);
         }
 
-        public RenderGraph BuildRenderGraph(PlacementGraph graph, Config config)
+        public Task<RenderGraph> BuildRenderGraph(PlacementGraph graph, Config config)
         {
             var renderGraph = new RenderGraph();
 
@@ -102,7 +103,7 @@ namespace TaskPlanner.TaskGraph.Analyzers
 
             foreach (var edge in graph.Edges)
             {
-                if (edge.From.X < edge.To.X)
+                if (edge.From.X <= edge.To.X)
                 {
                     renderGraph.Edges.Add(new RenderEdge
                     {
@@ -144,13 +145,9 @@ namespace TaskPlanner.TaskGraph.Analyzers
                         )
                     });
                 }
-                else
-                {
-                    throw new NotImplementedException();
-                }
             }
 
-            return renderGraph;
+            return Task.FromResult(renderGraph);
         }
     }
 }

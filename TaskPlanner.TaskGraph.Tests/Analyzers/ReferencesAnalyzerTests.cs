@@ -8,9 +8,9 @@ using TaskPlanner.Shared.Data.Coordinates;
 
 namespace TaskPlanner.TaskGraph.Tests.Analyzers
 {
-    public class TaskListAnalyzerTests
+    public class ReferencesAnalyzerTests
     {
-        private readonly Analyzer _analyzer = new Analyzer();
+        private readonly ReferencesAnalyzer _analyzer = new ReferencesAnalyzer();
 
         [Fact]
         private void OneTaskWithSingleDependency()
@@ -23,7 +23,9 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
             task2.References.Add(new Reference(task1.Metadata.Id, ReferenceType.Dependency));
             task1.References.Add(new Reference(task2.Metadata.Id, ReferenceType.Dependant));
             var input = new List<Todo> { task1, task2 };
-            var placementGraph = _analyzer.BuildPlacementGraph(input);
+            var placementGraph = _analyzer.BuildPlacementGraph(input)
+                .GetAwaiter()
+                .GetResult();
 
             Assert.Equal(2, placementGraph.Nodes.Count);
             Assert.Equal(2, placementGraph.Edges.Count);
@@ -49,7 +51,9 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
                 NodeHeight = 200,
                 NodeWidth = 160
             };
-            var renderGraph = _analyzer.BuildRenderGraph(placementGraph, config);
+            var renderGraph = _analyzer.BuildRenderGraph(placementGraph, config)
+                .GetAwaiter()
+                .GetResult();
 
             Assert.Equal(2, renderGraph.Nodes.Count);
             Assert.Equal(2, renderGraph.Edges.Count);

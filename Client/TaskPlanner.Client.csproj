@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shared\TaskPlanner.Shared.csproj" />
+    <ProjectReference Include="..\TaskPlanner.TaskGraph\TaskPlanner.TaskGraph.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -2,22 +2,26 @@
 using Blazor.Extensions;
 using Microsoft.AspNetCore.Components;
 using TaskPlanner.Client.Services.Canvas;
-using TaskPlanner.Shared.Data.Coordinates;
+using TaskPlanner.Client.Services.Tasks;
+using TaskPlanner.TaskGraph.Analyzers;
+using TaskPlanner.TaskGraph.Data.Config;
 
 namespace TaskPlanner.Client.Shared.Tasks
 {
     public partial class TaskGraph
     {
-        [Inject] private CanvasPainter Painter { get; set; }
+        [Inject] public CanvasPainter Painter { get; set; }
+        [Inject] public ITaskManager TaskManager { get; set; }
+        [Inject] public ReferencesAnalyzer Analyzer { get; set; }
 
         private BECanvasComponent _canvas;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             await Painter.Init(_canvas);
-            await Painter.DrawNode(new Position(10, 10), new Dimensions(30, 40));
-            await Painter.DrawNode(new Position(100, 10), new Dimensions(30, 40));
-            await Painter.DrawEdge(new Position(40, 30), new Position(100, 30));
+            var tasks = await TaskManager.GetAll();
+            var graph = await Analyzer.Analyze(tasks, new Config());
+            await Painter.DrawGraph(graph);
         }
     }
 }
