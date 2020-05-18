@@ -1,4 +1,6 @@
-﻿namespace TaskPlanner.Shared.Data.Coordinates
+﻿using System;
+
+namespace TaskPlanner.Shared.Data.Coordinates
 {
     public class Dimensions
     {
@@ -15,5 +17,17 @@
 
         public int Width { get; set; }
         public int Height { get; set; }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Dimensions dimensions &&
+                   Width == dimensions.Width &&
+                   Height == dimensions.Height;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Width, Height);
+        }
     }
 }

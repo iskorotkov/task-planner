@@ -12,11 +12,11 @@ namespace TaskPlanner.TaskGraph.Analyzers
     {
         public RenderGraph Analyze(List<Todo> tasks, Config config)
         {
-            var placementGraph = BuildPlacementGraph(tasks, config);
+            var placementGraph = BuildPlacementGraph(tasks);
             return BuildRenderGraph(placementGraph, config);
         }
 
-        private PlacementGraph BuildPlacementGraph(List<Todo> tasks, Config config)
+        public PlacementGraph BuildPlacementGraph(List<Todo> tasks)
         {
             if (tasks == null)
             {
@@ -32,9 +32,11 @@ namespace TaskPlanner.TaskGraph.Analyzers
             var queue = new Queue<(Todo Task, int Depth, int Count)>();
             queue.Enqueue((tasks[0], 0, 0));
 
+            var visited = new HashSet<Todo>();
             while (queue.Count > 0)
             {
                 var (task, depth, count) = queue.Dequeue();
+                visited.Add(task);
                 graph.Nodes.Add(new PlacementNode
                 {
                     Task = task,
@@ -51,21 +53,33 @@ namespace TaskPlanner.TaskGraph.Analyzers
                         throw new ArgumentException("One of the provided tasks has unresolved reference to other task. Probably referenced task was deleted or wasn't created at all.");
                     }
 
-                    graph.Edges.Add(new PlacementEdge
+                    if (visited.Contains(referencedTask))
                     {
-                        From = new Position(depth, count),
-                        To = new Position(referencedDepth, referencedCount)
-                    });
+                        var placedNode = graph.Nodes.Find(x => x.Task == referencedTask);
+                        graph.Edges.Add(new PlacementEdge
+                        {
+                            From = new Position(depth, count),
+                            To = placedNode.Position
+                        });
+                    }
+                    else
+                    {
+                        graph.Edges.Add(new PlacementEdge
+                        {
+                            From = new Position(depth, count),
+                            To = new Position(referencedDepth, referencedCount)
+                        });
 
-                    queue.Enqueue((referencedTask, referencedDepth, referencedCount));
-                    referencedCount++;
+                        queue.Enqueue((referencedTask, referencedDepth, referencedCount));
+                        referencedCount++;
+                    }
                 }
             }
 
             return graph;
         }
 
-        private RenderGraph BuildRenderGraph(PlacementGraph graph, Config config)
+        public RenderGraph BuildRenderGraph(PlacementGraph graph, Config config)
         {
             var renderGraph = new RenderGraph();
 
