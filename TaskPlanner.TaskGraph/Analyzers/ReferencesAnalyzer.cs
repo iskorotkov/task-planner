@@ -38,11 +38,10 @@ namespace TaskPlanner.TaskGraph.Analyzers
             {
                 var (task, depth, count) = queue.Dequeue();
                 visited.Add(task);
-                graph.Nodes.Add(new PlacementNode
-                {
-                    Task = task,
-                    Position = new Position(depth, count)
-                });
+                graph.Nodes.Add(new PlacementNode(
+                    task: task,
+                    position: new Position(depth, count)
+                ));
 
                 var referencedDepth = depth + 1;
                 var referencedCount = 0;
@@ -57,19 +56,19 @@ namespace TaskPlanner.TaskGraph.Analyzers
                     if (visited.Contains(referencedTask))
                     {
                         var placedNode = graph.Nodes.Find(x => x.Task == referencedTask);
-                        graph.Edges.Add(new PlacementEdge
-                        {
-                            From = new Position(depth, count),
-                            To = placedNode.Position
-                        });
+                        graph.Edges.Add(new PlacementEdge(
+                            from: new Position(depth, count),
+                            to: placedNode.Position,
+                            type: reference.Type
+                        ));
                     }
                     else
                     {
-                        graph.Edges.Add(new PlacementEdge
-                        {
-                            From = new Position(depth, count),
-                            To = new Position(referencedDepth, referencedCount)
-                        });
+                        graph.Edges.Add(new PlacementEdge(
+                            from: new Position(depth, count),
+                            to: new Position(referencedDepth, referencedCount),
+                            type: reference.Type
+                        ));
 
                         queue.Enqueue((referencedTask, referencedDepth, referencedCount));
                         referencedCount++;
@@ -86,18 +85,17 @@ namespace TaskPlanner.TaskGraph.Analyzers
 
             foreach (var node in graph.Nodes)
             {
-                var renderNode = new RenderNode
-                {
-                    Task = node.Task,
-                    Position = new Position(
+                var renderNode = new RenderNode(
+                    task: node.Task,
+                    position: new Position(
                         x: config.LeftOffset + node.Position.X * (config.NodeWidth + config.HorizontalInterval),
                         y: config.TopOffset + node.Position.Y * (config.NodeHeight + config.VerticalInterval)
                     ),
-                    Dimensions = new Dimensions(
+                    dimensions: new Dimensions(
                         width: config.NodeWidth,
                         height: config.NodeHeight
                     )
-                };
+                );
                 renderGraph.Nodes.Add(renderNode);
             }
 
@@ -105,9 +103,8 @@ namespace TaskPlanner.TaskGraph.Analyzers
             {
                 if (edge.From.X <= edge.To.X)
                 {
-                    renderGraph.Edges.Add(new RenderEdge
-                    {
-                        From = new Position(
+                    renderGraph.Edges.Add(new RenderEdge(
+                        from: new Position(
                             x: config.LeftOffset
                                 + edge.From.X * (config.NodeWidth + config.HorizontalInterval)
                                 + config.NodeWidth,
@@ -115,35 +112,36 @@ namespace TaskPlanner.TaskGraph.Analyzers
                                 + edge.From.Y * (config.NodeHeight + config.VerticalInterval)
                                 + config.NodeHeight / 2
                         ),
-                        To = new Position(
+                        to: new Position(
                             x: config.LeftOffset
                                 + edge.To.X * (config.NodeWidth + config.HorizontalInterval),
                             y: config.TopOffset
                                 + edge.To.Y * (config.NodeHeight + config.VerticalInterval)
                                 + config.NodeHeight / 2
-                        )
-                    });
+                        ),
+                        type: edge.Type
+                    ));
                 }
                 else if (edge.From.X > edge.To.X)
                 {
-                    renderGraph.Edges.Add(new RenderEdge
-                    {
-                        From = new Position(
+                    renderGraph.Edges.Add(new RenderEdge(
+                        from: new Position(
                             x: config.LeftOffset
                                 + edge.From.X * (config.NodeWidth + config.HorizontalInterval),
                             y: config.TopOffset
                                 + edge.From.Y * (config.NodeHeight + config.VerticalInterval)
                                 + config.NodeHeight / 2
                         ),
-                        To = new Position(
+                        to: new Position(
                             x: config.LeftOffset
                                 + edge.To.X * (config.NodeWidth + config.HorizontalInterval)
                                 + config.NodeWidth,
                             y: config.TopOffset
                                 + edge.To.Y * (config.NodeHeight + config.VerticalInterval)
                                 + config.NodeHeight / 2
-                        )
-                    });
+                        ),
+                        type: edge.Type
+                    ));
                 }
             }
 

@@ -38,9 +38,11 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
 
             Assert.Equal(new Position(0, 0), placementGraph.Edges[0].From);
             Assert.Equal(new Position(1, 0), placementGraph.Edges[0].To);
+            Assert.Equal(ReferenceType.Dependant, placementGraph.Edges[0].Type);
 
             Assert.Equal(new Position(1, 0), placementGraph.Edges[1].From);
             Assert.Equal(new Position(0, 0), placementGraph.Edges[1].To);
+            Assert.Equal(ReferenceType.Dependency, placementGraph.Edges[1].Type);
 
             var config = new Config
             {
@@ -68,9 +70,11 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
 
             Assert.Equal(new Position(200, 150), renderGraph.Edges[0].From);
             Assert.Equal(new Position(220, 150), renderGraph.Edges[0].To);
+            Assert.Equal(ReferenceType.Dependant, renderGraph.Edges[0].Type);
 
             Assert.Equal(new Position(220, 150), renderGraph.Edges[1].From);
             Assert.Equal(new Position(200, 150), renderGraph.Edges[1].To);
+            Assert.Equal(ReferenceType.Dependency, renderGraph.Edges[1].Type);
         }
     }
 }
