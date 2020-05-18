@@ -1,6 +1,6 @@
 ﻿namespace TaskPlanner.TaskGraph.Data.Config
 {
-    public class Config
+    public class RenderConfig
     {
         public int LeftOffset { get; set; } = 20;
         public int TopOffset { get; set; } = 20;

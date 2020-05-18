@@ -11,13 +11,15 @@ namespace TaskPlanner.TaskGraph.Analyzers
 {
     public class ReferencesAnalyzer
     {
-        public async Task<RenderGraph> Analyze(List<Todo> tasks, Config config)
+        public async Task<RenderGraph> Analyze(List<Todo> tasks,
+            PlacementConfig? placementConfig = null,
+            RenderConfig? renderConfig = null)
         {
-            var placementGraph = await BuildPlacementGraph(tasks);
-            return await BuildRenderGraph(placementGraph, config);
+            var placementGraph = await BuildPlacementGraph(tasks, placementConfig ?? new PlacementConfig());
+            return await BuildRenderGraph(placementGraph, renderConfig ?? new RenderConfig());
         }
 
-        public Task<PlacementGraph> BuildPlacementGraph(List<Todo> tasks)
+        public Task<PlacementGraph> BuildPlacementGraph(List<Todo> tasks, PlacementConfig config)
         {
             if (tasks == null)
             {
@@ -47,6 +49,11 @@ namespace TaskPlanner.TaskGraph.Analyzers
                 var referencedCount = 0;
                 foreach (var reference in task.References)
                 {
+                    if (config.ReferenceTypes?.Contains(reference.Type) == false)
+                    {
+                        continue;
+                    }
+
                     var referencedTask = tasks.Find(x => x.Metadata.Id == reference.TargetId);
                     if (referencedTask == null)
                     {
@@ -79,7 +86,7 @@ namespace TaskPlanner.TaskGraph.Analyzers
             return Task.FromResult(graph);
         }
 
-        public Task<RenderGraph> BuildRenderGraph(PlacementGraph graph, Config config)
+        public Task<RenderGraph> BuildRenderGraph(PlacementGraph graph, RenderConfig config)
         {
             var renderGraph = new RenderGraph();
 
