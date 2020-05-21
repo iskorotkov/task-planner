@@ -29,6 +29,7 @@ namespace TaskPlanner.Client.Pages.Tasks
 
         private async Task RenderGraph()
         {
+            _showingTypesSelector.BitMask = _analyzeTypesSelector.BitMask;
             var painterConfig = new PainterConfig
             {
                 Types = _showingTypesSelector.BitMask

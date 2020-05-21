@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TaskPlanner.Shared.Data.References;
@@ -7,7 +8,9 @@ namespace TaskPlanner.Client.Shared.Graph
 {
     public partial class ReferenceTypeSelector
     {
-        public ReferenceType BitMask { get; private set; }
+        [Parameter] public Func<ReferenceType, bool>? ShowCheckbox { get; set; }
+
+        public ReferenceType BitMask { get; set; }
 
         private void Toggle(ReferenceType type, bool status)
         {
@@ -24,9 +27,14 @@ namespace TaskPlanner.Client.Shared.Graph
 
         private IEnumerable<ReferenceType> GetTypes()
         {
-            return Enum.GetValues(typeof(ReferenceType))
+            var types = Enum.GetValues(typeof(ReferenceType))
                 .Cast<ReferenceType>()
                 .Skip(1);
+            if (ShowCheckbox != null)
+            {
+                return types.Where(ShowCheckbox);
+            }
+            return types;
         }
     }
 }

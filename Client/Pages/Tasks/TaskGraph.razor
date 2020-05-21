@@ -8,7 +8,8 @@
 
     <div>
         <label>Show references:</label>
-        <ReferenceTypeSelector @ref="@_showingTypesSelector" />
+        <ReferenceTypeSelector @ref="@_showingTypesSelector"
+                               ShowCheckbox="@(t => _analyzeTypesSelector.BitMask.HasFlag(t))" />
     </div>
 
     <button type="button" @onclick="@RenderGraph">Render graph</button>
