@@ -7,7 +7,7 @@ using TaskPlanner.TaskGraph.Analyzers;
 using TaskPlanner.TaskGraph.Data.Config;
 using TaskPlanner.Shared.Data.References;
 
-namespace TaskPlanner.Client.Shared.Tasks
+namespace TaskPlanner.Client.Pages.Tasks
 {
     public partial class TaskGraph
     {
