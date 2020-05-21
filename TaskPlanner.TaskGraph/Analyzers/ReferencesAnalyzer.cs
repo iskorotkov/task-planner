@@ -49,7 +49,7 @@ namespace TaskPlanner.TaskGraph.Analyzers
                 var referencedCount = 0;
                 foreach (var reference in task.References)
                 {
-                    if (config.ReferenceTypes?.Contains(reference.Type) == false)
+                    if (!config.ReferenceTypes.HasFlag(reference.Type))
                     {
                         continue;
                     }

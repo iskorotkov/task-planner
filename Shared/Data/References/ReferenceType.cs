@@ -1,14 +1,19 @@
-﻿namespace TaskPlanner.Shared.Data.References
+﻿using System;
+
+namespace TaskPlanner.Shared.Data.References
 {
-    public enum ReferenceType
+    [Flags]
+    public enum ReferenceType : int
     {
-        Child,
-        Parent,
-        Dependency,
-        Dependant,
-        Alternative,
-        Similar,
-        TestFor,
-        TestedBy
+        None = 0,
+        Child = 1,
+        Parent = 2,
+        Dependency = 4,
+        Dependant = 8,
+        Alternative = 16,
+        Similar = 32,
+        TestFor = 64,
+        TestedBy = 128,
+        All = int.MaxValue
     }
 }

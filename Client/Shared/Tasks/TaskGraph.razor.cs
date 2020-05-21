@@ -6,7 +6,6 @@ using TaskPlanner.Client.Services.Tasks;
 using TaskPlanner.TaskGraph.Analyzers;
 using TaskPlanner.TaskGraph.Data.Config;
 using TaskPlanner.Shared.Data.References;
-using System.Collections.Generic;
 
 namespace TaskPlanner.Client.Shared.Tasks
 {
@@ -19,10 +18,7 @@ namespace TaskPlanner.Client.Shared.Tasks
         private BECanvasComponent _canvas;
         private PlacementConfig _placementConfig = new PlacementConfig
         {
-            ReferenceTypes = new List<ReferenceType>
-            {
-                ReferenceType.Dependant
-            }
+            ReferenceTypes = ReferenceType.Dependant
         };
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
