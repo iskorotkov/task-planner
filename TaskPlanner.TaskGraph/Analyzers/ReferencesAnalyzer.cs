@@ -83,6 +83,11 @@ namespace TaskPlanner.TaskGraph.Analyzers
                 }
             }
 
+            // If there are no edges, we shouldn't display any node
+            if (graph.Edges.Count == 0)
+            {
+                graph.Nodes.Clear();
+            }
             return Task.FromResult(graph);
         }
 
