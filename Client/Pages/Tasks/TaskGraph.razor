@@ -1,7 +1,16 @@
 ﻿@page "/graph"
 
 <div>
-    <ReferenceTypeSelector @ref="@_analyzeTypesSelector"/>
+    <div>
+        <label>Analyze references:</label>
+        <ReferenceTypeSelector @ref="@_analyzeTypesSelector" />
+    </div>
+
+    <div>
+        <label>Show references:</label>
+        <ReferenceTypeSelector @ref="@_showingTypesSelector" />
+    </div>
+
     <button type="button" @onclick="@RenderGraph">Render graph</button>
 </div>
 

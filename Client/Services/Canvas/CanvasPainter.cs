@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Blazor.Extensions;
 using Blazor.Extensions.Canvas.Canvas2D;
@@ -10,9 +11,11 @@ namespace TaskPlanner.Client.Services.Canvas
     {
         private BECanvasComponent? _canvas;
         private Canvas2DContext? _context;
+        private PainterConfig _config;
 
-        public async Task Init(BECanvasComponent canvas)
+        public async Task Init(BECanvasComponent canvas, PainterConfig config)
         {
+            _config = config;
             if (canvas != _canvas)
             {
                 _canvas = canvas;
@@ -31,7 +34,9 @@ namespace TaskPlanner.Client.Services.Canvas
                 await DrawNode(node);
             }
 
-            foreach (var edge in graph.Edges)
+            var edges = graph.Edges
+                .Where(x => _config.Types.HasFlag(x.Type));
+            foreach (var edge in edges)
             {
                 await DrawEdge(edge);
             }

@@ -17,6 +17,7 @@ namespace TaskPlanner.Client.Pages.Tasks
 
         private BECanvasComponent _canvas;
         private ReferenceTypeSelector _analyzeTypesSelector;
+        private ReferenceTypeSelector _showingTypesSelector;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -28,13 +29,19 @@ namespace TaskPlanner.Client.Pages.Tasks
 
         private async Task RenderGraph()
         {
-            await Painter.Init(_canvas);
+            var painterConfig = new PainterConfig
+            {
+                Types = _showingTypesSelector.BitMask
+            };
+            await Painter.Init(_canvas, painterConfig);
+
             var tasks = await TaskManager.GetAll();
             var placementConfig = new PlacementConfig
             {
                 ReferenceTypes = _analyzeTypesSelector.BitMask
             };
             var graph = await Analyzer.Analyze(tasks, placementConfig: placementConfig);
+
             await Painter.DrawGraph(graph);
         }
     }
