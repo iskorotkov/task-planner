@@ -6,6 +6,7 @@ using TaskPlanner.Client.Services.Tasks;
 using TaskPlanner.TaskGraph.Analyzers;
 using TaskPlanner.TaskGraph.Data.Config;
 using TaskPlanner.Client.Shared.Graph;
+using TaskPlanner.TaskGraph.Data.Render;
 
 namespace TaskPlanner.Client.Pages.Tasks
 {
@@ -18,32 +19,36 @@ namespace TaskPlanner.Client.Pages.Tasks
         private BECanvasComponent _canvas;
         private ReferenceTypeSelector _analyzeTypesSelector;
         private ReferenceTypeSelector _showingTypesSelector;
+        private RenderGraph _graph;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
-                await RenderGraph();
+                await AnalyzeGraph();
             }
         }
 
-        private async Task RenderGraph()
+        private async Task AnalyzeGraph()
         {
             _showingTypesSelector.BitMask = _analyzeTypesSelector.BitMask;
-            var painterConfig = new PainterConfig
-            {
-                Types = _showingTypesSelector.BitMask
-            };
-            await Painter.Init(_canvas, painterConfig);
-
             var tasks = await TaskManager.GetAll();
             var placementConfig = new PlacementConfig
             {
                 ReferenceTypes = _analyzeTypesSelector.BitMask
             };
-            var graph = await Analyzer.Analyze(tasks, placementConfig: placementConfig);
+            _graph = await Analyzer.Analyze(tasks, placementConfig: placementConfig);
+            await RenderGraph();
+        }
 
-            await Painter.DrawGraph(graph);
+        private async Task RenderGraph()
+        {
+            var painterConfig = new PainterConfig
+            {
+                Types = _showingTypesSelector.BitMask
+            };
+            await Painter.Init(_canvas, painterConfig);
+            await Painter.DrawGraph(_graph);
         }
     }
 }
