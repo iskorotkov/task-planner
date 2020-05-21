@@ -64,6 +64,9 @@ namespace TaskPlanner.Client.Services.Canvas
             await _context.LineToAsync(edge.To.X, edge.To.Y);
             await _context.ClosePathAsync();
             await _context.StrokeAsync();
+
+            var labelPos = (edge.From + edge.To) / 2;
+            await _context.FillTextAsync(edge.Type.ToString(), labelPos.X, labelPos.Y);
         }
 
         private void EnsureInitialized()

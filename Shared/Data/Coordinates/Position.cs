@@ -28,6 +28,26 @@ namespace TaskPlanner.Shared.Data.Coordinates
             return new Position(left.X - right.X, left.Y - right.Y);
         }
 
+        public static Position operator *(Position pos, int value)
+        {
+            return new Position(pos.X * value, pos.Y * value);
+        }
+
+        public static Position operator *(int value, Position pos)
+        {
+            return pos * value;
+        }
+
+        public static Position operator /(Position pos, int value)
+        {
+            return new Position(pos.X / value, pos.Y / value);
+        }
+
+        public static Position operator /(int value, Position pos)
+        {
+            return pos / value;
+        }
+
         public override bool Equals(object? obj)
         {
             return obj is Position position &&
