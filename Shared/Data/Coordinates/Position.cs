@@ -18,6 +18,16 @@ namespace TaskPlanner.Shared.Data.Coordinates
         public int X { get; set; }
         public int Y { get; set; }
 
+        public static Position operator +(Position left, Position right)
+        {
+            return new Position(left.X + right.X, left.Y + right.Y);
+        }
+
+        public static Position operator -(Position left, Position right)
+        {
+            return new Position(left.X - right.X, left.Y - right.Y);
+        }
+
         public override bool Equals(object? obj)
         {
             return obj is Position position &&

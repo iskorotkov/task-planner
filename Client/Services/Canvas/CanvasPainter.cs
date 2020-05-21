@@ -15,8 +15,10 @@ namespace TaskPlanner.Client.Services.Canvas
 
         public async Task Init(BECanvasComponent canvas, PainterConfig config)
         {
-            _config = config;
-            if (canvas != _canvas)
+            _config = config ?? throw new ArgumentNullException(nameof(config));
+            _ = canvas ?? throw new ArgumentNullException(nameof(canvas));
+
+            if (_canvas != canvas)
             {
                 _canvas = canvas;
                 _context = await _canvas.CreateCanvas2DAsync();
@@ -45,9 +47,13 @@ namespace TaskPlanner.Client.Services.Canvas
         public async Task DrawNode(RenderNode node)
         {
             EnsureInitialized();
-            await _context.SetStrokeStyleAsync("green");
-            await _context.SetFillStyleAsync("blue");
-            await _context.FillRectAsync(node.Position.X, node.Position.Y, node.Dimensions.Width, node.Dimensions.Height);
+            await _context.StrokeRectAsync(node.Position.X, node.Position.Y, node.Dimensions.Width, node.Dimensions.Height);
+
+            var titlePosition = node.Position + _config.TitleOffset;
+            await _context.FillTextAsync(node.Task.Content.Title, titlePosition.X, titlePosition.Y);
+
+            var descPosition = node.Position + _config.DescriptionOffset;
+            await _context.FillTextAsync(node.Task.Content.Description ?? "", descPosition.X, descPosition.Y);
         }
 
         public async Task DrawEdge(RenderEdge edge)
