@@ -5,7 +5,7 @@ using TaskPlanner.Client.Services.Canvas;
 using TaskPlanner.Client.Services.Tasks;
 using TaskPlanner.TaskGraph.Analyzers;
 using TaskPlanner.TaskGraph.Data.Config;
-using TaskPlanner.Shared.Data.References;
+using TaskPlanner.Client.Shared.Graph;
 
 namespace TaskPlanner.Client.Pages.Tasks
 {
@@ -16,16 +16,25 @@ namespace TaskPlanner.Client.Pages.Tasks
         [Inject] public ReferencesAnalyzer Analyzer { get; set; }
 
         private BECanvasComponent _canvas;
-        private PlacementConfig _placementConfig = new PlacementConfig
-        {
-            ReferenceTypes = ReferenceType.Dependant
-        };
+        private ReferenceTypeSelector _analyzeTypesSelector;
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
+            if (firstRender)
+            {
+                await RenderGraph();
+            }
+        }
+
+        private async Task RenderGraph()
+        {
             await Painter.Init(_canvas);
             var tasks = await TaskManager.GetAll();
-            var graph = await Analyzer.Analyze(tasks, placementConfig: _placementConfig);
+            var placementConfig = new PlacementConfig
+            {
+                ReferenceTypes = _analyzeTypesSelector.BitMask
+            };
+            var graph = await Analyzer.Analyze(tasks, placementConfig: placementConfig);
             await Painter.DrawGraph(graph);
         }
     }

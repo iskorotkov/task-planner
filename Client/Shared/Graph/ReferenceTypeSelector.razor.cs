@@ -7,17 +7,17 @@ namespace TaskPlanner.Client.Shared.Graph
 {
     public partial class ReferenceTypeSelector
     {
-        private ReferenceType _bitMask { get; set; }
+        public ReferenceType BitMask { get; private set; }
 
         private void Toggle(ReferenceType type, bool status)
         {
             if (status)
             {
-                _bitMask |= type;
+                BitMask |= type;
             }
             else
             {
-                _bitMask &= ~type;
+                BitMask &= ~type;
             }
             StateHasChanged();
         }

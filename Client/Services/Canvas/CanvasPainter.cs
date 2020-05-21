@@ -18,6 +18,10 @@ namespace TaskPlanner.Client.Services.Canvas
                 _canvas = canvas;
                 _context = await _canvas.CreateCanvas2DAsync();
             }
+            else
+            {
+                await _context.ClearRectAsync(0, 0, _canvas.Width, _canvas.Height);
+            }
         }
 
         public async Task DrawGraph(RenderGraph graph)
