@@ -14,6 +14,6 @@ namespace TaskPlanner.Shared.Data.References
         Similar = 32,
         TestFor = 64,
         TestedBy = 128,
-        All = int.MaxValue
+        All = Child | Parent | Dependency | Dependant | Alternative | Similar | TestFor | TestedBy
     }
 }
