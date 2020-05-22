@@ -14,7 +14,7 @@ namespace TaskPlanner.Client.Pages.Tasks
     {
         [Inject] public CanvasPainter Painter { get; set; }
         [Inject] public ITaskManager TaskManager { get; set; }
-        [Inject] public ReferencesAnalyzer Analyzer { get; set; }
+        [Inject] public GraphAnalyzer Analyzer { get; set; }
 
         private BECanvasComponent _canvas;
         private ReferenceTypeSelector _analyzeTypesSelector;

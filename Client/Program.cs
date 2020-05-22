@@ -21,7 +21,7 @@ namespace TaskPlanner.Client
             builder.Services.AddScoped<IReferenceManager, ReferenceManager>();
 
             builder.Services.AddTransient<CanvasPainter>();
-            builder.Services.AddTransient<ReferencesAnalyzer>();
+            builder.Services.AddTransient<GraphAnalyzer>();
 
             builder.Services.AddFirebaseAuthentication();
             builder.Services.AddFirestore();

@@ -10,9 +10,11 @@ using Xunit;
 
 namespace TaskPlanner.TaskGraph.Tests.Analyzers
 {
-    public class ReferencesAnalyzerTests
+    public class GraphAnalyzerTests
     {
-        private readonly ReferencesAnalyzer _analyzer = new ReferencesAnalyzer();
+        private readonly AbstractAnalyzer _abstractAnalyzer = new AbstractAnalyzer();
+        private readonly PlacementAnalyzer _placementAnalyzer = new PlacementAnalyzer();
+        private readonly RenderAnalyzer _renderAnalyzer = new RenderAnalyzer();
 
         [Fact]
         private void OneTaskWithSingleDependency()
@@ -26,10 +28,12 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
             task1.References.Add(new Reference(task2.Metadata.Id, ReferenceType.Dependant));
             var input = new List<Todo> { task1, task2 };
 
-            var abstractGraph = _analyzer.BuildAbstractGraph(input, new GraphConfig())
+            var abstractGraph = _abstractAnalyzer.Analyze(input, new GraphConfig())
                 .GetAwaiter().GetResult();
 
-            var placementGraph = _analyzer.BuildPlacementGraph(abstractGraph, new GraphConfig())
+            // TODO: Add tests for AbstractAnalyzer
+
+            var placementGraph = _placementAnalyzer.Analyze(abstractGraph, new GraphConfig())
                 .GetAwaiter().GetResult();
             Assert.Equal(new List<PlacementNode>
             {
@@ -42,7 +46,7 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
                 new PlacementEdge(new Position(1, 0), new Position(0, 0), ReferenceType.Dependant)
             }, placementGraph.Edges);
 
-            var renderGraph = _analyzer.BuildRenderGraph(placementGraph, new GraphConfig
+            var renderGraph = _renderAnalyzer.Analyze(placementGraph, new GraphConfig
             {
                 HorizontalInterval = 20,
                 VerticalInterval = 30,
