@@ -19,5 +19,17 @@ namespace TaskPlanner.TaskGraph.Data.Render
 
         public List<RenderNode> Nodes { get; set; }
         public List<RenderEdge> Edges { get; set; }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is RenderGraph graph &&
+                   EqualityComparer<List<RenderNode>>.Default.Equals(Nodes, graph.Nodes) &&
+                   EqualityComparer<List<RenderEdge>>.Default.Equals(Edges, graph.Edges);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Nodes, Edges);
+        }
     }
 }

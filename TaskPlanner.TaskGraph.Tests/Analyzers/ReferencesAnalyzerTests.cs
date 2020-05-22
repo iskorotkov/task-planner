@@ -28,19 +28,16 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
             var placementGraph = _analyzer.BuildPlacementGraph(input, new GraphConfig())
                 .GetAwaiter().GetResult();
 
-            // Nodes
-            Assert.Equal(2, placementGraph.Nodes.Count);
-            Assert.Equal(new PlacementNode(task1, new Position(0, 0)),
-                placementGraph.Nodes[0]);
-            Assert.Equal(new PlacementNode(task2, new Position(1, 0)),
-                placementGraph.Nodes[1]);
-
-            // Edges
-            Assert.Equal(2, placementGraph.Edges.Count);
-            Assert.Equal(new PlacementEdge(new Position(0, 0), new Position(1, 0), ReferenceType.Dependant),
-                placementGraph.Edges[0]);
-            Assert.Equal(new PlacementEdge(new Position(1, 0), new Position(0, 0), ReferenceType.Dependency),
-                placementGraph.Edges[1]);
+            Assert.Equal(new List<PlacementNode>
+            {
+                new PlacementNode(task1, new Position(0, 0)),
+                new PlacementNode(task2, new Position(1, 0))
+            }, placementGraph.Nodes);
+            Assert.Equal(new List<PlacementEdge>
+            {
+                new PlacementEdge(new Position(0, 0), new Position(1, 0), ReferenceType.Dependant),
+                new PlacementEdge(new Position(1, 0), new Position(0, 0), ReferenceType.Dependency)
+            }, placementGraph.Edges);
 
             var renderGraph = _analyzer.BuildRenderGraph(placementGraph, new GraphConfig
             {
@@ -52,19 +49,16 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
                 NodeWidth = 160
             }).GetAwaiter().GetResult();
 
-            // Nodes
-            Assert.Equal(2, renderGraph.Nodes.Count);
-            Assert.Equal(new RenderNode(task1, new Position(40, 50), new Dimensions(160, 200)),
-                renderGraph.Nodes[0]);
-            Assert.Equal(new RenderNode(task2, new Position(220, 50), new Dimensions(160, 200)),
-                renderGraph.Nodes[1]);
-
-            // Edges
-            Assert.Equal(2, renderGraph.Edges.Count);
-            Assert.Equal(new RenderEdge(new Position(200, 150), new Position(220, 150), ReferenceType.Dependant),
-                renderGraph.Edges[0]);
-            Assert.Equal(new RenderEdge(new Position(220, 150), new Position(200, 150), ReferenceType.Dependency),
-                renderGraph.Edges[1]);
+            Assert.Equal(new List<RenderNode>
+            {
+                new RenderNode(task1, new Position(40, 50), new Dimensions(160, 200)),
+                new RenderNode(task2, new Position(220, 50), new Dimensions(160, 200))
+            }, renderGraph.Nodes);
+            Assert.Equal(new List<RenderEdge>
+            {
+                new RenderEdge(new Position(200, 150), new Position(220, 150), ReferenceType.Dependant),
+                new RenderEdge(new Position(220, 150), new Position(200, 150), ReferenceType.Dependency)
+            }, renderGraph.Edges);
         }
     }
 }

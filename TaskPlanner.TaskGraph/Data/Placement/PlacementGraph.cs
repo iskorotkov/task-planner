@@ -19,5 +19,17 @@ namespace TaskPlanner.TaskGraph.Data.Placement
 
         public List<PlacementNode> Nodes { get; }
         public List<PlacementEdge> Edges { get; }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is PlacementGraph graph &&
+                   EqualityComparer<List<PlacementNode>>.Default.Equals(Nodes, graph.Nodes) &&
+                   EqualityComparer<List<PlacementEdge>>.Default.Equals(Edges, graph.Edges);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Nodes, Edges);
+        }
     }
 }
