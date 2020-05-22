@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TaskPlanner.Shared.Data.Coordinates;
 using TaskPlanner.Shared.Data.References;
 
@@ -16,5 +17,18 @@ namespace TaskPlanner.TaskGraph.Data.Placement
         public Position From { get; set; }
         public Position To { get; set; }
         public ReferenceType Type { get; set; }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is PlacementEdge edge &&
+                   EqualityComparer<Position>.Default.Equals(From, edge.From) &&
+                   EqualityComparer<Position>.Default.Equals(To, edge.To) &&
+                   Type == edge.Type;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(From, To, Type);
+        }
     }
 }

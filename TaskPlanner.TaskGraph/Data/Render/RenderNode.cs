@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TaskPlanner.Shared.Data.Coordinates;
 using TaskPlanner.Shared.Data.Tasks;
 
@@ -16,5 +17,18 @@ namespace TaskPlanner.TaskGraph.Data.Render
         public Todo Task { get; set; }
         public Position Position { get; set; }
         public Dimensions Dimensions { get; set; }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is RenderNode node &&
+                   EqualityComparer<Todo>.Default.Equals(Task, node.Task) &&
+                   EqualityComparer<Position>.Default.Equals(Position, node.Position) &&
+                   EqualityComparer<Dimensions>.Default.Equals(Dimensions, node.Dimensions);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Task, Position, Dimensions);
+        }
     }
 }

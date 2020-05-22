@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TaskPlanner.Shared.Data.Coordinates;
 using TaskPlanner.Shared.Data.Tasks;
 
@@ -14,5 +15,17 @@ namespace TaskPlanner.TaskGraph.Data.Placement
 
         public Todo Task { get; set; }
         public Position Position { get; set; }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is PlacementNode node &&
+                   EqualityComparer<Todo>.Default.Equals(Task, node.Task) &&
+                   EqualityComparer<Position>.Default.Equals(Position, node.Position);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Task, Position);
+        }
     }
 }
