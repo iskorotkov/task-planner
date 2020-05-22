@@ -29,17 +29,17 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
             var abstractGraph = _analyzer.BuildAbstractGraph(input, new GraphConfig())
                 .GetAwaiter().GetResult();
 
-            var placementGraph = _analyzer.BuildPlacementGraph(input, new GraphConfig())
+            var placementGraph = _analyzer.BuildPlacementGraph(abstractGraph, new GraphConfig())
                 .GetAwaiter().GetResult();
             Assert.Equal(new List<PlacementNode>
             {
-                new PlacementNode(task1, new Position(0, 0)),
-                new PlacementNode(task2, new Position(1, 0))
+                new PlacementNode(task2, new Position(0, 0)),
+                new PlacementNode(task1, new Position(1, 0))
             }, placementGraph.Nodes);
             Assert.Equal(new List<PlacementEdge>
             {
-                new PlacementEdge(new Position(0, 0), new Position(1, 0), ReferenceType.Dependant),
-                new PlacementEdge(new Position(1, 0), new Position(0, 0), ReferenceType.Dependency)
+                new PlacementEdge(new Position(0, 0), new Position(1, 0), ReferenceType.Dependency),
+                new PlacementEdge(new Position(1, 0), new Position(0, 0), ReferenceType.Dependant)
             }, placementGraph.Edges);
 
             var renderGraph = _analyzer.BuildRenderGraph(placementGraph, new GraphConfig
@@ -53,13 +53,13 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
             }).GetAwaiter().GetResult();
             Assert.Equal(new List<RenderNode>
             {
-                new RenderNode(task1, new Position(40, 50), new Dimensions(160, 200)),
-                new RenderNode(task2, new Position(220, 50), new Dimensions(160, 200))
+                new RenderNode(task2, new Position(40, 50), new Dimensions(160, 200)),
+                new RenderNode(task1, new Position(220, 50), new Dimensions(160, 200))
             }, renderGraph.Nodes);
             Assert.Equal(new List<RenderEdge>
             {
-                new RenderEdge(new Position(200, 150), new Position(220, 150), ReferenceType.Dependant),
-                new RenderEdge(new Position(220, 150), new Position(200, 150), ReferenceType.Dependency)
+                new RenderEdge(new Position(200, 150), new Position(220, 150), ReferenceType.Dependency),
+                new RenderEdge(new Position(220, 150), new Position(200, 150), ReferenceType.Dependant)
             }, renderGraph.Edges);
         }
     }

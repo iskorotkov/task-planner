@@ -16,8 +16,10 @@ namespace TaskPlanner.TaskGraph.Analyzers
         public async Task<RenderGraph> Analyze(IEnumerable<Todo> tasks, GraphConfig? config = null)
         {
             config ??= new GraphConfig();
-            var placementGraph = await BuildPlacementGraph(tasks, config);
-            return await BuildRenderGraph(placementGraph, config);
+            var abstractGraph = await BuildAbstractGraph(tasks, config);
+            var placementGraph = await BuildPlacementGraph(abstractGraph, config);
+            var renderGraph = await BuildRenderGraph(placementGraph, config);
+            return renderGraph;
         }
 
         public Task<AbstractGraph> BuildAbstractGraph(IEnumerable<Todo> tasks, GraphConfig config)
@@ -86,7 +88,7 @@ namespace TaskPlanner.TaskGraph.Analyzers
                         referencedNode = new AbstractNode(referencedTask);
                     }
 
-                    nodeToAdd.References.Add(referencedNode);
+                    nodeToAdd.References.Add(new AbstractReference(referencedNode, reference.Type));
                 }
             }
 
@@ -95,49 +97,46 @@ namespace TaskPlanner.TaskGraph.Analyzers
             return Task.FromResult(new AbstractGraph(roots.ToList()));
         }
 
-        public Task<PlacementGraph> BuildPlacementGraph(IEnumerable<Todo> tasks, GraphConfig config)
+        public Task<PlacementGraph> BuildPlacementGraph(AbstractGraph abstractGraph, GraphConfig config)
         {
-            _ = tasks ?? throw new ArgumentNullException(nameof(tasks));
+            _ = abstractGraph ?? throw new ArgumentNullException(nameof(abstractGraph));
 
-            var graph = new PlacementGraph();
-            if (!tasks.Any())
+            if (abstractGraph.Roots.Count == 0)
             {
-                return Task.FromResult(graph);
+                return Task.FromResult(new PlacementGraph());
             }
 
-            var queue = new Queue<(Todo Task, int Depth, int Count)>();
-            queue.Enqueue((tasks.First(), 0, 0));
-
-            var visited = new HashSet<Todo>();
-            while (queue.Count > 0)
+            var graph = new PlacementGraph();
+            var placedTasks = new HashSet<Todo>();
+            var subgraphRow = 0;
+            foreach (var root in abstractGraph.Roots)
             {
-                var (task, depth, count) = queue.Dequeue();
-                visited.Add(task);
-                graph.Nodes.Add(new PlacementNode(
-                    task: task,
-                    position: new Position(depth, count)
-                ));
+                PlaceSubgraph(graph, placedTasks, root, subgraphRow);
+            }
 
-                var referencedDepth = depth + 1;
-                var referencedCount = 0;
-                foreach (var reference in task.References)
+            return Task.FromResult(graph);
+        }
+
+        private void PlaceSubgraph(PlacementGraph graph, HashSet<Todo> placedTasks, AbstractNode root, int subgraphRow)
+        {
+            var nodesQueue = new Queue<(AbstractNode Node, int Row, int Column)>();
+            nodesQueue.Enqueue((root, subgraphRow, 0));
+            while (nodesQueue.Count > 0)
+            {
+                var (nextNode, row, column) = nodesQueue.Dequeue();
+                var placementNode = new PlacementNode(nextNode.Task, new Position(column, row));
+                graph.Nodes.Add(placementNode);
+                placedTasks.Add(nextNode.Task);
+
+                var referenceRow = row;
+                var referenceColumn = column + 1;
+                foreach (var reference in nextNode.References)
                 {
-                    if (!config.ReferenceTypes.HasFlag(reference.Type))
+                    if (placedTasks.Contains(reference.Node.Task))
                     {
-                        continue;
-                    }
-
-                    var referencedTask = tasks.FirstOrDefault(x => x.Metadata.Id == reference.TargetId);
-                    if (referencedTask == null)
-                    {
-                        throw new ArgumentException("One of the provided tasks has unresolved reference to other task. Probably referenced task was deleted or wasn't created at all.");
-                    }
-
-                    if (visited.Contains(referencedTask))
-                    {
-                        var placedNode = graph.Nodes.Find(x => x.Task == referencedTask);
+                        var placedNode = graph.Nodes.Find(x => x.Task == reference.Node.Task);
                         graph.Edges.Add(new PlacementEdge(
-                            from: new Position(depth, count),
+                            from: new Position(column, row),
                             to: placedNode.Position,
                             type: reference.Type
                         ));
@@ -145,23 +144,16 @@ namespace TaskPlanner.TaskGraph.Analyzers
                     else
                     {
                         graph.Edges.Add(new PlacementEdge(
-                            from: new Position(depth, count),
-                            to: new Position(referencedDepth, referencedCount),
+                            from: new Position(column, row),
+                            to: new Position(referenceColumn, referenceRow),
                             type: reference.Type
                         ));
 
-                        queue.Enqueue((referencedTask, referencedDepth, referencedCount));
-                        referencedCount++;
+                        nodesQueue.Enqueue((reference.Node, referenceRow, referenceColumn));
+                        referenceRow++;
                     }
                 }
             }
-
-            // If there are no edges, we shouldn't display any node
-            if (graph.Edges.Count == 0)
-            {
-                graph.Nodes.Clear();
-            }
-            return Task.FromResult(graph);
         }
 
         public Task<RenderGraph> BuildRenderGraph(PlacementGraph graph, GraphConfig config)
