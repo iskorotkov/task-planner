@@ -94,7 +94,9 @@ namespace TaskPlanner.TaskGraph.Analyzers
                                  ?? throw new ArgumentException(
                                      "One of the provided tasks has unresolved reference to other task. " +
                                      "Probably referenced task was deleted or wasn't created at all.");
-            return new AbstractNode(referencedTask);
+            var node = new AbstractNode(referencedTask);
+            _nodes.Add(node);
+            return node;
         }
 
         private AbstractNode GetNodeForTask(Todo task)
