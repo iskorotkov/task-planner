@@ -29,8 +29,10 @@ namespace TaskPlanner.TaskGraph.Analyzers
                 return Task.FromResult(new PlacementGraph());
             }
 
+            _nextGraphRow = 0;
             _graph = new PlacementGraph();
             _placedTasks = new HashSet<Todo>();
+
             foreach (var root in _abstractGraph.Roots)
             {
                 AddGraph(root);
