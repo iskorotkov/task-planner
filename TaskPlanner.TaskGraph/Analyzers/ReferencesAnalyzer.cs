@@ -113,48 +113,25 @@ namespace TaskPlanner.TaskGraph.Analyzers
 
             foreach (var edge in graph.Edges)
             {
-                if (edge.From.X <= edge.To.X)
-                {
-                    renderGraph.Edges.Add(new RenderEdge(
-                        from: new Position(
-                            x: config.LeftOffset
-                                + edge.From.X * (config.NodeWidth + config.HorizontalInterval)
-                                + config.NodeWidth,
-                            y: config.TopOffset
-                                + edge.From.Y * (config.NodeHeight + config.VerticalInterval)
-                                + config.NodeHeight / 2
-                        ),
-                        to: new Position(
-                            x: config.LeftOffset
-                                + edge.To.X * (config.NodeWidth + config.HorizontalInterval),
-                            y: config.TopOffset
-                                + edge.To.Y * (config.NodeHeight + config.VerticalInterval)
-                                + config.NodeHeight / 2
-                        ),
-                        type: edge.Type
-                    ));
-                }
-                else if (edge.From.X > edge.To.X)
-                {
-                    renderGraph.Edges.Add(new RenderEdge(
-                        from: new Position(
-                            x: config.LeftOffset
-                                + edge.From.X * (config.NodeWidth + config.HorizontalInterval),
-                            y: config.TopOffset
-                                + edge.From.Y * (config.NodeHeight + config.VerticalInterval)
-                                + config.NodeHeight / 2
-                        ),
-                        to: new Position(
-                            x: config.LeftOffset
-                                + edge.To.X * (config.NodeWidth + config.HorizontalInterval)
-                                + config.NodeWidth,
-                            y: config.TopOffset
-                                + edge.To.Y * (config.NodeHeight + config.VerticalInterval)
-                                + config.NodeHeight / 2
-                        ),
-                        type: edge.Type
-                    ));
-                }
+                renderGraph.Edges.Add(new RenderEdge(
+                    from: new Position(
+                        x: config.LeftOffset
+                            + edge.From.X * (config.NodeWidth + config.HorizontalInterval)
+                            + (edge.From.X <= edge.To.X ? config.NodeWidth : 0),
+                        y: config.TopOffset
+                            + edge.From.Y * (config.NodeHeight + config.VerticalInterval)
+                            + config.NodeHeight / 2
+                    ),
+                    to: new Position(
+                        x: config.LeftOffset
+                            + edge.To.X * (config.NodeWidth + config.HorizontalInterval)
+                            + (edge.From.X > edge.To.X ? config.NodeWidth : 0),
+                        y: config.TopOffset
+                            + edge.To.Y * (config.NodeHeight + config.VerticalInterval)
+                            + config.NodeHeight / 2
+                    ),
+                    type: edge.Type
+                ));
             }
 
             return Task.FromResult(renderGraph);
