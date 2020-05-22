@@ -1,4 +1,5 @@
-﻿using TaskPlanner.Shared.Data.References;
+﻿using TaskPlanner.Shared.Data.Coordinates;
+using TaskPlanner.Shared.Data.References;
 
 namespace TaskPlanner.TaskGraph.Data.Config
 {
@@ -6,12 +7,8 @@ namespace TaskPlanner.TaskGraph.Data.Config
     {
         public ReferenceType ReferenceTypes { get; set; } = ReferenceType.All;
 
-        public int LeftOffset { get; set; } = 20;
-        public int TopOffset { get; set; } = 20;
-        public int HorizontalInterval { get; set; } = 30;
-        public int VerticalInterval { get; set; } = 30;
-
-        public int NodeWidth { get; set; } = 120;
-        public int NodeHeight { get; set; } = 160;
+        public Position Offsets { get; set; } = new Position(20, 20);
+        public Position Intervals { get; set; } = new Position(30, 30);
+        public Dimensions Dimensions { get; set; } = new Dimensions(120, 160);
     }
 }

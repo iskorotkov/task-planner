@@ -48,12 +48,10 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
 
             var renderGraph = _renderAnalyzer.Analyze(placementGraph, new GraphConfig
             {
-                HorizontalInterval = 20,
-                VerticalInterval = 30,
-                LeftOffset = 40,
-                TopOffset = 50,
-                NodeHeight = 200,
-                NodeWidth = 160
+                Intervals = new Position(20, 30),
+                Offsets = new Position(40, 50),
+                Dimensions = new Dimensions(160, 200),
+                ReferenceTypes = ReferenceType.All
             }).GetAwaiter().GetResult();
             Assert.Equal(new List<RenderNode>
             {
