@@ -11,15 +11,14 @@ namespace TaskPlanner.TaskGraph.Analyzers
 {
     public class ReferencesAnalyzer
     {
-        public async Task<RenderGraph> Analyze(List<Todo> tasks,
-            PlacementConfig? placementConfig = null,
-            RenderConfig? renderConfig = null)
+        public async Task<RenderGraph> Analyze(List<Todo> tasks, GraphConfig? config = null)
         {
-            var placementGraph = await BuildPlacementGraph(tasks, placementConfig ?? new PlacementConfig());
-            return await BuildRenderGraph(placementGraph, renderConfig ?? new RenderConfig());
+            config ??= new GraphConfig();
+            var placementGraph = await BuildPlacementGraph(tasks, config);
+            return await BuildRenderGraph(placementGraph, config);
         }
 
-        public Task<PlacementGraph> BuildPlacementGraph(List<Todo> tasks, PlacementConfig config)
+        public Task<PlacementGraph> BuildPlacementGraph(List<Todo> tasks, GraphConfig config)
         {
             if (tasks == null)
             {
@@ -91,7 +90,7 @@ namespace TaskPlanner.TaskGraph.Analyzers
             return Task.FromResult(graph);
         }
 
-        public Task<RenderGraph> BuildRenderGraph(PlacementGraph graph, RenderConfig config)
+        public Task<RenderGraph> BuildRenderGraph(PlacementGraph graph, GraphConfig config)
         {
             var renderGraph = new RenderGraph();
 

@@ -1,7 +1,11 @@
-﻿namespace TaskPlanner.TaskGraph.Data.Config
+﻿using TaskPlanner.Shared.Data.References;
+
+namespace TaskPlanner.TaskGraph.Data.Config
 {
-    public class RenderConfig
+    public class GraphConfig
     {
+        public ReferenceType ReferenceTypes { get; set; } = ReferenceType.All;
+
         public int LeftOffset { get; set; } = 20;
         public int TopOffset { get; set; } = 20;
         public int HorizontalInterval { get; set; } = 30;

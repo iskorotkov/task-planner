@@ -23,7 +23,7 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
             task2.References.Add(new Reference(task1.Metadata.Id, ReferenceType.Dependency));
             task1.References.Add(new Reference(task2.Metadata.Id, ReferenceType.Dependant));
             var input = new List<Todo> { task1, task2 };
-            var placementGraph = _analyzer.BuildPlacementGraph(input, new PlacementConfig())
+            var placementGraph = _analyzer.BuildPlacementGraph(input, new GraphConfig())
                 .GetAwaiter()
                 .GetResult();
 
@@ -44,7 +44,7 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
             Assert.Equal(new Position(0, 0), placementGraph.Edges[1].To);
             Assert.Equal(ReferenceType.Dependency, placementGraph.Edges[1].Type);
 
-            var config = new RenderConfig
+            var config = new GraphConfig
             {
                 HorizontalInterval = 20,
                 VerticalInterval = 30,

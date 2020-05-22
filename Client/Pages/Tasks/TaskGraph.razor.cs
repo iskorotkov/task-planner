@@ -33,11 +33,11 @@ namespace TaskPlanner.Client.Pages.Tasks
         {
             _showingTypesSelector.BitMask = _analyzeTypesSelector.BitMask;
             var tasks = await TaskManager.GetAll();
-            var placementConfig = new PlacementConfig
+            var config = new GraphConfig
             {
                 ReferenceTypes = _analyzeTypesSelector.BitMask
             };
-            _graph = await Analyzer.Analyze(tasks, placementConfig: placementConfig);
+            _graph = await Analyzer.Analyze(tasks, config);
             await RenderGraph();
         }
 
