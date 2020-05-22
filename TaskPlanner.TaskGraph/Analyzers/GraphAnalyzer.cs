@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TaskPlanner.Shared.Data.Tasks;
 using TaskPlanner.TaskGraph.Data.Config;
@@ -11,9 +12,9 @@ namespace TaskPlanner.TaskGraph.Analyzers
         public GraphAnalyzer(AbstractAnalyzer abstractAnalyzer, PlacementAnalyzer placementAnalyzer,
             RenderAnalyzer renderAnalyzer)
         {
-            _abstractAnalyzer = abstractAnalyzer ?? throw new System.ArgumentNullException(nameof(abstractAnalyzer));
-            _placementAnalyzer = placementAnalyzer ?? throw new System.ArgumentNullException(nameof(placementAnalyzer));
-            _renderAnalyzer = renderAnalyzer ?? throw new System.ArgumentNullException(nameof(renderAnalyzer));
+            _abstractAnalyzer = abstractAnalyzer ?? throw new ArgumentNullException(nameof(abstractAnalyzer));
+            _placementAnalyzer = placementAnalyzer ?? throw new ArgumentNullException(nameof(placementAnalyzer));
+            _renderAnalyzer = renderAnalyzer ?? throw new ArgumentNullException(nameof(renderAnalyzer));
         }
 
         private readonly AbstractAnalyzer _abstractAnalyzer;
@@ -22,7 +23,9 @@ namespace TaskPlanner.TaskGraph.Analyzers
 
         public async Task<RenderGraph> Analyze(IEnumerable<Todo> tasks, GraphConfig? config = null)
         {
+            _ = tasks ?? throw new ArgumentNullException(nameof(tasks));
             config ??= new GraphConfig();
+            
             var abstractGraph = await _abstractAnalyzer.Analyze(tasks, config);
             var placementGraph = await _placementAnalyzer.Analyze(abstractGraph, config);
             return await _renderAnalyzer.Analyze(placementGraph, config);
