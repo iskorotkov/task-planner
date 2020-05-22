@@ -23,19 +23,20 @@ namespace TaskPlanner.TaskGraph.Analyzers
 
         private RenderEdge CreateEdge(PlacementEdge edge)
         {
+            var (from, to) = Position(edge);
+            var verticalOffset = new Position(0, _config.Dimensions.Height / 2);
+            var horizontalOffset = new Position(_config.Dimensions.Width, 0);
+            if (edge.From.X <= edge.To.X)
+            {
+                from += horizontalOffset;
+            }
+            else
+            {
+                to += horizontalOffset;
+            }
             return new RenderEdge(
-                from: new Position(
-                    x: CornerPosition(edge.From.X, _config.Offsets.X, _config.Dimensions.Width, _config.Intervals.X)
-                       + (edge.From.X <= edge.To.X ? _config.Dimensions.Width : 0),
-                    y: CornerPosition(edge.From.Y, _config.Offsets.Y, _config.Dimensions.Height, _config.Intervals.Y)
-                       + _config.Dimensions.Height / 2
-                ),
-                to: new Position(
-                    x: CornerPosition(edge.To.X, _config.Offsets.X, _config.Dimensions.Width, _config.Intervals.X)
-                       + (edge.From.X > edge.To.X ? _config.Dimensions.Width : 0),
-                    y: CornerPosition(edge.To.Y, _config.Offsets.Y, _config.Dimensions.Height, _config.Intervals.Y)
-                       + _config.Dimensions.Height / 2
-                ),
+                from: from + verticalOffset,
+                to: to + verticalOffset,
                 type: edge.Type
             );
         }
@@ -44,22 +45,33 @@ namespace TaskPlanner.TaskGraph.Analyzers
         {
             return new RenderNode(
                 task: node.Task,
-                position: new Position(
-                    x: CornerPosition(node.Position.X, _config.Offsets.X, _config.Dimensions.Width,
-                        _config.Intervals.X),
-                    y: CornerPosition(node.Position.Y, _config.Offsets.Y, _config.Dimensions.Height,
-                        _config.Intervals.Y)
-                ),
-                dimensions: new Dimensions(
-                    width: _config.Dimensions.Width,
-                    height: _config.Dimensions.Height
-                )
+                position: Position(node),
+                dimensions: _config.Dimensions
             );
         }
 
-        private int CornerPosition(int position, int offset, int sideLength, int interval)
+        private int Position(int position, int offset, int sideLength, int interval)
         {
             return offset + position * (sideLength + interval);
+        }
+
+        private Position Position(Position position, Position offset, Dimensions dimensions, Position intervals)
+        {
+            var x = Position(position.X, offset.X, dimensions.Width, intervals.X);
+            var y = Position(position.Y, offset.Y, dimensions.Height, intervals.Y);
+            return new Position(x, y);
+        }
+
+        private Position Position(PlacementNode node)
+        {
+            return Position(node.Position, _config.Offsets, _config.Dimensions, _config.Intervals);
+        }
+
+        private (Position From, Position To) Position(PlacementEdge edge)
+        {
+            var from = Position(edge.From, _config.Offsets, _config.Dimensions, _config.Intervals);
+            var to = Position(edge.To, _config.Offsets, _config.Dimensions, _config.Intervals);
+            return (from, to);
         }
     }
 }
