@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using TaskPlanner.Shared.Data.Conditions;
 using TaskPlanner.Shared.Data.Tasks;
+using TaskPlanner.Shared.Services.Storage;
 
 namespace TaskPlanner.Client.Services.Storage
 {

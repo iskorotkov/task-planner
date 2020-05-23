@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
-using Shared.Data.State;
-using TaskPlanner.Client.Services.Tasks;
+using TaskPlanner.Shared.Data.State;
+using TaskPlanner.Shared.Services.Tasks;
 
 namespace TaskPlanner.Client.Extensions
 {

@@ -16,13 +16,18 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
         private readonly PlacementAnalyzer _placementAnalyzer = new PlacementAnalyzer();
         private readonly RenderAnalyzer _renderAnalyzer = new RenderAnalyzer();
 
+        private Todo CreateTask(string id)
+        {
+            var task = new Todo();
+            task.Metadata.Id = id;
+            return task;
+        }
+
         [Fact]
         private void OneTaskWithSingleDependency()
         {
-            var task1 = new Todo();
-            var task2 = new Todo();
-            task1.Metadata.Id = "task1";
-            task2.Metadata.Id = "task2";
+            var task1 = CreateTask("task1");
+            var task2 = CreateTask("task2");
 
             task2.References.Add(new Reference(task1.Metadata.Id, ReferenceType.Dependency));
             task1.References.Add(new Reference(task2.Metadata.Id, ReferenceType.Dependant));

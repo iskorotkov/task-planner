@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using TaskPlanner.Client.Services.Auth;
 using TaskPlanner.Client.Services.Canvas;
-using TaskPlanner.Client.Services.Tasks;
 using TaskPlanner.Client.Services.Storage;
-using TaskPlanner.Client.Services.References;
+using TaskPlanner.Shared.Services.References;
+using TaskPlanner.Shared.Services.Tasks;
 using TaskPlanner.TaskGraph.Analyzers;
 
 namespace TaskPlanner.Client

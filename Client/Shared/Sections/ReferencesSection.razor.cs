@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Shared.Data.References;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TaskPlanner.Client.Services.Tasks;
+using TaskPlanner.Shared.Data.References;
 using TaskPlanner.Shared.Data.Tasks;
+using TaskPlanner.Shared.Services.Tasks;
 
 namespace TaskPlanner.Client.Shared.Sections
 {

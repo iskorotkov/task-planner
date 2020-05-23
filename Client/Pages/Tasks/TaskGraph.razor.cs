@@ -2,10 +2,10 @@
 using Blazor.Extensions;
 using Microsoft.AspNetCore.Components;
 using TaskPlanner.Client.Services.Canvas;
-using TaskPlanner.Client.Services.Tasks;
 using TaskPlanner.TaskGraph.Analyzers;
 using TaskPlanner.TaskGraph.Data.Config;
 using TaskPlanner.Client.Shared.Graph;
+using TaskPlanner.Shared.Services.Tasks;
 using TaskPlanner.TaskGraph.Data.Render;
 
 namespace TaskPlanner.Client.Pages.Tasks
