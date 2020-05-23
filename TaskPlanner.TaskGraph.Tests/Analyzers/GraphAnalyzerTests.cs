@@ -2,6 +2,7 @@
 using TaskPlanner.Shared.Data.Coordinates;
 using TaskPlanner.Shared.Data.References;
 using TaskPlanner.Shared.Data.Tasks;
+using TaskPlanner.Shared.Services.References;
 using TaskPlanner.TaskGraph.Analyzers;
 using TaskPlanner.TaskGraph.Data.Config;
 using TaskPlanner.TaskGraph.Data.Placement;
@@ -16,27 +17,26 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
         private readonly PlacementAnalyzer _placementAnalyzer = new PlacementAnalyzer();
         private readonly RenderAnalyzer _renderAnalyzer = new RenderAnalyzer();
 
-        private Todo CreateTask(string id)
-        {
-            var task = new Todo();
-            task.Metadata.Id = id;
-            return task;
-        }
+        private readonly IReferenceManager _referenceManager = new ReferenceManager();
+
+        private static Todo CreateTask(string id) => new Todo { Metadata = { Id = id } };
 
         [Fact]
         private void OneTaskWithSingleDependency()
         {
             var task1 = CreateTask("task1");
             var task2 = CreateTask("task2");
-
-            task2.References.Add(new Reference(task1.Metadata.Id, ReferenceType.Dependency));
-            task1.References.Add(new Reference(task2.Metadata.Id, ReferenceType.Dependant));
+            _referenceManager.AddDependency(task1, task2);
             var input = new List<Todo> { task1, task2 };
 
             var abstractGraph = _abstractAnalyzer.Analyze(input, new GraphConfig())
                 .GetAwaiter().GetResult();
-
-            // TODO: Add tests for AbstractAnalyzer
+            Assert.Single(abstractGraph.Roots);
+            Assert.Equal(task2, abstractGraph.Roots[0].Task);
+            Assert.Single(abstractGraph.Roots[0].References);
+            Assert.Equal(task1, abstractGraph.Roots[0].References[0].Node.Task);
+            Assert.Single(abstractGraph.Roots[0].References[0].Node.References);
+            Assert.Equal(abstractGraph.Roots[0], abstractGraph.Roots[0].References[0].Node.References[0].Node);
 
             var placementGraph = _placementAnalyzer.Analyze(abstractGraph, new GraphConfig())
                 .GetAwaiter().GetResult();
