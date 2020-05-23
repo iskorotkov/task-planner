@@ -21,15 +21,15 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
 
         private static Todo CreateTask(string id) => new Todo { Metadata = { Id = id } };
 
+        // task2 (dependant) <-> (dependency) task1
         [Fact]
         private void OneTaskWithSingleDependency()
         {
             var task1 = CreateTask("task1");
             var task2 = CreateTask("task2");
             _referenceManager.AddDependency(task1, task2);
-            var input = new List<Todo> { task1, task2 };
 
-            var abstractGraph = _abstractAnalyzer.Analyze(input, new GraphConfig())
+            var abstractGraph = _abstractAnalyzer.Analyze(new[] { task1, task2 }, new GraphConfig())
                 .GetAwaiter().GetResult();
             Assert.Single(abstractGraph.Roots);
             Assert.Equal(task2, abstractGraph.Roots[0].Task);
