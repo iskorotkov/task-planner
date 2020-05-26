@@ -7,6 +7,8 @@ using TaskPlanner.Client.Services.Storage;
 using TaskPlanner.Shared.Services.References;
 using TaskPlanner.Shared.Services.Tasks;
 using TaskPlanner.TaskGraph.Analyzers;
+using TaskPlanner.TaskGraph.Data.Config;
+using TaskPlanner.TaskGraph.Layout;
 
 namespace TaskPlanner.Client
 {
@@ -20,8 +22,9 @@ namespace TaskPlanner.Client
             builder.Services.AddScoped<ITaskManager, TaskManager>();
             builder.Services.AddScoped<IReferenceManager, ReferenceManager>();
 
-            builder.Services.AddTransient<CanvasPainter>();
             builder.Services.AddGraphAnalyzers();
+            builder.Services.AddLayoutBuilders();
+            builder.Services.AddTransient<CanvasPainter>();
 
             builder.Services.AddFirebaseAuthentication();
             builder.Services.AddFirestore();
