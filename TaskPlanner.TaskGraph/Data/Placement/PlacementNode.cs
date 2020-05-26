@@ -13,8 +13,8 @@ namespace TaskPlanner.TaskGraph.Data.Placement
             Position = position ?? throw new ArgumentNullException(nameof(position));
         }
 
-        public Todo Task { get; set; }
-        public Position Position { get; set; }
+        public Todo Task { get; }
+        public Position Position { get; }
 
         public override bool Equals(object? obj)
         {

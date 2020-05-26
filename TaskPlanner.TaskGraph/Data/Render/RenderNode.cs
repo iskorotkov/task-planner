@@ -14,9 +14,9 @@ namespace TaskPlanner.TaskGraph.Data.Render
             Dimensions = dimensions ?? throw new ArgumentNullException(nameof(dimensions));
         }
 
-        public Todo Task { get; set; }
-        public Position Position { get; set; }
-        public Dimensions Dimensions { get; set; }
+        public Todo Task { get; }
+        public Position Position { get; }
+        public Dimensions Dimensions { get; }
 
         public override bool Equals(object? obj)
         {

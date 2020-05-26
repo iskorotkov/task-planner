@@ -10,7 +10,7 @@ namespace TaskPlanner.TaskGraph.Data.Abstract
             Type = type;
         }
 
-        public AbstractNode Node { get; set; }
-        public ReferenceType Type { get; set; }
+        public AbstractNode Node { get; }
+        public ReferenceType Type { get; }
     }
 }

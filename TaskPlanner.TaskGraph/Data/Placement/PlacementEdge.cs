@@ -14,9 +14,9 @@ namespace TaskPlanner.TaskGraph.Data.Placement
             Type = type;
         }
 
-        public Position From { get; set; }
-        public Position To { get; set; }
-        public ReferenceType Type { get; set; }
+        public Position From { get; }
+        public Position To { get; }
+        public ReferenceType Type { get; }
 
         public override bool Equals(object? obj)
         {

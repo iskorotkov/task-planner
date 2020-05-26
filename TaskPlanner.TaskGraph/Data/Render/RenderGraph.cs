@@ -17,8 +17,8 @@ namespace TaskPlanner.TaskGraph.Data.Render
             Edges = edges ?? throw new ArgumentNullException(nameof(edges));
         }
 
-        public List<RenderNode> Nodes { get; set; }
-        public List<RenderEdge> Edges { get; set; }
+        public List<RenderNode> Nodes { get; }
+        public List<RenderEdge> Edges { get; }
 
         public override bool Equals(object? obj)
         {
