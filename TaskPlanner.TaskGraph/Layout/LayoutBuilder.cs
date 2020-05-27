@@ -13,7 +13,8 @@ namespace TaskPlanner.TaskGraph.Layout
             var position = nodePosition + padding;
             foreach (var nodeElement in config.ElementsPositions)
             {
-                yield return new RenderElement(position + nodeElement.Offset, nodeElement.MaxLetters);
+                position += nodeElement.Offset;
+                yield return new RenderElement(position, nodeElement.MaxLetters);
             }
         }
     }

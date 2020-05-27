@@ -18,12 +18,12 @@ namespace TaskPlanner.TaskGraph.Data.Config
             new NodeElement(new Position(0, 0), 20),
             new NodeElement(new Position(0, 20), 20),
 
-            new NodeElement(new Position(0, 40), 20),
-            new NodeElement(new Position(0, 60), 20),
-            new NodeElement(new Position(0, 80), 20),
-            new NodeElement(new Position(0, 100), 20),
-            new NodeElement(new Position(0, 120), 20),
-            new NodeElement(new Position(0, 140), 20)
+            new NodeElement(new Position(0, 20), 20),
+            new NodeElement(new Position(0, 20), 20),
+            new NodeElement(new Position(0, 20), 20),
+            new NodeElement(new Position(0, 20), 20),
+            new NodeElement(new Position(0, 20), 20),
+            new NodeElement(new Position(0, 20), 20)
         };
     }
 }

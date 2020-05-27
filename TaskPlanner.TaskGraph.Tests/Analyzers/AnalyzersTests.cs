@@ -29,7 +29,7 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
             ElementsPositions = new List<NodeElement>
             {
                 new NodeElement(new Position(15, 30), 16),
-                new NodeElement(new Position(15, 45), 9)
+                new NodeElement(new Position(0, 15), 9)
             }
         };
 
