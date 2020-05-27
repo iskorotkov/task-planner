@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Blazor.Extensions;
 using Blazor.Extensions.Canvas.Canvas2D;
+using TaskPlanner.Shared.Extensions;
 using TaskPlanner.Shared.Services.Formatters;
 using TaskPlanner.TaskGraph.Data.Render;
 
@@ -38,6 +39,7 @@ namespace TaskPlanner.Client.Services.Canvas
 
         public async Task DrawGraph(RenderGraph graph)
         {
+            EnsureInitialized();
             foreach (var node in graph.Nodes)
             {
                 await DrawNode(node);
@@ -51,23 +53,65 @@ namespace TaskPlanner.Client.Services.Canvas
             }
         }
 
-        public async Task DrawNode(RenderNode node)
+        private async Task DrawNode(RenderNode node)
         {
-            EnsureInitialized();
-            await _context.StrokeRectAsync(node.Position.X, node.Position.Y, node.Dimensions.Width, node.Dimensions.Height);
+            await _context.StrokeRectAsync(node.Position.X, node.Position.Y,
+                node.Dimensions.Width, node.Dimensions.Height);
 
-            var titleElement = node.Elements[0];
-            var title = _nodeTextFormatter.ClampText(node.Task.Content.Title ?? "", titleElement.MaxLetters);
-            await _context.FillTextAsync(title, titleElement.Position.X, titleElement.Position.Y);
+            await DrawElement(node.Task.Content.Title ?? "?", node.Elements[0]);
+            await DrawElement(node.Task.Content.Description ?? "?", node.Elements[1]);
 
-            var descElement = node.Elements[1];
-            var desc = _nodeTextFormatter.ClampText(node.Task.Content.Description ?? "", titleElement.MaxLetters);
-            await _context.FillTextAsync(desc, descElement.Position.X, descElement.Position.Y);
+            var index = 2;
+            RenderElement NextElement() => node.Elements[index++];
+
+            if (node.Task.Participants.Author is { } author)
+            {
+                await DrawElement(author, NextElement());
+            }
+            
+            if (node.Task.ExecutionTime is { } time)
+            {
+                var estimated = time.EstimatedTime?.ToShortString() ?? "?";
+                var spent = time.TimeSpent?.ToShortString() ?? "?";
+                await DrawElement($"Time: {estimated} / {spent}",
+                    NextElement());
+            }
+
+            if (node.Task.Deadlines is { } deadlines)
+            {
+                var hd = deadlines.HardDeadline?.ToString() ?? "?";
+                var sd = deadlines.SoftDeadline.ToString() ?? "?";
+                await DrawElement($"Deadlines: {sd} : {hd}", NextElement());
+            }
+
+            if (node.Task.Iterations is { } iterations)
+            {
+                await DrawElement(
+                    $"Iterations: {iterations.Executed} / {iterations.Required} x{iterations.TimePerIteration.ToShortString()}",
+                    NextElement());
+            }
+
+            if (node.Task.Metrics is { } metrics)
+            {
+                await DrawElement($"Metrics: C={metrics.Complexity}, I={metrics.Importance}",
+                    NextElement());
+            }
+
+            if (node.Task.References.Count > 0)
+            {
+                await DrawElement($"References: {node.Task.References.Count}", NextElement());
+            }
         }
 
-        public async Task DrawEdge(RenderEdge edge)
+        private async Task DrawElement(string text, RenderElement element)
         {
-            EnsureInitialized();
+            text = _nodeTextFormatter.ClampText(text, element.MaxLetters);
+            var desc = _nodeTextFormatter.ClampText(text, element.MaxLetters);
+            await _context.FillTextAsync(desc, element.Position.X, element.Position.Y);
+        }
+
+        private async Task DrawEdge(RenderEdge edge)
+        {
             await _context.BeginPathAsync();
             await _context.MoveToAsync(edge.From.X, edge.From.Y);
             await _context.LineToAsync(edge.To.X, edge.To.Y);

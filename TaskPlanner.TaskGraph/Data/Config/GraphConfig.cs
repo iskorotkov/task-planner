@@ -12,11 +12,18 @@ namespace TaskPlanner.TaskGraph.Data.Config
         public Position Intervals { get; set; } = new Position(30, 30);
         public Dimensions Dimensions { get; set; } = new Dimensions(120, 160);
 
-        public Padding ContentPadding { get; set; } = new Padding(8);
+        public Padding ContentPadding { get; set; } = new Padding(8, 16);
         public List<NodeElement> ElementsPositions { get; set; } = new List<NodeElement>
         {
-            new NodeElement(new Position(20, 20), 10),
-            new NodeElement(new Position(20, 40), 10)
+            new NodeElement(new Position(0, 0), 20),
+            new NodeElement(new Position(0, 20), 20),
+
+            new NodeElement(new Position(0, 40), 20),
+            new NodeElement(new Position(0, 60), 20),
+            new NodeElement(new Position(0, 80), 20),
+            new NodeElement(new Position(0, 100), 20),
+            new NodeElement(new Position(0, 120), 20),
+            new NodeElement(new Position(0, 140), 20)
         };
     }
 }
