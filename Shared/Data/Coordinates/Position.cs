@@ -59,5 +59,11 @@ namespace TaskPlanner.Shared.Data.Coordinates
         {
             return HashCode.Combine(X, Y);
         }
+
+        public void Deconstruct(out int x, out int y)
+        {
+            x = X;
+            y = Y;
+        }
     }
 }

@@ -1,26 +1,24 @@
 ﻿using System;
+using TaskPlanner.Shared.Data.Coordinates;
 using TaskPlanner.TaskGraph.Data.Abstract;
 
 namespace TaskPlanner.TaskGraph.Data.Placement
 {
     public class NodePosition
     {
-        private AbstractNode Node { get; }
-        private int Row { get; }
-        private int Column { get; }
-
-        public NodePosition(AbstractNode node, int row, int column)
+        public NodePosition(AbstractNode node, Position position)
         {
             Node = node ?? throw new ArgumentNullException(nameof(node));
-            Row = row;
-            Column = column;
+            Position = position ?? throw new ArgumentNullException(nameof(position));
         }
 
-        public void Deconstruct(out AbstractNode node, out int row, out int column)
+        public AbstractNode Node { get; }
+        public Position Position { get; }
+
+        public void Deconstruct(out AbstractNode node, out Position position)
         {
             node = Node;
-            row = Row;
-            column = Column;
+            position = Position;
         }
     }
 }

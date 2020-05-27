@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TaskPlanner.Shared.Data.Coordinates;
@@ -44,7 +45,7 @@ namespace TaskPlanner.TaskGraph.Analyzers
         private void AddGraph(AbstractNode root)
         {
             _nodesQueue = new Queue<NodePosition>();
-            _nodesQueue.Enqueue(new NodePosition(root, _nextGraphRow, 0));
+            _nodesQueue.Enqueue(new NodePosition(root, new Position(_nextGraphRow, 0)));
             while (_nodesQueue.Count > 0)
             {
                 AddNode(_nodesQueue);
@@ -53,7 +54,8 @@ namespace TaskPlanner.TaskGraph.Analyzers
 
         private void AddNode(Queue<NodePosition> nodesQueue)
         {
-            var (nextNode, row, column) = nodesQueue.Dequeue();
+            var (nextNode, position) = nodesQueue.Dequeue();
+            var (column, row) = position;
             CreatePlacementNode(nextNode, row, column);
 
             var referenceRow = row;
@@ -85,13 +87,17 @@ namespace TaskPlanner.TaskGraph.Analyzers
         private void AddEdgeToNewNode(AbstractReference reference, Position fromPos,
             Position toPos)
         {
+            var nodePosition = _nodesQueue.FirstOrDefault(x => Equals(x.Node, reference.Node));
+            if (nodePosition == null)
+            {
+                _nodesQueue.Enqueue(new NodePosition(reference.Node, toPos));
+            }
+
             _graph.Edges.Add(new PlacementEdge(
                 @from: fromPos,
-                to: toPos,
+                to: nodePosition?.Position ?? toPos,
                 type: reference.Type
             ));
-
-            _nodesQueue.Enqueue(new NodePosition(reference.Node, toPos.Y, toPos.X));
         }
 
         private void AddEdgeToExistingNode(AbstractReference reference, int column, int row)

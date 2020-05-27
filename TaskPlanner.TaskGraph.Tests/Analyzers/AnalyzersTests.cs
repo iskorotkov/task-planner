@@ -99,13 +99,13 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
                 new RenderEdge(
                     new Position(200, 150), 
                     new Position(220, 150), 
-                    new List<ReferenceType> { ReferenceType.Dependency }, 
+                    ReferenceType.Dependency, 
                     new RenderElement(new Position(233, 174), 10)
                     ),
                 new RenderEdge(
                     new Position(220, 150), 
                     new Position(200, 150), 
-                    new List<ReferenceType> { ReferenceType.Dependant }, 
+                    ReferenceType.Dependant, 
                     new RenderElement(new Position(233, 174), 10)
                     )
             }, renderGraph.Edges);
