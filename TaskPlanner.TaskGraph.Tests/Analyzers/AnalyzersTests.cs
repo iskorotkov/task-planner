@@ -31,7 +31,8 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
                 new NodeElement(new Position(15, 30), 16),
                 new NodeElement(new Position(0, 15), 9)
             },
-            EdgeLabel = new NodeElement(new Position(23, 24), 10)
+            EdgeLabel = new NodeElement(new Position(23, 24), 10),
+            BackwardEdgeLabel = new NodeElement(new Position(11, 12), 20)
         };
 
         private static Todo CreateTask(string id) => new Todo { Metadata = { Id = id } };
@@ -106,7 +107,7 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
                     new Position(220, 150), 
                     new Position(200, 150), 
                     ReferenceType.Dependant, 
-                    new RenderElement(new Position(233, 174), 10)
+                    new RenderElement(new Position(221, 162), 20)
                     )
             }, renderGraph.Edges);
         }
