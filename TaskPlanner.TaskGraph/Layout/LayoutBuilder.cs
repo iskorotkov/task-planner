@@ -11,7 +11,7 @@ namespace TaskPlanner.TaskGraph.Layout
         {
             var padding = new Position(config.ContentPadding.Left, config.ContentPadding.Top);
             var position = nodePosition + padding;
-            foreach (var nodeElement in config.ElementsPositions)
+            foreach (var nodeElement in config.Elements)
             {
                 position += nodeElement.Offset;
                 yield return new RenderElement(position, nodeElement.MaxLetters);

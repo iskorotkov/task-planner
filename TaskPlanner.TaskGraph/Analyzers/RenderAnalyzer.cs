@@ -40,10 +40,15 @@ namespace TaskPlanner.TaskGraph.Analyzers
             {
                 to += horizontalOffset;
             }
+
+            from += verticalOffset;
+            to += verticalOffset;
+            var labelPosition = (from + to) / 2 + _config.EdgeLabel.Offset;
             return new RenderEdge(
-                from: from + verticalOffset,
-                to: to + verticalOffset,
-                type: edge.Type
+                from: from,
+                to: to,
+                type: edge.Type,
+                new RenderElement(labelPosition, _config.EdgeLabel.MaxLetters)
             );
         }
 

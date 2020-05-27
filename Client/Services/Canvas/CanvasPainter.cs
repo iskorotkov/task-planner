@@ -123,8 +123,8 @@ namespace TaskPlanner.Client.Services.Canvas
             await _context.ClosePathAsync();
             await _context.StrokeAsync();
 
-            var labelPos = (edge.From + edge.To) / 2;
-            await _context.FillTextAsync(edge.Type.ToString(), labelPos.X, labelPos.Y);
+            var label = _nodeTextFormatter.ClampText(edge.Type.ToString(), edge.Label.MaxLetters);
+            await _context.FillTextAsync(label, edge.Label.Position.X, edge.Label.Position.Y);
         }
 
         private void EnsureInitialized()

@@ -26,11 +26,12 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
             Dimensions = new Dimensions(160, 200),
             ReferenceTypes = ReferenceType.All,
             ContentPadding = new Padding(11),
-            ElementsPositions = new List<NodeElement>
+            Elements = new List<NodeElement>
             {
                 new NodeElement(new Position(15, 30), 16),
                 new NodeElement(new Position(0, 15), 9)
-            }
+            },
+            EdgeLabel = new NodeElement(new Position(23, 24), 10)
         };
 
         private static Todo CreateTask(string id) => new Todo { Metadata = { Id = id } };
@@ -95,8 +96,18 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
             RenderNodeEqual(expectedRenderNodes[1], renderGraph.Nodes[1]);
             Assert.Equal(new List<RenderEdge>
             {
-                new RenderEdge(new Position(200, 150), new Position(220, 150), ReferenceType.Dependency),
-                new RenderEdge(new Position(220, 150), new Position(200, 150), ReferenceType.Dependant)
+                new RenderEdge(
+                    new Position(200, 150), 
+                    new Position(220, 150), 
+                    ReferenceType.Dependency,
+                    new RenderElement(new Position(233, 174), 10)
+                    ),
+                new RenderEdge(
+                    new Position(220, 150), 
+                    new Position(200, 150), 
+                    ReferenceType.Dependant,
+                    new RenderElement(new Position(233, 174), 10)
+                    )
             }, renderGraph.Edges);
         }
 

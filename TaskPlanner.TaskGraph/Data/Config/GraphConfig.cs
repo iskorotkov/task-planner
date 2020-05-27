@@ -13,7 +13,7 @@ namespace TaskPlanner.TaskGraph.Data.Config
         public Dimensions Dimensions { get; set; } = new Dimensions(120, 160);
 
         public Padding ContentPadding { get; set; } = new Padding(8, 16);
-        public List<NodeElement> ElementsPositions { get; set; } = new List<NodeElement>
+        public List<NodeElement> Elements { get; set; } = new List<NodeElement>
         {
             new NodeElement(new Position(0, 0), 20),
             new NodeElement(new Position(0, 20), 20),
@@ -25,5 +25,7 @@ namespace TaskPlanner.TaskGraph.Data.Config
             new NodeElement(new Position(0, 20), 20),
             new NodeElement(new Position(0, 20), 20)
         };
+
+        public NodeElement EdgeLabel { get; set; } = new NodeElement(new Position(-10, -5), 16);
     }
 }
