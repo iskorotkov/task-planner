@@ -70,8 +70,18 @@ namespace TaskPlanner.TaskGraph.Analyzers
                 {
                     var fromPosition = new Position(column, row);
                     var toPosition = new Position(referenceColumn, referenceRow);
-                    AddEdgeToNewNode(reference, fromPosition, toPosition);
-                    referenceRow++;
+                    var nodePosition = _nodesQueue.FirstOrDefault(x => Equals(x.Node, reference.Node));
+                    if (nodePosition == null)
+                    {
+                        _nodesQueue.Enqueue(new NodePosition(reference.Node, toPosition));
+                        referenceRow++;
+                    }
+
+                    _graph.Edges.Add(new PlacementEdge(
+                        @from: fromPosition,
+                        to: nodePosition?.Position ?? toPosition,
+                        type: reference.Type
+                    ));
                     _nextGraphRow = Math.Max(_nextGraphRow, referenceRow);
                 }
             }
@@ -82,22 +92,6 @@ namespace TaskPlanner.TaskGraph.Analyzers
             var placementNode = new PlacementNode(nextNode.Task, new Position(column, row));
             _graph.Nodes.Add(placementNode);
             _placedTasks.Add(nextNode.Task);
-        }
-
-        private void AddEdgeToNewNode(AbstractReference reference, Position fromPos,
-            Position toPos)
-        {
-            var nodePosition = _nodesQueue.FirstOrDefault(x => Equals(x.Node, reference.Node));
-            if (nodePosition == null)
-            {
-                _nodesQueue.Enqueue(new NodePosition(reference.Node, toPos));
-            }
-
-            _graph.Edges.Add(new PlacementEdge(
-                @from: fromPos,
-                to: nodePosition?.Position ?? toPos,
-                type: reference.Type
-            ));
         }
 
         private void AddEdgeToExistingNode(AbstractReference reference, int column, int row)
