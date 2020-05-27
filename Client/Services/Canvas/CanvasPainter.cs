@@ -57,18 +57,22 @@ namespace TaskPlanner.Client.Services.Canvas
         {
             await _context.StrokeRectAsync(node.Position.X, node.Position.Y,
                 node.Dimensions.Width, node.Dimensions.Height);
+            await DrawNodeComponents(node);
+        }
 
-            await DrawElement(node.Task.Content.Title ?? "?", node.Elements[0]);
-            await DrawElement(node.Task.Content.Description ?? "?", node.Elements[1]);
-
-            var index = 2;
+        private async Task DrawNodeComponents(RenderNode node)
+        {
+            var index = 0;
             RenderElement NextElement() => node.Elements[index++];
+
+            await DrawElement(node.Task.Content.Title ?? "?", NextElement());
+            await DrawElement(node.Task.Content.Description ?? "?", NextElement());
 
             if (node.Task.Participants.Author is { } author)
             {
                 await DrawElement(author, NextElement());
             }
-            
+
             if (node.Task.ExecutionTime is { } time)
             {
                 var estimated = time.EstimatedTime?.ToShortString() ?? "?";
@@ -86,8 +90,9 @@ namespace TaskPlanner.Client.Services.Canvas
 
             if (node.Task.Iterations is { } iterations)
             {
+                var perIteration = iterations.TimePerIteration?.ToShortString() ?? "?";
                 await DrawElement(
-                    $"Iterations: {iterations.Executed} / {iterations.Required} x{iterations.TimePerIteration.ToShortString()}",
+                    $"Iterations: {iterations.Executed} / {iterations.Required} x{perIteration}",
                     NextElement());
             }
 
