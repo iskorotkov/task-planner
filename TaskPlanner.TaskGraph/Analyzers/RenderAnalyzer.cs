@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TaskPlanner.Shared.Data.Coordinates;
+using TaskPlanner.Shared.Data.References;
 using TaskPlanner.TaskGraph.Data.Config;
 using TaskPlanner.TaskGraph.Data.Placement;
 using TaskPlanner.TaskGraph.Data.Render;
@@ -23,11 +25,27 @@ namespace TaskPlanner.TaskGraph.Analyzers
         {
             _config = config ?? throw new ArgumentNullException(nameof(config));
             var nodes = graph.Nodes.Select(CreateNode);
-            var edges = graph.Edges.Select(CreateEdge);
+            var edges = CreateEdges(graph.Edges);
             return Task.FromResult(new RenderGraph(nodes.ToList(), edges.ToList()));
         }
 
-        private RenderEdge CreateEdge(PlacementEdge edge)
+        private List<RenderEdge> CreateEdges(List<PlacementEdge> edges)
+        {
+            var grouped = edges.GroupBy(edge => new { edge.From, edge.To });
+            var results = new List<RenderEdge>();
+            foreach (var group in grouped)
+            {
+                var first = group.First();
+                var types = group.Select(x => x.Type)
+                    .Aggregate(ReferenceType.None, (a, b) => a | b);
+                var edge = CreateEdge(first, types);
+                results.Add(edge);
+            }
+
+            return results;
+        }
+
+        private RenderEdge CreateEdge(PlacementEdge edge, ReferenceType types)
         {
             var (from, to) = RenderPosition(edge);
             var verticalOffset = new Position(0, _config.Dimensions.Height / 2);
@@ -47,7 +65,7 @@ namespace TaskPlanner.TaskGraph.Analyzers
             return new RenderEdge(
                 from: from,
                 to: to,
-                type: edge.Type,
+                types: types,
                 new RenderElement(labelPosition, _config.EdgeLabel.MaxLetters)
             );
         }

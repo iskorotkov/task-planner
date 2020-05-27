@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Blazor.Extensions;
 using Blazor.Extensions.Canvas.Canvas2D;
+using TaskPlanner.Shared.Data.References;
 using TaskPlanner.Shared.Extensions;
 using TaskPlanner.Shared.Services.Formatters;
 using TaskPlanner.TaskGraph.Data.Render;
@@ -44,10 +44,8 @@ namespace TaskPlanner.Client.Services.Canvas
             {
                 await DrawNode(node);
             }
-
-            var edges = graph.Edges
-                .Where(x => _config.Types.HasFlag(x.Type));
-            foreach (var edge in edges)
+            
+            foreach (var edge in graph.Edges)
             {
                 await DrawEdge(edge);
             }
@@ -117,14 +115,35 @@ namespace TaskPlanner.Client.Services.Canvas
 
         private async Task DrawEdge(RenderEdge edge)
         {
+            var types = edge.Types & _config.Types;
+            if (types == 0)
+            {
+                return;
+            }
+
+            await DrawEdgeLine(edge);
+            await DrawEdgeLabel(edge, types);
+        }
+
+        private async Task DrawEdgeLabel(RenderEdge edge, ReferenceType types)
+        {
+            var typeLabels = types.ToString().Split(", ");
+            var label = typeLabels.Length switch
+            {
+                1 => typeLabels[0],
+                _ => $"{typeLabels[0]} +{typeLabels.Length - 1}"
+            };
+            label = _nodeTextFormatter.ClampText(label, edge.Label.MaxLetters);
+            await _context.FillTextAsync(label, edge.Label.Position.X, edge.Label.Position.Y);
+        }
+
+        private async Task DrawEdgeLine(RenderEdge edge)
+        {
             await _context.BeginPathAsync();
             await _context.MoveToAsync(edge.From.X, edge.From.Y);
             await _context.LineToAsync(edge.To.X, edge.To.Y);
             await _context.ClosePathAsync();
             await _context.StrokeAsync();
-
-            var label = _nodeTextFormatter.ClampText(edge.Type.ToString(), edge.Label.MaxLetters);
-            await _context.FillTextAsync(label, edge.Label.Position.X, edge.Label.Position.Y);
         }
 
         private void EnsureInitialized()
