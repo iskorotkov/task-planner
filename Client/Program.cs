@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TaskPlanner.Client.Services.Auth;
 using TaskPlanner.Client.Services.Canvas;
 using TaskPlanner.Client.Services.Storage;
+using TaskPlanner.Shared.Services.Formatters;
 using TaskPlanner.Shared.Services.References;
 using TaskPlanner.Shared.Services.Tasks;
 using TaskPlanner.TaskGraph.Analyzers;
@@ -21,6 +22,7 @@ namespace TaskPlanner.Client
 
             builder.Services.AddScoped<ITaskManager, TaskManager>();
             builder.Services.AddScoped<IReferenceManager, ReferenceManager>();
+            builder.Services.AddTransient<NodeTextFormatter>();
 
             builder.Services.AddGraphAnalyzers();
             builder.Services.AddLayoutBuilders();

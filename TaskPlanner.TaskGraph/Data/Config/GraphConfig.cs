@@ -15,8 +15,8 @@ namespace TaskPlanner.TaskGraph.Data.Config
         public Padding ContentPadding { get; set; } = new Padding(8);
         public List<NodeElement> ElementsPositions { get; set; } = new List<NodeElement>
         {
-            new NodeElement(new Position(20, 20), 80),
-            new NodeElement(new Position(20, 40), 80)
+            new NodeElement(new Position(20, 20), 10),
+            new NodeElement(new Position(20, 40), 10)
         };
     }
 }

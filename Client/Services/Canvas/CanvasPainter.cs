@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Blazor.Extensions;
 using Blazor.Extensions.Canvas.Canvas2D;
+using TaskPlanner.Shared.Services.Formatters;
 using TaskPlanner.TaskGraph.Data.Render;
 
 namespace TaskPlanner.Client.Services.Canvas
@@ -12,6 +13,12 @@ namespace TaskPlanner.Client.Services.Canvas
         private BECanvasComponent? _canvas;
         private Canvas2DContext? _context;
         private PainterConfig _config;
+        private readonly NodeTextFormatter _nodeTextFormatter;
+
+        public CanvasPainter(NodeTextFormatter nodeTextFormatter)
+        {
+            _nodeTextFormatter = nodeTextFormatter ?? throw new ArgumentNullException(nameof(nodeTextFormatter));
+        }
 
         public async Task Init(BECanvasComponent canvas, PainterConfig config)
         {
@@ -49,11 +56,13 @@ namespace TaskPlanner.Client.Services.Canvas
             EnsureInitialized();
             await _context.StrokeRectAsync(node.Position.X, node.Position.Y, node.Dimensions.Width, node.Dimensions.Height);
 
-            var titlePosition = node.Position + _config.TitleOffset;
-            await _context.FillTextAsync(node.Task.Content.Title, titlePosition.X, titlePosition.Y);
+            var titleElement = node.Elements[0];
+            var title = _nodeTextFormatter.ClampText(node.Task.Content.Title ?? "", titleElement.MaxLetters);
+            await _context.FillTextAsync(title, titleElement.Position.X, titleElement.Position.Y);
 
-            var descPosition = node.Position + _config.DescriptionOffset;
-            await _context.FillTextAsync(node.Task.Content.Description ?? "", descPosition.X, descPosition.Y);
+            var descElement = node.Elements[1];
+            var desc = _nodeTextFormatter.ClampText(node.Task.Content.Description ?? "", titleElement.MaxLetters);
+            await _context.FillTextAsync(desc, descElement.Position.X, descElement.Position.Y);
         }
 
         public async Task DrawEdge(RenderEdge edge)
