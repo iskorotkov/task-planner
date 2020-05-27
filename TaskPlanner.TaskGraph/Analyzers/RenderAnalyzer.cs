@@ -61,12 +61,13 @@ namespace TaskPlanner.TaskGraph.Analyzers
 
             from += verticalOffset;
             to += verticalOffset;
-            var labelPosition = (from + to) / 2 + _config.EdgeLabel.Offset;
+            var edgeLabel = from.X < to.X ? _config.EdgeLabel : _config.BackwardEdgeLabel;
+            var labelPosition = (from + to) / 2 + edgeLabel.Offset;
             return new RenderEdge(
                 from: from,
                 to: to,
                 types: types,
-                new RenderElement(labelPosition, _config.EdgeLabel.MaxLetters)
+                new RenderElement(labelPosition, edgeLabel.MaxLetters)
             );
         }
 

@@ -27,5 +27,6 @@ namespace TaskPlanner.TaskGraph.Data.Config
         };
 
         public NodeElement EdgeLabel { get; set; } = new NodeElement(new Position(-10, -5), 16);
+        public NodeElement BackwardEdgeLabel { get; set; } = new NodeElement(new Position(-10, 10), 16);
     }
 }
