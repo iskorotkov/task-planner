@@ -29,6 +29,8 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
             Elements = new List<NodeElement>
             {
                 new NodeElement(new Position(15, 30), 16),
+                new NodeElement(new Position(8, 0), 10, false),
+                new NodeElement(new Position(6, 0), 8, false),
                 new NodeElement(new Position(0, 15), 9)
             },
             EdgeLabel = new NodeElement(new Position(23, 24), 10),
@@ -78,6 +80,8 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
                     new List<RenderElement>
                     {
                         new RenderElement(new Position(66, 91), 16),
+                        new RenderElement(new Position(74, 91), 10),
+                        new RenderElement(new Position(80, 91), 8),
                         new RenderElement(new Position(66, 106), 9)
                     }
                 ),
@@ -88,6 +92,8 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
                     new List<RenderElement>
                     {
                         new RenderElement(new Position(246, 91), 16),
+                        new RenderElement(new Position(254, 91), 10),
+                        new RenderElement(new Position(260, 91), 8),
                         new RenderElement(new Position(246, 106), 9)
                     }
                 )

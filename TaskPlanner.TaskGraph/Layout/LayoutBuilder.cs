@@ -11,10 +11,20 @@ namespace TaskPlanner.TaskGraph.Layout
         {
             var padding = new Position(config.ContentPadding.Left, config.ContentPadding.Top);
             var position = nodePosition + padding;
+            var positionInLine = position;
             foreach (var nodeElement in config.Elements)
             {
-                position += nodeElement.Offset;
-                yield return new RenderElement(position, nodeElement.MaxLetters);
+                if (nodeElement.NextLine)
+                {
+                    position += nodeElement.Offset;
+                    positionInLine = position;
+                }
+                else
+                {
+                    positionInLine += nodeElement.Offset;
+                }
+
+                yield return new RenderElement(positionInLine, nodeElement.MaxLetters);
             }
         }
     }
