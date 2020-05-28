@@ -45,7 +45,7 @@ namespace TaskPlanner.TaskGraph.Analyzers
         private void AddGraph(AbstractNode root)
         {
             _nodesQueue = new Queue<NodePosition>();
-            _nodesQueue.Enqueue(new NodePosition(root, new Position(_nextGraphRow, 0)));
+            _nodesQueue.Enqueue(new NodePosition(root, new Position(0, _nextGraphRow)));
             while (_nodesQueue.Count > 0)
             {
                 AddNode(_nodesQueue);
