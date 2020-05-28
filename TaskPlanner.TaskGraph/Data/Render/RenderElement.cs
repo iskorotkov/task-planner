@@ -5,18 +5,18 @@ namespace TaskPlanner.TaskGraph.Data.Render
 {
     public class RenderElement
     {
-        public RenderElement(Position position, int maxLetters)
+        public RenderElement(Position position, int maxWidth)
         {
             Position = position ?? throw new ArgumentNullException(nameof(position));
-            MaxLetters = maxLetters;
+            MaxWidth = maxWidth;
         }
 
         public Position Position { get; }
-        public int MaxLetters { get; }
+        public int MaxWidth { get; }
 
         protected bool Equals(RenderElement other)
         {
-            return Position.Equals(other.Position) && MaxLetters.Equals(other.MaxLetters);
+            return Position.Equals(other.Position) && MaxWidth.Equals(other.MaxWidth);
         }
 
         public override bool Equals(object? obj)
@@ -41,7 +41,7 @@ namespace TaskPlanner.TaskGraph.Data.Render
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Position, MaxLetters);
+            return HashCode.Combine(Position, MaxWidth);
         }
     }
 }
