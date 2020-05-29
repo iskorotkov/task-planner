@@ -67,7 +67,7 @@ namespace TaskPlanner.TaskGraph.Analyzers
                 from: from,
                 to: to,
                 types: types,
-                new RenderElement(labelPosition, edgeLabel.MaxLetters)
+                new RenderElement(labelPosition, edgeLabel.Dimensions)
             );
         }
 

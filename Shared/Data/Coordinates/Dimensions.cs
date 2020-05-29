@@ -9,6 +9,12 @@ namespace TaskPlanner.Shared.Data.Coordinates
 
         }
 
+        public Dimensions(int dimensions)
+        {
+            Width = dimensions;
+            Height = dimensions;
+        }
+
         public Dimensions(int width, int height)
         {
             Width = width;

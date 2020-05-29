@@ -45,7 +45,7 @@ namespace TaskPlanner.Client.Services.Canvas
             {
                 await DrawNode(node);
             }
-            
+
             foreach (var edge in graph.Edges)
             {
                 await DrawEdge(edge);
@@ -111,11 +111,9 @@ namespace TaskPlanner.Client.Services.Canvas
 
         private async Task DrawElement(RenderElement element, string text)
         {
-            // TODO: Text offset should depend on font size
-            var position = element.Position + new Position(0, 8);
-            text = _nodeTextFormatter.ClampText(text, element.MaxWidth);
-            var desc = _nodeTextFormatter.ClampText(text, element.MaxWidth);
-            await _context.FillTextAsync(desc, position.X, position.Y);
+            var position = element.Position + new Position(0, element.Dimensions.Height);
+            text = _nodeTextFormatter.ClampText(text, element.Dimensions.Width);
+            await _context.FillTextAsync(text, position.X, position.Y);
         }
 
         private async Task DrawRect(RenderElement element, string style)
@@ -123,7 +121,7 @@ namespace TaskPlanner.Client.Services.Canvas
             var oldStyle = _context.FillStyle;
             await _context.SetFillStyleAsync(style);
             await _context.FillRectAsync(element.Position.X, element.Position.Y,
-                _config.IconDimensions.Width, _config.IconDimensions.Height);
+                element.Dimensions.Width, element.Dimensions.Height);
             await _context.SetFillStyleAsync(oldStyle);
         }
 
@@ -142,14 +140,19 @@ namespace TaskPlanner.Client.Services.Canvas
         private async Task DrawEdgeLabel(RenderEdge edge, ReferenceType types)
         {
             var typeLabels = types.ToString().Split(", ");
-            var label = typeLabels.Length switch
+            var position = edge.Label.Position + new Position(0, edge.Label.Dimensions.Height);
+            var label = typeLabels[0];
+            if (typeLabels.Length == 1)
             {
-                1 => typeLabels[0],
-                _ => $"{typeLabels[0]} +{typeLabels.Length - 1}"
-            };
-            label = _nodeTextFormatter.ClampText(label, edge.Label.MaxWidth);
-            
-            await _context.FillTextAsync(label, edge.Label.Position.X, edge.Label.Position.Y);
+                label = _nodeTextFormatter.ClampText(label, edge.Label.Dimensions.Width);
+            }
+            else
+            {
+                var suffix = $" +{typeLabels.Length - 1}";
+                label = _nodeTextFormatter.ClampText(label, edge.Label.Dimensions.Width - suffix.Length);
+                label += suffix;
+            }
+            await _context.FillTextAsync(label, position.X, position.Y);
         }
 
         private async Task DrawEdgeLine(RenderEdge edge)

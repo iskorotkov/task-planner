@@ -24,7 +24,7 @@ namespace TaskPlanner.TaskGraph.Layout
                     positionInLine += nodeElement.Offset;
                 }
 
-                yield return new RenderElement(positionInLine, nodeElement.MaxLetters);
+                yield return new RenderElement(positionInLine, nodeElement.Dimensions);
             }
         }
     }

@@ -5,19 +5,15 @@ namespace TaskPlanner.TaskGraph.Data.Config
 {
     public class NodeElement
     {
-        public NodeElement(Position offset, int maxLetters, bool nextLine = true)
+        public NodeElement(Position offset, Dimensions dimensions, bool nextLine = true)
         {
             Offset = offset ?? throw new System.ArgumentNullException(nameof(offset));
-            if (maxLetters < 0)
-            {
-                throw new ArgumentException("Max width can't be negative.", nameof(maxLetters));
-            }
-            MaxLetters = maxLetters;
+            Dimensions = dimensions ?? throw new ArgumentNullException(nameof(dimensions));
             NextLine = nextLine;
         }
 
         public Position Offset { get; }
-        public int MaxLetters { get; }
+        public Dimensions Dimensions { get; }
         public bool NextLine { get; }
     }
 }
