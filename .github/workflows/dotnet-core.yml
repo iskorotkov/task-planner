@@ -24,9 +24,7 @@ jobs:
       with:
         node-version: 14.x
     - name: Install Node.js dependencies
-      run: npm install
-    - name: Setup tsc
-      run: npm install typescript
+      run: cd "Client\Scripts" & npm install
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Test
