@@ -24,15 +24,15 @@ jobs:
       with:
         node-version: 14.x
     - name: Install Node.js dependencies
-      run: cd "Client\Scripts" & npm install
+      run: cd "./Client/Scripts" & npm install
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Test
       run: dotnet test --no-restore --verbosity normal
     - name: Publish the client
-      run: dotnet publish "Client\TaskPlanner.Client.csproj" -c Release --self-contained -o "publish"
+      run: dotnet publish "./Client/TaskPlanner.Client.csproj" -c Release --self-contained -o "./publish"
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2
       with:
         name: "client"
-        path: "publish"
+        path: "./publish"
