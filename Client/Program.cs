@@ -4,11 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using TaskPlanner.Client.Services.Auth;
 using TaskPlanner.Client.Services.Canvas;
 using TaskPlanner.Client.Services.Storage;
-using TaskPlanner.Shared.Services.Formatters;
 using TaskPlanner.Shared.Services.References;
 using TaskPlanner.Shared.Services.Tasks;
 using TaskPlanner.TaskGraph.Analyzers;
-using TaskPlanner.TaskGraph.Data.Config;
 using TaskPlanner.TaskGraph.Layout;
 
 namespace TaskPlanner.Client

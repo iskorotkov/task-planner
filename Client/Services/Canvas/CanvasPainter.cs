@@ -5,7 +5,6 @@ using Blazor.Extensions.Canvas.Canvas2D;
 using TaskPlanner.Shared.Data.Coordinates;
 using TaskPlanner.Shared.Data.References;
 using TaskPlanner.Shared.Extensions;
-using TaskPlanner.Shared.Services.Formatters;
 using TaskPlanner.TaskGraph.Data.Render;
 
 namespace TaskPlanner.Client.Services.Canvas
@@ -118,8 +117,7 @@ namespace TaskPlanner.Client.Services.Canvas
         private async Task DrawElement(RenderElement element, string text, FontInfo fontInfo)
         {
             var position = element.Position + new Position(0, element.Dimensions.Height);
-            text = _nodeTextFormatter.ClampText(text, element.Dimensions.Width);
-            await DrawText(text, position, fontInfo);
+            await DrawText(text, position, element.Dimensions.Width, fontInfo);
         }
 
         private async Task DrawRect(RenderElement element, string style)
@@ -148,18 +146,12 @@ namespace TaskPlanner.Client.Services.Canvas
             var typeLabels = types.ToString().Split(", ");
             var position = edge.Label.Position + new Position(0, edge.Label.Dimensions.Height);
             var label = typeLabels[0];
-            if (typeLabels.Length == 1)
+            if (typeLabels.Length != 1)
             {
-                label = _nodeTextFormatter.ClampText(label, edge.Label.Dimensions.Width);
-            }
-            else
-            {
-                var suffix = $" +{typeLabels.Length - 1}";
-                label = _nodeTextFormatter.ClampText(label, edge.Label.Dimensions.Width - suffix.Length);
-                label += suffix;
+                label = $"{label} +{typeLabels.Length - 1}";
             }
 
-            await DrawText(label, position, _config.EdgeFont);
+            await DrawText(label, position, edge.Label.Dimensions.Width, _config.EdgeFont);
         }
 
         private async Task DrawEdgeLine(RenderEdge edge)
@@ -171,16 +163,17 @@ namespace TaskPlanner.Client.Services.Canvas
             await _context.StrokeAsync();
         }
 
-        private async Task DrawText(string text, Position position, FontInfo? fontInfo)
+        private async Task DrawText(string text, Position position, int maxWidth, FontInfo? fontInfo)
         {
             var oldFont = _context.Font;
             if (fontInfo != null)
             {
                 await _context.SetFontAsync(fontInfo.FontString);
             }
-            
+
+            text = await _nodeTextFormatter.ClampText(_context, text, maxWidth);
             await _context.FillTextAsync(text, position.X, position.Y);
-            
+
             if (fontInfo != null)
             {
                 await _context.SetFontAsync(oldFont);
