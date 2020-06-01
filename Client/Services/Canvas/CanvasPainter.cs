@@ -13,7 +13,7 @@ namespace TaskPlanner.Client.Services.Canvas
     public class CanvasPainter
     {
         private BECanvasComponent? _canvas;
-        private Canvas2DContext? _context;
+        private Canvas2DContext _context;
         private PainterConfig _config;
         private readonly NodeTextFormatter _nodeTextFormatter;
 
@@ -64,13 +64,15 @@ namespace TaskPlanner.Client.Services.Canvas
             var index = 0;
             RenderElement NextElement() => node.Elements[index++];
 
-            await DrawElement(NextElement(), node.Task.Content.Title ?? "?");
-            await DrawElement(NextElement(), node.Task.Content.Description ?? "?");
+            await DrawElement(NextElement(), node.Task.Content.Title ?? "?",
+                _config.TitleFont);
+            await DrawElement(NextElement(), node.Task.Content.Description ?? "?",
+                _config.DescriptionFont);
 
             if (node.Task.Participants.Author is { } author)
             {
                 await DrawRect(NextElement(), "green");
-                await DrawElement(NextElement(), author);
+                await DrawElement(NextElement(), author, _config.ComponentFont);
             }
 
             if (node.Task.ExecutionTime is { } time)
@@ -78,7 +80,7 @@ namespace TaskPlanner.Client.Services.Canvas
                 await DrawRect(NextElement(), "blue");
                 var estimated = time.EstimatedTime?.ToShortString() ?? "?";
                 var spent = time.TimeSpent?.ToShortString() ?? "?";
-                await DrawElement(NextElement(), $"Time: {estimated} / {spent}");
+                await DrawElement(NextElement(), $"Time: {estimated} / {spent}", _config.ComponentFont);
             }
 
             if (node.Task.Deadlines is { } deadlines)
@@ -86,34 +88,38 @@ namespace TaskPlanner.Client.Services.Canvas
                 await DrawRect(NextElement(), "red");
                 var hd = deadlines.HardDeadline?.ToString() ?? "?";
                 var sd = deadlines.SoftDeadline.ToString() ?? "?";
-                await DrawElement(NextElement(), $"Deadlines: {sd} : {hd}");
+                await DrawElement(NextElement(), $"Deadlines: {sd} : {hd}", _config.ComponentFont);
             }
 
             if (node.Task.Iterations is { } iterations)
             {
                 await DrawRect(NextElement(), "yellow");
                 var perIteration = iterations.TimePerIteration?.ToShortString() ?? "?";
-                await DrawElement(NextElement(), $"Iterations: {iterations.Executed} / {iterations.Required} x{perIteration}");
+                await DrawElement(NextElement(),
+                    $"Iterations: {iterations.Executed} / {iterations.Required} x{perIteration}",
+                    _config.ComponentFont);
             }
 
             if (node.Task.Metrics is { } metrics)
             {
                 await DrawRect(NextElement(), "purple");
-                await DrawElement(NextElement(), $"Metrics: C={metrics.Complexity}, I={metrics.Importance}");
+                await DrawElement(NextElement(), $"Metrics: C={metrics.Complexity}, I={metrics.Importance}",
+                    _config.ComponentFont);
             }
 
             if (node.Task.References.Count > 0)
             {
                 await DrawRect(NextElement(), "grey");
-                await DrawElement(NextElement(), $"References: {node.Task.References.Count}");
+                await DrawElement(NextElement(), $"References: {node.Task.References.Count}",
+                    _config.ComponentFont);
             }
         }
 
-        private async Task DrawElement(RenderElement element, string text)
+        private async Task DrawElement(RenderElement element, string text, FontInfo fontInfo)
         {
             var position = element.Position + new Position(0, element.Dimensions.Height);
             text = _nodeTextFormatter.ClampText(text, element.Dimensions.Width);
-            await _context.FillTextAsync(text, position.X, position.Y);
+            await DrawText(text, position, fontInfo);
         }
 
         private async Task DrawRect(RenderElement element, string style)
@@ -152,7 +158,8 @@ namespace TaskPlanner.Client.Services.Canvas
                 label = _nodeTextFormatter.ClampText(label, edge.Label.Dimensions.Width - suffix.Length);
                 label += suffix;
             }
-            await _context.FillTextAsync(label, position.X, position.Y);
+
+            await DrawText(label, position, _config.EdgeFont);
         }
 
         private async Task DrawEdgeLine(RenderEdge edge)
@@ -162,6 +169,22 @@ namespace TaskPlanner.Client.Services.Canvas
             await _context.LineToAsync(edge.To.X, edge.To.Y);
             await _context.ClosePathAsync();
             await _context.StrokeAsync();
+        }
+
+        private async Task DrawText(string text, Position position, FontInfo? fontInfo)
+        {
+            var oldFont = _context.Font;
+            if (fontInfo != null)
+            {
+                await _context.SetFontAsync(fontInfo.FontString);
+            }
+            
+            await _context.FillTextAsync(text, position.X, position.Y);
+            
+            if (fontInfo != null)
+            {
+                await _context.SetFontAsync(oldFont);
+            }
         }
 
         private void EnsureInitialized()
