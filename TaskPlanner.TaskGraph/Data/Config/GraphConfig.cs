@@ -20,22 +20,28 @@ namespace TaskPlanner.TaskGraph.Data.Config
             new NodeElement(new Position(0, 20), new Dimensions(104, 8)), // Description
 
             new NodeElement(new Position(0, 20), new Dimensions(8)), // Component 1
-            new NodeElement(new Position(10, 0), new Dimensions(96, 8), nextLine: false),
+            new NodeElement(new Position(10, 0), new Dimensions(8),
+                nextLine: false, stretchHorizontal: true),
 
             new NodeElement(new Position(0, 20), new Dimensions(8)), // Component 2
-            new NodeElement(new Position(10, 0), new Dimensions(96, 8), nextLine: false),
+            new NodeElement(new Position(10, 0), new Dimensions(8),
+                nextLine: false, stretchHorizontal: true),
 
             new NodeElement(new Position(0, 20), new Dimensions(8)), // Component 3
-            new NodeElement(new Position(10, 0), new Dimensions(96, 8), nextLine: false),
+            new NodeElement(new Position(10, 0), new Dimensions(8),
+                nextLine: false, stretchHorizontal: true),
 
             new NodeElement(new Position(0, 20), new Dimensions(8)), // Component 4
-            new NodeElement(new Position(10, 0), new Dimensions(96, 8), nextLine: false),
+            new NodeElement(new Position(10, 0), new Dimensions(8),
+                nextLine: false, stretchHorizontal: true),
 
             new NodeElement(new Position(0, 20), new Dimensions(8)), // Component 5
-            new NodeElement(new Position(10, 0), new Dimensions(96, 8), nextLine: false),
+            new NodeElement(new Position(10, 0), new Dimensions(8),
+                nextLine: false, stretchHorizontal: true),
 
             new NodeElement(new Position(0, 20), new Dimensions(8)), // Component 6
-            new NodeElement(new Position(10, 0), new Dimensions(96, 8), nextLine: false)
+            new NodeElement(new Position(10, 0), new Dimensions(8),
+                nextLine: false, stretchHorizontal: true)
         };
 
         public NodeElement EdgeLabel { get; set; } = new NodeElement(new Position(-30, -15), new Dimensions(70, 8));

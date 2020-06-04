@@ -24,7 +24,15 @@ namespace TaskPlanner.TaskGraph.Layout
                     positionInLine += nodeElement.Offset;
                 }
 
-                yield return new RenderElement(positionInLine, nodeElement.Dimensions);
+                var dimensions = nodeElement.Dimensions;
+                if (nodeElement.StretchHorizontal)
+                {
+                    var offsetFromLeft = nodePosition.X - positionInLine.X;
+                    var availableWidth = config.Dimensions.Width - config.ContentPadding.Right;
+                    dimensions.Width = availableWidth + offsetFromLeft;
+                }
+
+                yield return new RenderElement(positionInLine, dimensions);
             }
         }
     }

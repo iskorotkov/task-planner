@@ -12,13 +12,19 @@
 
         public Padding(int horizontal, int vertical)
         {
-            Left = Right = horizontal;
-            Top = Bottom = vertical;
+            Left = horizontal;
+            Right = horizontal;
+            
+            Top = vertical;
+            Bottom = vertical;
         }
 
         public Padding(int all)
         {
-            Left = Top = Right = Bottom = all;
+            Left = all;
+            Right = all;
+            Top = all;
+            Bottom = all;
         }
 
         public int Left { get; }
