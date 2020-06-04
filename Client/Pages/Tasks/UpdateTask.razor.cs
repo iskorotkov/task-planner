@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Shared.Data.State;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TaskPlanner.Client.Extensions;
-using TaskPlanner.Client.Services.Tasks;
+using TaskPlanner.Shared.Data.State;
 using TaskPlanner.Shared.Data.Tasks;
 using TaskPlanner.Shared.Data.Ui;
+using TaskPlanner.Shared.Services.Tasks;
 
 namespace TaskPlanner.Client.Pages.Tasks
 {

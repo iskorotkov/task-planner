@@ -3,20 +3,22 @@
     {
         @foreach (var referencedTasks in ReferencedTasks)
         {
-            <CardTemplate>
-                <Header>
-                    @referencedTasks.ReferenceType
-                </Header>
+            <div class="p-1 pl-3">
+                <CardTemplate>
+                    <Header>
+                        @referencedTasks.ReferenceType
+                    </Header>
 
-                <Body>
-                    <ul>
-                        @foreach (var item in referencedTasks.Tasks)
-                        {
-                            <li>@item.Content.Title</li>
-                        }
-                    </ul>
-                </Body>
-            </CardTemplate>
+                    <Body>
+                        <ul>
+                            @foreach (var item in referencedTasks.Tasks)
+                            {
+                                <li>@item.Content.Title</li>
+                            }
+                        </ul>
+                    </Body>
+                </CardTemplate>
+            </div>
         }
     }
 </div>

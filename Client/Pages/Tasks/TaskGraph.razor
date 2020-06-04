@@ -1,0 +1,18 @@
+﻿@page "/graph"
+
+<div>
+    <div>
+        <label>Analyze references:</label>
+        <ReferenceTypeSelector @ref="@_analyzeTypesSelector"
+                               OnToggle="@AnalyzeGraph"/>
+    </div>
+
+    <div>
+        <label>Show references:</label>
+        <ReferenceTypeSelector @ref="@_showingTypesSelector"
+                               ShowCheckbox="@(t => _analyzeTypesSelector.BitMask.HasFlag(t))"
+                               OnToggle="@RenderGraph"/>
+    </div>
+</div>
+
+<BECanvas Width="960" Height="1280" @ref="_canvas"></BECanvas>

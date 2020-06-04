@@ -4,11 +4,11 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Shared.Data.State;
 using TaskPlanner.Client.Extensions;
-using TaskPlanner.Client.Services.Tasks;
+using TaskPlanner.Shared.Data.State;
 using TaskPlanner.Shared.Data.Tasks;
 using TaskPlanner.Shared.Data.Ui;
+using TaskPlanner.Shared.Services.Tasks;
 
 namespace TaskPlanner.Client.Pages.Tasks
 {

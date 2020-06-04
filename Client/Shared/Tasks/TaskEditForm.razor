@@ -27,8 +27,12 @@
 
         <div class="row">
             <div class="col-6">
-                <AddReferencesSection SelectedTask="@Model"/>
-                <ReferencesSection Task="@Model"/>
+                <div class="p-1 pl-3">
+                    <AddReferencesSection SelectedTask="@Model"/>
+                </div>
+                <div class="p-1 pl-3">
+                    <ReferencesSection Task="@Model"/>
+                </div>
 
                 <ContentSection Content="@Model.Content" />
             </div>

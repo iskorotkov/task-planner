@@ -1,0 +1,6 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e3a85743_002D5ec2_002D4b56_002Da5d0_002D598c57a88e0c/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="OneTaskWithSingleDependency" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::A8BE375D-3579-4C87-87EA-01D2F2CB60A0::.NETCoreApp,Version=v5.0::TaskPlanner.TaskGraph.Tests.Analyzers.GraphAnalyzerTests.OneTaskWithSingleDependency&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

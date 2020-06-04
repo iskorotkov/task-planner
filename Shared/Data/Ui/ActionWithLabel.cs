@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Shared.Data.Ui
+namespace TaskPlanner.Shared.Data.Ui
 {
     public class ActionWithLabel
     {

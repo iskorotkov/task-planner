@@ -6,9 +6,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskPlanner.Client", "Clien
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskPlanner.Shared", "Shared\TaskPlanner.Shared.csproj", "{BF761111-F27A-4657-BC17-A5EC1DEB8F8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskPlanner.TaskGraph", "TaskPlanner.TaskGraph\TaskPlanner.TaskGraph.csproj", "{3CA755D0-7C38-4DB3-A66D-AE0C5EB2E942}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskPlanner.TaskGraph", "TaskPlanner.TaskGraph\TaskPlanner.TaskGraph.csproj", "{3CA755D0-7C38-4DB3-A66D-AE0C5EB2E942}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskPlanner.TaskGraph.Tests", "TaskPlanner.TaskGraph.Tests\TaskPlanner.TaskGraph.Tests.csproj", "{A8BE375D-3579-4C87-87EA-01D2F2CB60A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskPlanner.TaskGraph.Tests", "TaskPlanner.TaskGraph.Tests\TaskPlanner.TaskGraph.Tests.csproj", "{A8BE375D-3579-4C87-87EA-01D2F2CB60A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

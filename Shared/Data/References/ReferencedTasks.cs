@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using TaskPlanner.Shared.Data.References;
 using TaskPlanner.Shared.Data.Tasks;
 
-namespace Shared.Data.References
+namespace TaskPlanner.Shared.Data.References
 {
     public class ReferencedTasks
     {

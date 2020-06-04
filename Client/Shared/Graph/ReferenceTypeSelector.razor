@@ -1,0 +1,9 @@
+﻿<div>
+    @foreach (var t in GetTypes())
+    {
+        var type = t;
+
+        <input type="checkbox" checked="@BitMask.HasFlag(type)" @onchange="@(e => Toggle(type, (bool) e.Value))" />
+        <label>@type.ToString()</label>
+    }
+</div>

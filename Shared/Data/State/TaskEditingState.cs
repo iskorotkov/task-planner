@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using TaskPlanner.Shared.Data.Tasks;
 
-namespace Shared.Data.State
+namespace TaskPlanner.Shared.Data.State
 {
     public class TaskEditingState
     {
