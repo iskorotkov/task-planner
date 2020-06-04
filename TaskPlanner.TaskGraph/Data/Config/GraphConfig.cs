@@ -16,31 +16,31 @@ namespace TaskPlanner.TaskGraph.Data.Config
 
         public List<NodeElement> Elements { get; set; } = new List<NodeElement>
         {
-            new NodeElement(new Position(0, 0), new Dimensions(104, 8)), // Title
-            new NodeElement(new Position(0, 20), new Dimensions(104, 8)), // Description
+            new NodeElement(new Position(0, 0), new Dimensions(8), stretchHorizontal: true), // Title
+            new NodeElement(new Position(0, 10), new Dimensions(8), stretchHorizontal: true), // Description
 
-            new NodeElement(new Position(0, 20), new Dimensions(8)), // Component 1
-            new NodeElement(new Position(10, 0), new Dimensions(8),
+            new NodeElement(new Position(0, 10), new Dimensions(8)), // Component 1
+            new NodeElement(new Position(5, 0), new Dimensions(8),
                 nextLine: false, stretchHorizontal: true),
 
-            new NodeElement(new Position(0, 20), new Dimensions(8)), // Component 2
-            new NodeElement(new Position(10, 0), new Dimensions(8),
+            new NodeElement(new Position(0, 10), new Dimensions(8)), // Component 2
+            new NodeElement(new Position(5, 0), new Dimensions(8),
                 nextLine: false, stretchHorizontal: true),
 
-            new NodeElement(new Position(0, 20), new Dimensions(8)), // Component 3
-            new NodeElement(new Position(10, 0), new Dimensions(8),
+            new NodeElement(new Position(0, 10), new Dimensions(8)), // Component 3
+            new NodeElement(new Position(5, 0), new Dimensions(8),
                 nextLine: false, stretchHorizontal: true),
 
-            new NodeElement(new Position(0, 20), new Dimensions(8)), // Component 4
-            new NodeElement(new Position(10, 0), new Dimensions(8),
+            new NodeElement(new Position(0, 10), new Dimensions(8)), // Component 4
+            new NodeElement(new Position(5, 0), new Dimensions(8),
                 nextLine: false, stretchHorizontal: true),
 
-            new NodeElement(new Position(0, 20), new Dimensions(8)), // Component 5
-            new NodeElement(new Position(10, 0), new Dimensions(8),
+            new NodeElement(new Position(0, 10), new Dimensions(8)), // Component 5
+            new NodeElement(new Position(5, 0), new Dimensions(8),
                 nextLine: false, stretchHorizontal: true),
 
-            new NodeElement(new Position(0, 20), new Dimensions(8)), // Component 6
-            new NodeElement(new Position(10, 0), new Dimensions(8),
+            new NodeElement(new Position(0, 10), new Dimensions(8)), // Component 6
+            new NodeElement(new Position(5, 0), new Dimensions(8),
                 nextLine: false, stretchHorizontal: true)
         };
 

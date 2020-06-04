@@ -15,8 +15,8 @@ namespace TaskPlanner.Shared.Data.Coordinates
             Y = y;
         }
 
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int X { get; }
+        public int Y { get; }
 
         public static Position operator +(Position left, Position right)
         {

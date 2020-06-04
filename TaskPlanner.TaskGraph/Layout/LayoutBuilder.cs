@@ -10,29 +10,32 @@ namespace TaskPlanner.TaskGraph.Layout
         public IEnumerable<RenderElement> Build(Position nodePosition, GraphConfig config)
         {
             var padding = new Position(config.ContentPadding.Left, config.ContentPadding.Top);
-            var position = nodePosition + padding;
-            var positionInLine = position;
+            var nextLinePosition = nodePosition + padding;
+            var currentLinePosition = nextLinePosition;
             foreach (var nodeElement in config.Elements)
             {
                 if (nodeElement.NextLine)
                 {
-                    position += nodeElement.Offset;
-                    positionInLine = position;
+                    nextLinePosition += nodeElement.Offset;
+                    currentLinePosition = nextLinePosition;
+                    nextLinePosition = new Position(nextLinePosition.X,
+                        nextLinePosition.Y + nodeElement.Dimensions.Height);
                 }
                 else
                 {
-                    positionInLine += nodeElement.Offset;
+                    currentLinePosition += nodeElement.Offset;
                 }
 
                 var dimensions = nodeElement.Dimensions;
                 if (nodeElement.StretchHorizontal)
                 {
-                    var offsetFromLeft = nodePosition.X - positionInLine.X;
+                    var offsetFromLeft = currentLinePosition.X - nodePosition.X;
                     var availableWidth = config.Dimensions.Width - config.ContentPadding.Right;
-                    dimensions.Width = availableWidth + offsetFromLeft;
+                    dimensions = new Dimensions(availableWidth - offsetFromLeft, dimensions.Height);
                 }
 
-                yield return new RenderElement(positionInLine, dimensions);
+                yield return new RenderElement(currentLinePosition, dimensions);
+                currentLinePosition = new Position(currentLinePosition.X + dimensions.Width, currentLinePosition.Y);
             }
         }
     }

@@ -28,10 +28,10 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
             ContentPadding = new Padding(11),
             Elements = new List<NodeElement>
             {
-                new NodeElement(new Position(15, 30), new Dimensions(16, 16)),
-                new NodeElement(new Position(8, 0), new Dimensions(10, 10), nextLine: false),
-                new NodeElement(new Position(6, 0), new Dimensions(8, 8), nextLine: false),
-                new NodeElement(new Position(0, 15), new Dimensions(9, 9))
+                new NodeElement(new Position(15, 30), new Dimensions(16)),
+                new NodeElement(new Position(8, 0), new Dimensions(10), nextLine: false),
+                new NodeElement(new Position(6, 0), new Dimensions(8), nextLine: false, stretchHorizontal: true),
+                new NodeElement(new Position(0, 15), new Dimensions(9), stretchHorizontal: true)
             },
             EdgeLabel = new NodeElement(new Position(23, 24), new Dimensions(10, 10)),
             BackwardEdgeLabel = new NodeElement(new Position(11, 12), new Dimensions(20, 20))
@@ -80,9 +80,9 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
                     new List<RenderElement>
                     {
                         new RenderElement(new Position(66, 91), new Dimensions(16, 16)),
-                        new RenderElement(new Position(74, 91), new Dimensions(10, 10)),
-                        new RenderElement(new Position(80, 91), new Dimensions(8, 8)),
-                        new RenderElement(new Position(66, 106), new Dimensions(9, 9))
+                        new RenderElement(new Position(90, 91), new Dimensions(10, 10)),
+                        new RenderElement(new Position(106, 91), new Dimensions(83, 8)),
+                        new RenderElement(new Position(66, 122), new Dimensions(123, 9))
                     }
                 ),
                 new RenderNode(
@@ -92,9 +92,9 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
                     new List<RenderElement>
                     {
                         new RenderElement(new Position(246, 91), new Dimensions(16, 16)),
-                        new RenderElement(new Position(254, 91), new Dimensions(10, 10)),
-                        new RenderElement(new Position(260, 91), new Dimensions(8, 8)),
-                        new RenderElement(new Position(246, 106), new Dimensions(9, 9))
+                        new RenderElement(new Position(270, 91), new Dimensions(10, 10)),
+                        new RenderElement(new Position(286, 91), new Dimensions(83, 8)),
+                        new RenderElement(new Position(246, 122), new Dimensions(123, 9))
                     }
                 )
             };
@@ -118,7 +118,7 @@ namespace TaskPlanner.TaskGraph.Tests.Analyzers
             }, renderGraph.Edges);
         }
 
-        private void RenderNodeEqual(RenderNode left, RenderNode right)
+        private static void RenderNodeEqual(RenderNode left, RenderNode right)
         {
             Assert.Equal(left.Task, right.Task);
             Assert.Equal(left.Position, right.Position);

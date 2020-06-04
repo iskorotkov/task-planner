@@ -21,8 +21,8 @@ namespace TaskPlanner.Shared.Data.Coordinates
             Height = height;
         }
 
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int Width { get; }
+        public int Height { get; }
 
         public override bool Equals(object? obj)
         {
