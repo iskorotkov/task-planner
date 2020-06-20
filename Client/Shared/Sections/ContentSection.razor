@@ -1,4 +1,4 @@
-﻿<div class="col form-group" @attributes="@AdditionalAttributes">
-    <label>Description</label>
-    <InputTextArea class="form-control" @bind-Value="@Content.Description" />
+﻿<div class="card p-2" attributes="@AdditionalAttributes">
+    <input type="text" class="form-control border-0 mb-1" placeholder="Title..." @bind="@Content.Title"/>
+    <textarea class="form-control border-0" placeholder="Description..." rows="5" @bind="@Content.Description"></textarea>
 </div>
