@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using TaskPlanner.Shared.Data.Tasks;
 
-namespace TaskPlanner.Client.Services.References
+namespace TaskPlanner.Shared.Services.References
 {
     public interface IReferenceManager
     {

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
-using Shared.Data.State;
-using Shared.Data.Ui;
-using TaskPlanner.Client.Services.References;
-using TaskPlanner.Client.Services.Tasks;
+using TaskPlanner.Shared.Data.State;
 using TaskPlanner.Shared.Data.Tasks;
+using TaskPlanner.Shared.Data.Ui;
+using TaskPlanner.Shared.Services.References;
+using TaskPlanner.Shared.Services.Tasks;
 
 namespace TaskPlanner.Client.Shared.Sections
 {

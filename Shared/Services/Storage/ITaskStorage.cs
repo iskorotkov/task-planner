@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using TaskPlanner.Shared.Data.Tasks;
 
-namespace TaskPlanner.Client.Services.Storage
+namespace TaskPlanner.Shared.Services.Storage
 {
     public interface ITaskStorage
     {

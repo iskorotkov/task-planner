@@ -2,9 +2,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using TaskPlanner.Client.Services.Auth;
-using TaskPlanner.Client.Services.Tasks;
+using TaskPlanner.Client.Services.Canvas;
 using TaskPlanner.Client.Services.Storage;
-using TaskPlanner.Client.Services.References;
+using TaskPlanner.Shared.Services.References;
+using TaskPlanner.Shared.Services.Tasks;
+using TaskPlanner.TaskGraph.Analyzers;
+using TaskPlanner.TaskGraph.Layout;
 
 namespace TaskPlanner.Client
 {
@@ -17,6 +20,11 @@ namespace TaskPlanner.Client
 
             builder.Services.AddScoped<ITaskManager, TaskManager>();
             builder.Services.AddScoped<IReferenceManager, ReferenceManager>();
+            builder.Services.AddTransient<NodeTextFormatter>();
+
+            builder.Services.AddGraphAnalyzers();
+            builder.Services.AddLayoutBuilders();
+            builder.Services.AddTransient<CanvasPainter>();
 
             builder.Services.AddFirebaseAuthentication();
             builder.Services.AddFirestore();

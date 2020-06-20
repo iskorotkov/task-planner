@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
-using TaskPlanner.Client.Services.Tasks;
 using TaskPlanner.Shared.Data.Tasks;
+using TaskPlanner.Shared.Services.Tasks;
 
 namespace TaskPlanner.Client.Pages
 {

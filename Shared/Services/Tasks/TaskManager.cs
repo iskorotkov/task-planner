@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TaskPlanner.Client.Services.Storage;
 using TaskPlanner.Shared.Data.Tasks;
+using TaskPlanner.Shared.Services.Storage;
 
-namespace TaskPlanner.Client.Services.Tasks
+namespace TaskPlanner.Shared.Services.Tasks
 {
     public class TaskManager : ITaskManager
     {

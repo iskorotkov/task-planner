@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using TaskPlanner.Shared.Services.Storage;
 
 namespace TaskPlanner.Client.Services.Storage
 {

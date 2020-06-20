@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazor.Extensions.Canvas" Version="1.1.0-preview1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Core" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="3.2.0-rc1.20223.4" />
@@ -21,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shared\TaskPlanner.Shared.csproj" />
+    <ProjectReference Include="..\TaskPlanner.TaskGraph\TaskPlanner.TaskGraph.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,6 +40,9 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="Pages\Tasks\TaskGraph.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
   </ItemGroup>
 
