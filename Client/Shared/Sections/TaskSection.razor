@@ -1,16 +1,11 @@
-﻿<div class="card">
+﻿<div class="card shadow">
     <div class="card-body">
-        @if (Title != null || OnRemove.HasDelegate)
+        @if (OnRemove.HasDelegate)
         {
-            <div class="d-flex flex-row justify-content-between">
-                @Title
-
-                @if (OnRemove.HasDelegate)
-                {
-                    <button type="button" class="close" aria-label="Close" @onclick="@OnRemove">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                }
+            <div class="d-flex flex-row justify-content-end">
+                <button type="button" class="close" aria-label="Close" @onclick="@OnRemove">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
         }
 
@@ -20,9 +15,6 @@
 
 @code
 {
-    [Parameter]
-    public string Title { get; set; }
-
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 

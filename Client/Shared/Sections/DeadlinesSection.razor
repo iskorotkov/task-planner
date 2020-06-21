@@ -1,13 +1,11 @@
-﻿<TaskSection Title="Deadlines" OnRemove="@RemoveSection">
-    <div class="row">
-        <div class="form-group">
-            <label>Soft deadline</label>
-            <input type="datetime-local" class="form-control" @bind="@Deadlines.SoftDeadline"/>
-        </div>
+﻿<TaskSection OnRemove="@RemoveSection">
+    <div class="form-group row no-gutters">
+        <label>Soft deadline</label>
+        <input type="datetime-local" class="form-control" @bind="@Deadlines.SoftDeadline"/>
+    </div>
 
-        <div class="form-group">
-            <label>Hard deadline</label>
-            <input type="datetime-local" class="form-control" @bind="@Deadlines.HardDeadline"/>
-        </div>
+    <div class="form-group row no-gutters">
+        <label>Hard deadline</label>
+        <input type="datetime-local" class="form-control" @bind="@Deadlines.HardDeadline"/>
     </div>
 </TaskSection>
