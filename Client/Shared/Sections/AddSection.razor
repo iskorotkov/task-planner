@@ -1,4 +1,13 @@
-﻿<button type="button" class="btn btn-success m-1" @onclick="@OnClick" @attributes="@AdditionalAttributes">
-    <span class="oi oi-plus p-1"></span>
-    @Text
-</button>
+﻿<TaskSection>
+    <div class="d-flex h-100 align-items-center justify-content-center">
+        <button type="button" class="btn btn-link stretched-link"
+                @onclick="@OnClick"
+                @attributes="@AdditionalAttributes">
+
+            <div class="text-muted">
+                <span class="oi oi-plus p-1"></span>
+                @Text
+            </div>
+        </button>
+    </div>
+</TaskSection>
