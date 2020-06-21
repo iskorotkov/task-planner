@@ -1,81 +1,18 @@
 ﻿<div class="container-fluid" @attributes="@AdditionalAttributes">
-    <div class="row pl-4">
-        <h2 class="mr-auto">@Title</h2>
-
-        @if (Actions != null)
-        {
-            @foreach (var action in Actions)
-            {
-                <div class="p-1">
-                    <button class="btn @action.ButtonClass" type="@action.ButtonType" @onclick="@action.OnClick">
-                        @action.ButtonText
-                    </button>
-                </div>
-            }
-        }
-    </div>
-
     <EditForm EditContext="@EditContext">
-        <DataAnnotationsValidator />
+        <DataAnnotationsValidator/>
 
-        <div class="row">
-            <div class="col form-group ml-3">
-                <label>Title</label>
-                <InputText class="form-control" @bind-Value="@Model.Content.Title" />
-            </div>
-        </div>
+        <ContentSection Content="@Model.Content"/>
 
-        <div class="row">
-            <div class="col-6">
-                <div class="p-1 pl-3">
-                    <AddReferencesSection SelectedTask="@Model"/>
-                </div>
-                <div class="p-1 pl-3">
-                    <ReferencesSection Task="@Model"/>
-                </div>
+        <div class="card-deck">
+            <DeadlinesSection Deadlines="@Model.Deadlines" OnRemove="@(() => Model.Deadlines = null)"/>
+            <ExecutionTimeSection ExecutionTime="@Model.ExecutionTime" OnRemove="@(() => Model.ExecutionTime = null)"/>
+            <IterationsSection Iterations="@Model.Iterations" OnRemove="@(() => Model.Iterations = null)"/>
+            <MetricsSection Metrics="@Model.Metrics" OnRemove="@(() => Model.Metrics = null)"/>
 
-                <ContentSection Content="@Model.Content" />
-            </div>
+            <SectionManagementSection/>
 
-            <div class="col-6">
-                <div class="mb-3 ml-1">
-                    <SectionsManagementSection Sections="@Sections" />
-                </div>
-
-                <div class="row no-gutters">
-                    @if (Model.Deadlines != null)
-                    {
-                        <div class="col-6 p-2">
-                            <DeadlinesSection Deadlines="@Model.Deadlines"
-                                              RemoveSection="@(() => Model.Deadlines = null)" />
-                        </div>
-                    }
-
-                    @if (Model.ExecutionTime != null)
-                    {
-                        <div class="col-6 p-2">
-                            <ExecutionTimeSection ExecutionTime="@Model.ExecutionTime"
-                                                  RemoveSection="@(() => Model.ExecutionTime = null)" />
-                        </div>
-                    }
-
-                    @if (Model.Iterations != null)
-                    {
-                        <div class="col-6 p-2">
-                            <IterationsSection Iterations="@Model.Iterations"
-                                               RemoveSection="@(() => Model.Iterations = null)" />
-                        </div>
-                    }
-
-                    @if (Model.Metrics != null)
-                    {
-                        <div class="col-6 p-2">
-                            <MetricsSection Metrics="@Model.Metrics"
-                                            RemoveSection="@(() => Model.Metrics = null)" />
-                        </div>
-                    }
-                </div>
-            </div>
+            @* TODO: Add sections for reference management *@
         </div>
     </EditForm>
 </div>
