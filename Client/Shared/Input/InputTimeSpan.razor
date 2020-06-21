@@ -1,11 +1,14 @@
-﻿<input type="number" style="width: 8rem;" @bind="@Value.Amount" @attributes="@AdditionalAttributes" />
+﻿<div>
+    <input type="number" class="form-control d-inline h-auto w-50 px-1 py-0"
+           @bind="@Value.Amount"/>
 
-<select @bind="@Value.Period">
-    <option value="@TimePeriod.Seconds">second(s)</option>
-    <option value="@TimePeriod.Minutes">minute(s)</option>
-    <option value="@TimePeriod.Hours">hour(s)</option>
-    <option value="@TimePeriod.Days">day(s)</option>
-    <option value="@TimePeriod.Weeks">week(s)</option>
-    <option value="@TimePeriod.Months">month(s)</option>
-    <option value="@TimePeriod.Years">year(s)</option>
-</select>
+    <select class="form-control d-inline border-0 p-0 h-auto w-auto" @bind="@Value.Period">
+        <option value="@TimePeriod.Seconds">second(s)</option>
+        <option value="@TimePeriod.Minutes">minute(s)</option>
+        <option value="@TimePeriod.Hours">hour(s)</option>
+        <option value="@TimePeriod.Days">day(s)</option>
+        <option value="@TimePeriod.Weeks">week(s)</option>
+        <option value="@TimePeriod.Months">month(s)</option>
+        <option value="@TimePeriod.Years">year(s)</option>
+    </select>
+</div>
