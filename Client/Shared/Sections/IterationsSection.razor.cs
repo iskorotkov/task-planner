@@ -7,7 +7,7 @@ namespace TaskPlanner.Client.Shared.Sections
 {
     public partial class IterationsSection
     {
-        [Parameter] public Iterations? Iterations { get; set; }
+        [Parameter] public Iterations Iterations { get; set; }
         [Parameter] public EventCallback<Iterations> OnRemove { get; set; }
 
         [Parameter(CaptureUnmatchedValues = true)]
@@ -17,7 +17,7 @@ namespace TaskPlanner.Client.Shared.Sections
         {
             if (OnRemove.HasDelegate)
             {
-                await OnRemove.InvokeAsync(Iterations!);
+                await OnRemove.InvokeAsync(Iterations);
             }
         }
     }

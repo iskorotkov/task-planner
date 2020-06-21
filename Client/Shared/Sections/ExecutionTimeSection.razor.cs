@@ -7,7 +7,7 @@ namespace TaskPlanner.Client.Shared.Sections
 {
     public partial class ExecutionTimeSection
     {
-        [Parameter] public ExecutionTime? ExecutionTime { get; set; }
+        [Parameter] public ExecutionTime ExecutionTime { get; set; }
         [Parameter] public EventCallback<ExecutionTime> OnRemove { get; set; }
 
         [Parameter(CaptureUnmatchedValues = true)]
@@ -17,7 +17,7 @@ namespace TaskPlanner.Client.Shared.Sections
         {
             if (OnRemove.HasDelegate)
             {
-                await OnRemove.InvokeAsync(ExecutionTime!);
+                await OnRemove.InvokeAsync(ExecutionTime);
             }
         }
     }

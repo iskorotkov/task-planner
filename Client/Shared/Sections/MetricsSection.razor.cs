@@ -7,7 +7,7 @@ namespace TaskPlanner.Client.Shared.Sections
 {
     public partial class MetricsSection
     {
-        [Parameter] public Metrics? Metrics { get; set; }
+        [Parameter] public Metrics Metrics { get; set; }
         [Parameter] public EventCallback<Metrics> OnRemove { get; set; }
 
         [Parameter(CaptureUnmatchedValues = true)]
@@ -17,7 +17,7 @@ namespace TaskPlanner.Client.Shared.Sections
         {
             if (OnRemove.HasDelegate)
             {
-                await OnRemove.InvokeAsync(Metrics!);
+                await OnRemove.InvokeAsync(Metrics);
             }
         }
     }

@@ -1,16 +1,13 @@
-﻿@if (Metrics != null)
-{
-    <TaskSection Title="Metrics" OnRemove="@RemoveSection">
-        <div class="row">
-            <div class="form-group">
-                <label>Importance</label>
-                <InputNumber class="form-control" @bind-Value="@Metrics.Importance"/>
-            </div>
-
-            <div class="form-group">
-                <label>Complexity</label>
-                <InputNumber class="form-control" @bind-Value="@Metrics.Complexity"/>
-            </div>
+﻿<TaskSection Title="Metrics" OnRemove="@RemoveSection">
+    <div class="row">
+        <div class="form-group">
+            <label>Importance</label>
+            <InputNumber class="form-control" @bind-Value="@Metrics.Importance"/>
         </div>
-    </TaskSection>
-}
+
+        <div class="form-group">
+            <label>Complexity</label>
+            <InputNumber class="form-control" @bind-Value="@Metrics.Complexity"/>
+        </div>
+    </div>
+</TaskSection>

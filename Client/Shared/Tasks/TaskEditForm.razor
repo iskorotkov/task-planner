@@ -4,11 +4,26 @@
 
         <ContentSection Content="@Model.Content"/>
 
-        <div class="card-deck">
-            <DeadlinesSection Deadlines="@Model.Deadlines" OnRemove="@(() => Model.Deadlines = null)"/>
-            <ExecutionTimeSection ExecutionTime="@Model.ExecutionTime" OnRemove="@(() => Model.ExecutionTime = null)"/>
-            <IterationsSection Iterations="@Model.Iterations" OnRemove="@(() => Model.Iterations = null)"/>
-            <MetricsSection Metrics="@Model.Metrics" OnRemove="@(() => Model.Metrics = null)"/>
+        <div class="card-columns">
+            @if (Model.Deadlines != null)
+            {
+                <DeadlinesSection Deadlines="@Model.Deadlines" OnRemove="@(() => Model.Deadlines = null)"/>
+            }
+
+            @if (Model.ExecutionTime != null)
+            {
+                <ExecutionTimeSection ExecutionTime="@Model.ExecutionTime" OnRemove="@(() => Model.ExecutionTime = null)"/>
+            }
+
+            @if (Model.Iterations != null)
+            {
+                <IterationsSection Iterations="@Model.Iterations" OnRemove="@(() => Model.Iterations = null)"/>
+            }
+
+            @if (Model.Metrics != null)
+            {
+                <MetricsSection Metrics="@Model.Metrics" OnRemove="@(() => Model.Metrics = null)"/>
+            }
 
             <SectionManagementSection/>
 

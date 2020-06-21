@@ -7,7 +7,7 @@ namespace TaskPlanner.Client.Shared.Sections
 {
     public partial class DeadlinesSection
     {
-        [Parameter] public Deadlines? Deadlines { get; set; }
+        [Parameter] public Deadlines Deadlines { get; set; }
         [Parameter] public EventCallback<Deadlines> OnRemove { get; set; }
 
         [Parameter(CaptureUnmatchedValues = true)]
@@ -17,7 +17,7 @@ namespace TaskPlanner.Client.Shared.Sections
         {
             if (OnRemove.HasDelegate)
             {
-                await OnRemove.InvokeAsync(Deadlines!);
+                await OnRemove.InvokeAsync(Deadlines);
             }
         }
     }
