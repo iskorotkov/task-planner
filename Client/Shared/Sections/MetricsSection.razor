@@ -1,19 +1,16 @@
-﻿<SectionCardTemplate Value="@Metrics" RemoveSection="@RemoveSection" @attributes="@AdditionalAttributes">
-    <Header>
-        Metrics
-    </Header>
-
-    <Content>
+﻿@if (Metrics != null)
+{
+    <TaskSection Title="Metrics" OnRemove="@RemoveSection">
         <div class="row">
             <div class="form-group">
                 <label>Importance</label>
-                <InputNumber class="form-control" @bind-Value="@Metrics.Importance" />
+                <InputNumber class="form-control" @bind-Value="@Metrics.Importance"/>
             </div>
 
             <div class="form-group">
                 <label>Complexity</label>
-                <InputNumber class="form-control" @bind-Value="@Metrics.Complexity" />
+                <InputNumber class="form-control" @bind-Value="@Metrics.Complexity"/>
             </div>
         </div>
-    </Content>
-</SectionCardTemplate>
+    </TaskSection>
+}

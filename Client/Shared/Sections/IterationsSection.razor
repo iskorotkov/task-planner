@@ -1,24 +1,21 @@
-﻿<SectionCardTemplate Value="@Iterations" RemoveSection="@RemoveSection" @attributes="@AdditionalAttributes">
-    <Header>
-        Iterations
-    </Header>
-
-    <Content>
+﻿@if (Iterations != null)
+{
+    <TaskSection Title="Iterations" OnRemove="@RemoveSection">
         <div class="row">
             <div class="form-group">
                 <label>Iterations executed</label>
-                <InputNumber class="form-control" @bind-Value="@Iterations.Executed" />
+                <InputNumber class="form-control" @bind-Value="@Iterations.Executed"/>
             </div>
 
             <div class="form-group">
                 <label>Iterations total</label>
-                <InputNumber class="form-control" @bind-Value="@Iterations.Required" />
+                <InputNumber class="form-control" @bind-Value="@Iterations.Required"/>
             </div>
 
             <div class="form-group">
                 <label class="d-block">Time per iteration</label>
-                <InputTimeSpan class="form-control d-inline" Value="@Iterations.TimePerIteration" />
+                <InputTimeSpan class="form-control d-inline" Value="@Iterations.TimePerIteration"/>
             </div>
         </div>
-    </Content>
-</SectionCardTemplate>
+    </TaskSection>
+}
