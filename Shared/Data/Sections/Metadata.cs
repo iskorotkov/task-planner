@@ -1,8 +1,8 @@
 using System;
 
-namespace TaskPlanner.Shared.Data.Properties
+namespace TaskPlanner.Shared.Data.Sections
 {
-    public class Metadata
+    public class Metadata : Section
     {
         public string? Id { get; set; }
         public string? Owner { get; set; }
