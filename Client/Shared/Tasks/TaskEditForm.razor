@@ -2,9 +2,11 @@
     <EditForm EditContext="@EditContext">
         <DataAnnotationsValidator/>
 
-        <ContentSection Content="@Model.Content"/>
+        <div class="m-1">
+            <ContentSection Content="@Model.Content"/>
+        </div>
 
-        <div class="card-deck mt-4">
+        <div class="card-deck m-1">
             @if (Model.Deadlines != null)
             {
                 <DeadlinesSection Deadlines="@Model.Deadlines" OnRemove="@(() => Model.Deadlines = null)"/>
