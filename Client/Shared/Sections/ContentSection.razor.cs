@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using System.Collections.Generic;
 using TaskPlanner.Shared.Data.Sections;
 
 namespace TaskPlanner.Client.Shared.Sections
@@ -8,8 +7,5 @@ namespace TaskPlanner.Client.Shared.Sections
     {
         [Parameter] public Content Content { get; set; }
         [Parameter] public string Title { get; set; }
-
-        [Parameter(CaptureUnmatchedValues = true)]
-        public Dictionary<string, object>? AdditionalAttributes { get; set; }
     }
 }
