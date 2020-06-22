@@ -1,15 +1,17 @@
-﻿<div class="card shadow rounded-lg m-1">
-    <div class="card-body">
-        @if (OnRemove.HasDelegate)
-        {
-            <div class="d-flex justify-content-end">
-                <button type="button" class="close" aria-label="Close" @onclick="@OnRemove">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        }
-
-        @ChildContent
+﻿<div class="col-3 p-1">
+    <div class="card shadow rounded-lg h-100">
+        <div class="card-body">
+            @if (OnRemove.HasDelegate)
+            {
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="close" aria-label="Close" @onclick="@OnRemove">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+    
+            @ChildContent
+        </div>
     </div>
 </div>
 

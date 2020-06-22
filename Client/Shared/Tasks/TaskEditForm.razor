@@ -6,7 +6,7 @@
             <ContentSection Content="@Model.Content"/>
         </div>
 
-        <div class="card-deck m-1">
+        <div class="row m-1">
             @if (Model.Deadlines != null)
             {
                 <DeadlinesSection Deadlines="@Model.Deadlines" OnRemove="@(() => Model.Deadlines = null)"/>
@@ -27,25 +27,10 @@
                 <MetricsSection Metrics="@Model.Metrics" OnRemove="@(() => Model.Metrics = null)"/>
             }
 
-            @if (Model.Deadlines == null)
-            {
-                <AddSection Text="Add deadlines" OnClick="@(() => Model.Deadlines = new Deadlines())"/>
-            }
-
-            @if (Model.ExecutionTime == null)
-            {
-                <AddSection Text="Add execution time" OnClick="@(() => Model.ExecutionTime = new ExecutionTime())"/>
-            }
-
-            @if (Model.Iterations == null)
-            {
-                <AddSection Text="Add iterations" OnClick="@(() => Model.Iterations = new Iterations())"/>
-            }
-
-            @if (Model.Metrics == null)
-            {
-                <AddSection Text="Add metrics" OnClick="@(() => Model.Metrics = new Metrics())"/>
-            }
+            <AddSection Text="Add deadlines" OnClick="@(() => Model.Deadlines = new Deadlines())"/>
+            <AddSection Text="Add execution time" OnClick="@(() => Model.ExecutionTime = new ExecutionTime())"/>
+            <AddSection Text="Add iterations" OnClick="@(() => Model.Iterations = new Iterations())"/>
+            <AddSection Text="Add metrics" OnClick="@(() => Model.Metrics = new Metrics())"/>
 
             @* TODO: Add sections for reference management *@
         </div>
