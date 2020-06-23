@@ -10,11 +10,7 @@ namespace TaskPlanner.Shared.Data.Tasks
         public Content Content { get; set; } = new Content();
         public Participants Participants { get; set; } = new Participants();
 
-        public ExecutionTime? ExecutionTime { get; set; }
-        public Deadlines? Deadlines { get; set; }
-        public Iterations? Iterations {get;set;}
-        public Metrics? Metrics { get; set; }
-
+        public List<OptionalSection> Sections { get; set; } = new List<OptionalSection>();
         public List<Reference> References { get; set; } = new List<Reference>();
     }
 }
