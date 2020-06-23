@@ -1,6 +1,6 @@
 ﻿<TaskSection OnRemove="@RemoveSection">
     <div class="form-group">
-        <InputText class="form-control w-100 h-auto px-1 py-0 mb-1 border" @bind-Value="@Deadline.Title"/>
-        <input type="datetime-local" class="form-control w-100 h-auto px-1 py-0 border" @bind="@Deadline.Time"/>
+        <InputText class="tp-input-text" @bind-Value="@Deadline.Title"/>
+        <input type="datetime-local" class="tp-input-datetime" @bind="@Deadline.Time"/>
     </div>
 </TaskSection>

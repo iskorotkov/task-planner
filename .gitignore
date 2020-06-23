@@ -3,8 +3,10 @@
 .idea
 **/bin
 **/obj
-**/wwwroot/js
-**/wwwroot/lib
+**/wwwroot/js/firebase
+
+Client/wwwroot/css/styles.css
+Client/wwwroot/css/styles.css.map
 
 # Logs
 logs

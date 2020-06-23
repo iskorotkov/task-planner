@@ -1,0 +1,51 @@
+﻿@use 'node_modules/bootstrap/scss/bootstrap';
+
+.tp-input-text {
+  @extend .form-control;
+  @extend .w-100;
+  @extend .h-auto;
+  @extend .px-1;
+  @extend .py-0;
+  @extend .mb-1;
+  @extend .border;
+}
+
+.tp-input-number-base {
+  @extend .form-control;
+  @extend .d-inline;
+  @extend .h-auto;
+  @extend .px-1;
+  @extend .py-0;
+  @extend .border;
+}
+
+.tp-input-number-wide {
+  @extend .tp-input-number-base;
+  
+  @extend .w-100;
+}
+
+.tp-input-number-right {
+  @extend .tp-input-number-base;
+
+  @extend .text-right;
+  @extend .w-50;
+}
+
+.tp-input-datetime {
+  @extend .form-control;
+  @extend .w-100;
+  @extend .h-auto;
+  @extend .px-1;
+  @extend .py-0;
+  @extend .border;
+}
+
+.tp-input-select {
+  @extend .form-control;
+  @extend .d-inline;
+  @extend .border-0;
+  @extend .p-0;
+  @extend .h-auto;
+  @extend .w-auto;
+}
