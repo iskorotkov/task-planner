@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using TaskPlanner.Shared.Data.Sections;
 using TaskPlanner.Shared.Data.Tasks;
 using TaskPlanner.Shared.Services.Tasks;
 
@@ -16,10 +17,6 @@ namespace TaskPlanner.Client.Shared.Tasks
         [Parameter] public Todo Todo { get; set; }
 #pragma warning restore 8618
 
-        [Parameter(CaptureUnmatchedValues = true)]
-        // ReSharper disable once UnusedAutoPropertyAccessor.Global
-        public Dictionary<string, object>? AdditionalAttributes { get; set; }
-
         protected override void OnParametersSet()
         {
             if (Todo == null)
@@ -33,15 +30,9 @@ namespace TaskPlanner.Client.Shared.Tasks
             NavigationManager.NavigateTo($"/tasks/update/{Todo.Metadata.Id}");
         }
 
-        private async Task IncrementIterations()
+        private async Task IncrementIterations(Iterations iterations)
         {
-            if (Todo.Iterations == null)
-            {
-                throw new InvalidOperationException(
-                    "Can't increment number of iterations as iterations are not added to the task.");
-            }
-
-            Todo.Iterations.Executed++;
+            iterations.Executed++;
             await TaskManager.Update(Todo).ConfigureAwait(false);
         }
     }

@@ -1,4 +1,4 @@
-<div class="card position-relative" @attributes="@AdditionalAttributes">
+<div class="card position-relative">
     @if (!string.IsNullOrWhiteSpace(Todo.Content.Title))
     {
         <div class="card-header">
@@ -15,55 +15,40 @@
     }
 
     <ul class="list-group list-group-flush">
-        @if (Todo.Deadlines?.SoftDeadline != null)
+        @foreach (var section in Todo.Sections)
         {
             <li class="list-group-item">
-                Soft deadline: @Todo.Deadlines.SoftDeadline.Value
-                <br />
-                (@Todo.Deadlines.SoftDeadline.Value.GetTimeLeftMessage())
-            </li>
-        }
 
-        @if (Todo.Deadlines?.HardDeadline != null)
-        {
-            <li class="list-group-item">
-                Hard deadline: @Todo.Deadlines.HardDeadline.Value
-                <br />
-                (@Todo.Deadlines.HardDeadline.Value.GetTimeLeftMessage())
-            </li>
-        }
-
-        @if (Todo.ExecutionTime != null)
-        {
-            <li class="list-group-item">
-                Time: @(Todo.ExecutionTime?.TimeSpent?.ToString() ?? "-") / @(Todo.ExecutionTime?.EstimatedTime?.ToString() ?? "-")
-            </li>
-        }
-
-        @if (Todo.Iterations != null)
-        {
-            var timeSpan = Todo.Iterations.TimePerIteration != null
-                ? " (" + Todo.Iterations.TimePerIteration.ToShortString() + ")"
-                : "";
-            <li class="list-group-item">
-                Iterations@(timeSpan): @(Todo.Iterations.Executed.ToString() ?? "-") / @(Todo.Iterations.Required.ToString() ?? "-")
-                <button class="btn badge badge-pill badge-success" @onclick="@IncrementIterations">
-                    +1
-                </button>
-            </li>
-        }
-
-        @if (Todo.Metrics?.Complexity != null)
-        {
-            <li class="list-group-item">
-                Complexity: @Todo.Metrics.Complexity
-            </li>
-        }
-
-        @if (Todo.Metrics?.Importance != null)
-        {
-            <li class="list-group-item">
-                Importance: @Todo.Metrics.Importance
+                @* TODO: Remove switch based on section type (hard to extend) *@
+                @switch (section)
+                {
+                    case Deadline deadline:
+                        <text>
+                            Hard deadline: @deadline.Time<br/>(@deadline.Time.GetTimeLeftMessage())
+                        </text>
+                        break;
+                    case ExecutionTime executionTime:
+                        <text>@executionTime.Title: @executionTime.Time</text>
+                        break;
+                    case Iterations iterations:
+                        // TODO: Move formatting of section info in separate class
+                        var timeSpan = iterations.TimePerIteration != null
+                            ? $" ({iterations.TimePerIteration.ToShortString()})"
+                            : "";
+                        <text>
+                            Iterations@(timeSpan): @(iterations.Executed) / @(iterations.Required)
+                            <button class="btn badge badge-pill badge-success"
+                                    @onclick="@(() => IncrementIterations(iterations))">
+                                +1
+                            </button>
+                        </text>
+                        break;
+                    case Metric metric:
+                        <text>@metric.Title: @metric.Value</text>
+                        break;
+                    default:
+                        throw new UnsupportedSectionException(section);
+                }
             </li>
         }
     </ul>

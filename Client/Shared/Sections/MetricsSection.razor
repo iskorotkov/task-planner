@@ -1,11 +1,6 @@
 ﻿<TaskSection OnRemove="@RemoveSection">
     <div class="form-group">
-        <label class="d-block mb-0">Importance</label>
-        <InputNumber class="w-100 h-auto px-1 py-0 border" @bind-Value="@Metrics.Importance"/>
-    </div>
-
-    <div class="form-group mb-0">
-        <label class="d-block mb-0">Complexity</label>
-        <InputNumber class="w-100 h-auto px-1 py-0 border" @bind-Value="@Metrics.Complexity"/>
+        <InputText class="form-control w-100 h-auto px-1 py-0 mb-1 border" @bind-Value="@Metric.Title"/>
+        <InputNumber class="form-control w-100 h-auto px-1 py-0 border" @bind-Value="@Metric.Value"/>
     </div>
 </TaskSection>

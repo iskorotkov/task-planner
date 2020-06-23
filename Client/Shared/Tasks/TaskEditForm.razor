@@ -7,30 +7,31 @@
         </div>
 
         <div class="row m-1">
-            @if (Model.Deadlines != null)
+            @foreach (var section in Model.Sections)
             {
-                <DeadlinesSection Deadlines="@Model.Deadlines" OnRemove="@(() => Model.Deadlines = null)"/>
+                switch (section)
+                {
+                    case Deadline deadline:
+                        <DeadlinesSection Deadline="@deadline" OnRemove="@(() => Model.Sections.Remove(deadline))"/>
+                        break;
+                    case ExecutionTime executionTime:
+                        <ExecutionTimeSection ExecutionTime="@executionTime" OnRemove="@(() => Model.Sections.Remove(executionTime))"/>
+                        break;
+                    case Iterations iterations:
+                        <IterationsSection Iterations="@iterations" OnRemove="@(() => Model.Sections.Remove(iterations))"/>
+                        break;
+                    case Metric metric:
+                        <MetricsSection Metric="@metric" OnRemove="@(() => Model.Sections.Remove(metric))"/>
+                        break;
+                    default:
+                        throw new UnsupportedSectionException(section);
+                }
             }
 
-            @if (Model.ExecutionTime != null)
-            {
-                <ExecutionTimeSection ExecutionTime="@Model.ExecutionTime" OnRemove="@(() => Model.ExecutionTime = null)"/>
-            }
-
-            @if (Model.Iterations != null)
-            {
-                <IterationsSection Iterations="@Model.Iterations" OnRemove="@(() => Model.Iterations = null)"/>
-            }
-
-            @if (Model.Metrics != null)
-            {
-                <MetricsSection Metrics="@Model.Metrics" OnRemove="@(() => Model.Metrics = null)"/>
-            }
-
-            <AddSection Text="Add deadlines" OnClick="@(() => Model.Deadlines = new Deadlines())"/>
-            <AddSection Text="Add execution time" OnClick="@(() => Model.ExecutionTime = new ExecutionTime())"/>
-            <AddSection Text="Add iterations" OnClick="@(() => Model.Iterations = new Iterations())"/>
-            <AddSection Text="Add metrics" OnClick="@(() => Model.Metrics = new Metrics())"/>
+            <AddSection Text="Add deadline" OnClick="@(() => Model.Sections.Add(new Deadline()))"/>
+            <AddSection Text="Add execution time" OnClick="@(() => Model.Sections.Add(new ExecutionTime()))"/>
+            <AddSection Text="Add iterations" OnClick="@(() => Model.Sections.Add(new Iterations()))"/>
+            <AddSection Text="Add metric" OnClick="@(() => Model.Sections.Add(new Metric()))"/>
 
             @* TODO: Add sections for reference management *@
         </div>
