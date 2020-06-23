@@ -1,8 +1,8 @@
 ﻿<div class="d-block">
-    <input type="number" class="d-inline h-auto w-50 px-1 py-0 border text-right"
+    <input type="number" class="form-control d-inline h-auto w-50 px-1 py-0 border text-right"
            @bind="@Value.Amount"/>
 
-    <select class="d-inline border-0 p-0 h-auto w-auto" @bind="@Value.Period">
+    <select class="form-control d-inline border-0 p-0 h-auto w-auto" @bind="@Value.Period">
         <option value="@TimePeriod.Seconds">second(s)</option>
         <option value="@TimePeriod.Minutes">minute(s)</option>
         <option value="@TimePeriod.Hours">hour(s)</option>
