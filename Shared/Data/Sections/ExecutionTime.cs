@@ -4,7 +4,7 @@ namespace TaskPlanner.Shared.Data.Sections
 {
     public class ExecutionTime : OptionalSection
     {
-        public TaskTimeSpan? EstimatedTime { get; set; } = new TaskTimeSpan();
-        public TaskTimeSpan? TimeSpent { get; set; } = new TaskTimeSpan();
+        public string Title { get; set; } = "Estimated time";
+        public TaskTimeSpan Time { get; set; } = new TaskTimeSpan();
     }
 }
