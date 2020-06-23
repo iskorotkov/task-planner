@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Blazor.Extensions;
 using Blazor.Extensions.Canvas.Canvas2D;
 using TaskPlanner.Shared.Data.Coordinates;
 using TaskPlanner.Shared.Data.References;
+using TaskPlanner.Shared.Data.Sections;
 using TaskPlanner.Shared.Extensions;
 using TaskPlanner.TaskGraph.Data.Render;
 
@@ -74,36 +76,39 @@ namespace TaskPlanner.Client.Services.Canvas
                 await DrawElement(NextElement(), author, _config.ComponentFont);
             }
 
-            if (node.Task.ExecutionTime is { } time)
+            foreach (var section in node.Task.Sections.Take(4))
             {
-                await DrawRect(NextElement(), "blue");
-                var estimated = time.EstimatedTime?.ToShortString() ?? "?";
-                var spent = time.TimeSpent?.ToShortString() ?? "?";
-                await DrawElement(NextElement(), $"Time: {estimated} / {spent}", _config.ComponentFont);
-            }
-
-            if (node.Task.Deadlines is { } deadlines)
-            {
-                await DrawRect(NextElement(), "red");
-                var hd = deadlines.HardDeadline?.ToString() ?? "?";
-                var sd = deadlines.SoftDeadline.ToString() ?? "?";
-                await DrawElement(NextElement(), $"Deadlines: {sd} : {hd}", _config.ComponentFont);
-            }
-
-            if (node.Task.Iterations is { } iterations)
-            {
-                await DrawRect(NextElement(), "yellow");
-                var perIteration = iterations.TimePerIteration?.ToShortString() ?? "?";
-                await DrawElement(NextElement(),
-                    $"Iterations: {iterations.Executed} / {iterations.Required} x{perIteration}",
-                    _config.ComponentFont);
-            }
-
-            if (node.Task.Metrics is { } metrics)
-            {
-                await DrawRect(NextElement(), "purple");
-                await DrawElement(NextElement(), $"Metrics: C={metrics.Complexity}, I={metrics.Importance}",
-                    _config.ComponentFont);
+                // TODO: Move formatting of section info in separate class
+                switch (section)
+                {
+                    case Deadline deadline:
+                        await DrawRect(NextElement(), "red");
+                        await DrawElement(NextElement(),
+                            $"Hard deadline: {deadline.Time}\n({deadline.Time.GetTimeLeftMessage()})",
+                            _config.ComponentFont);
+                        break;
+                    case ExecutionTime executionTime:
+                        await DrawRect(NextElement(), "blue");
+                        await DrawElement(NextElement(), $"{executionTime.Title}: {executionTime.Time}",
+                            _config.ComponentFont);
+                        break;
+                    case Iterations iterations:
+                        await DrawRect(NextElement(), "yellow");
+                        var timeSpan = iterations.TimePerIteration != null
+                            ? $" ({iterations.TimePerIteration.ToShortString()})"
+                            : "";
+                        await DrawElement(NextElement(),
+                            $"Iterations{timeSpan}: {iterations.Executed} / {iterations.Required}",
+                            _config.ComponentFont);
+                        break;
+                    case Metric metric:
+                        await DrawRect(NextElement(), "purple");
+                        await DrawElement(NextElement(), $"{metric.Title}: {metric.Value}",
+                            _config.ComponentFont);
+                        break;
+                    default:
+                        throw new UnsupportedSectionException(section);
+                }
             }
 
             if (node.Task.References.Count > 0)
