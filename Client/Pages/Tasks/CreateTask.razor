@@ -1,5 +1,37 @@
 ﻿@page "/tasks/create"
+@using System.Security.Claims
+
+@inject ITaskManager TaskManager
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <CascadingValue Value="@_taskEditingState">
-    <TaskEditForm Model="@_task" Title="New task" Actions="@_actions"/>
+    <CascadingValue Value="@_task">
+        <CascadingValue Value="@false">
+            <TaskEditForm Title="New task"/>
+        </CascadingValue>
+    </CascadingValue>
 </CascadingValue>
+
+@code
+{
+    private readonly Todo _task;
+    private readonly TaskEditingState _taskEditingState;
+
+    public CreateTask()
+    {
+        _task = new Todo();
+        _taskEditingState = new TaskEditingState();
+        _taskEditingState.AddedTasks.Add(_task);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+    // TODO: #11 Move task metadata initialization into separate service
+        var state = await AuthenticationStateProvider
+            .GetAuthenticationStateAsync()
+            .ConfigureAwait(false);
+        _task.Metadata.Id = Guid.NewGuid().ToString();
+        _task.Metadata.Owner = state.User.FindFirst(claim => claim.Type == ClaimTypes.Email).Value;
+    }
+}

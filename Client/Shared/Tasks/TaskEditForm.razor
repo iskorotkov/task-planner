@@ -1,4 +1,4 @@
-﻿<div class="container-fluid" @attributes="@AdditionalAttributes">
+﻿<div class="container-fluid">
     <EditForm EditContext="@EditContext">
         <DataAnnotationsValidator/>
 
@@ -7,33 +7,50 @@
         </div>
 
         <div class="row m-1">
-            @foreach (var section in Model.Sections)
+            @foreach (var deadline in Model.Deadlines)
             {
-                switch (section)
-                {
-                    case Deadline deadline:
-                        <DeadlinesSection Deadline="@deadline" OnRemove="@(() => Model.Sections.Remove(deadline))"/>
-                        break;
-                    case ExecutionTime executionTime:
-                        <ExecutionTimeSection ExecutionTime="@executionTime" OnRemove="@(() => Model.Sections.Remove(executionTime))"/>
-                        break;
-                    case Iterations iterations:
-                        <IterationsSection Iterations="@iterations" OnRemove="@(() => Model.Sections.Remove(iterations))"/>
-                        break;
-                    case Metric metric:
-                        <MetricsSection Metric="@metric" OnRemove="@(() => Model.Sections.Remove(metric))"/>
-                        break;
-                    default:
-                        throw new UnsupportedSectionException(section);
-                }
+                <DeadlinesSection Deadline="@deadline" OnRemove="@(() => Model.Deadlines.Remove(deadline))"/>
             }
 
-            <AddSection Text="Add deadline" OnClick="@(() => Model.Sections.Add(new Deadline()))"/>
-            <AddSection Text="Add execution time" OnClick="@(() => Model.Sections.Add(new ExecutionTime()))"/>
-            <AddSection Text="Add iterations" OnClick="@(() => Model.Sections.Add(new Iterations()))"/>
-            <AddSection Text="Add metric" OnClick="@(() => Model.Sections.Add(new Metric()))"/>
+            @foreach (var time in Model.ExecutionTimes)
+            {
+                <ExecutionTimeSection ExecutionTime="@time" OnRemove="@(() => Model.ExecutionTimes.Remove(time))"/>
+            }
+
+            @foreach (var iterations in Model.Iterations)
+            {
+                <IterationsSection Iterations="@iterations" OnRemove="@(() => Model.Iterations.Remove(iterations))"/>
+            }
+
+            @foreach (var metric in Model.Metrics)
+            {
+                <MetricsSection Metric="@metric" OnRemove="@(() => Model.Metrics.Remove(metric))"/>
+            }
 
             @* TODO: Add sections for reference management *@
         </div>
     </EditForm>
 </div>
+
+@code
+{
+#pragma warning disable 8618
+    [CascadingParameter]
+    public Todo Model { get; set; }
+
+    [Parameter]
+    public string Title { get; set; }
+
+    private EditContext EditContext { get; set; }
+#pragma warning restore 8618
+
+    protected override void OnParametersSet()
+    {
+        if (Model == null)
+        {
+            throw new ArgumentException("Model is null", nameof(Model));
+        }
+
+        EditContext = new EditContext(Model);
+    }
+}

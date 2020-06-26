@@ -1,4 +1,10 @@
 ﻿@page "/overview"
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize]
+
+@inject ITaskManager TaskManager
+@inject NavigationManager NavigationManager
 
 <div class="container">
     <div class="container p-2">
@@ -7,19 +13,36 @@
         </button>
     </div>
 
-    @if(_tasks != null)
+    @if (_tasks != null)
     {
         <div class="row">
-        @foreach (var task in _tasks)
-        {
-            <div class="col-4">
-                <TaskCard Todo="@task"/>
-            </div>
-        }
+            @foreach (var task in _tasks)
+            {
+                <div class="col-4">
+                    <TaskCard Model="@task"/>
+                </div>
+            }
         </div>
     }
     else
     {
-        <text>No tasks were created.</text>
+        <text>Loading tasks...</text>
     }
 </div>
+
+@code
+{
+#pragma warning disable 8618
+    private List<Todo> _tasks;
+#pragma warning restore 8618
+
+    protected override async Task OnInitializedAsync()
+    {
+        _tasks = await TaskManager.GetAll().ConfigureAwait(false);
+    }
+
+    private void CreateTask()
+    {
+        NavigationManager.NavigateTo("/tasks/create");
+    }
+}

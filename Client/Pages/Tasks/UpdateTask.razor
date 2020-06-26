@@ -1,12 +1,40 @@
 ﻿@page "/tasks/update/{GuidStr}"
 
+@inject NavigationManager NavigationManager
+@inject ITaskManager TaskManager
+
 <CascadingValue Value="@_taskEditingState">
-    @if (_task != null)
-    {
-        <TaskEditForm Model="@_task" Title="Update task" Actions="@_actions"/>
-    }
-    else
-    {
-        <div>Loading...</div>
-    }
+    <CascadingValue Value="_task">
+        <CascadingValue Value="@true">
+            @if (_task != null)
+            {
+                <TaskEditForm Title="Update task"/>
+            }
+            else
+            {
+                <div>Loading...</div>
+            }
+        </CascadingValue>
+    </CascadingValue>
 </CascadingValue>
+
+@code
+{
+#pragma warning disable 8618
+    // ReSharper disable once UnusedAutoPropertyAccessor.Global
+    // ReSharper disable once MemberCanBePrivate.Global
+    [Parameter]
+    public string GuidStr { get; set; }
+
+    private Todo _task;
+#pragma warning restore 8618
+
+    private readonly TaskEditingState _taskEditingState = new TaskEditingState();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _task = await TaskManager.Find(GuidStr).ConfigureAwait(false)
+                ?? throw new ArgumentException(nameof(_task));
+        _taskEditingState.ModifiedTasks.Add(_task);
+    }
+}

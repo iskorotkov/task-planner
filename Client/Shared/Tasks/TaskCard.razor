@@ -1,54 +1,58 @@
+@inject NavigationManager NavigationManager
+@inject ITaskManager TaskManager
+
 <div class="card position-relative">
-    @if (!string.IsNullOrWhiteSpace(Todo.Content.Title))
+    @if (!string.IsNullOrWhiteSpace(Model.Content.Title))
     {
         <div class="card-header">
-            <h4 class="card-title">@Todo.Content.Title</h4>
-            <h6 class="card-subtitle mb-2 text-muted">@Todo.Participants.Author</h6>
+            <h4 class="card-title">@Model.Content.Title</h4>
+            <h6 class="card-subtitle mb-2 text-muted">@Model.Participants.Author</h6>
         </div>
     }
 
-    @if (!string.IsNullOrWhiteSpace(Todo.Content.Description))
+    @if (!string.IsNullOrWhiteSpace(Model.Content.Description))
     {
         <div class="card-body">
-            <p class="card-text">@Todo.Content.Description</p>
+            <p class="card-text">@Model.Content.Description</p>
         </div>
     }
 
     <ul class="list-group list-group-flush">
-        @foreach (var section in Todo.Sections)
+        @foreach (var deadline in Model.Deadlines)
         {
             <li class="list-group-item">
+                @deadline.Title: @deadline.Time<br/>(@deadline.Time.GetTimeLeftMessage())
+            </li>
+        }
 
-                @* TODO: Remove switch based on section type (hard to extend) *@
-                @switch (section)
-                {
-                    case Deadline deadline:
-                        <text>
-                            Hard deadline: @deadline.Time<br/>(@deadline.Time.GetTimeLeftMessage())
-                        </text>
-                        break;
-                    case ExecutionTime executionTime:
-                        <text>@executionTime.Title: @executionTime.Time</text>
-                        break;
-                    case Iterations iterations:
-                        // TODO: Move formatting of section info in separate class
-                        var timeSpan = iterations.TimePerIteration != null
-                            ? $" ({iterations.TimePerIteration.ToShortString()})"
-                            : "";
-                        <text>
-                            Iterations@(timeSpan): @(iterations.Executed) / @(iterations.Required)
-                            <button class="btn badge badge-pill badge-success"
-                                    @onclick="@(() => IncrementIterations(iterations))">
-                                +1
-                            </button>
-                        </text>
-                        break;
-                    case Metric metric:
-                        <text>@metric.Title: @metric.Value</text>
-                        break;
-                    default:
-                        throw new UnsupportedSectionException(section);
+        @foreach (var time in Model.ExecutionTimes)
+        {
+            <li class="list-group-item">
+                @time.Title: @time.Time
+            </li>
+        }
+
+        @foreach (var iterations in Model.Iterations)
+        {
+            <li class="list-group-item">
+                @{
+                    // TODO: Move formatting of section info in separate class
+                    var timeSpan = iterations.TimePerIteration != null
+                        ? $" ({iterations.TimePerIteration.ToShortString()})"
+                        : "";
                 }
+                Iterations@(timeSpan): @(iterations.Executed) / @(iterations.Required)
+                <button class="btn badge badge-pill badge-success"
+                        @onclick="@(() => IncrementIterations(iterations))">
+                    +1
+                </button>
+            </li>
+        }
+
+        @foreach (var metric in Model.Metrics)
+        {
+            <li class="list-group-item">
+                @metric.Title: @metric.Value
             </li>
         }
     </ul>
@@ -59,3 +63,28 @@
         </button>
     </div>
 </div>
+
+@code
+{
+    [Parameter]
+    public Todo Model { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if (Model == null)
+        {
+            throw new ArgumentException(nameof(Model));
+        }
+    }
+
+    private void CardClicked()
+    {
+        NavigationManager.NavigateTo($"/tasks/update/{Model.Metadata.Id}");
+    }
+
+    private async Task IncrementIterations(Iterations iterations)
+    {
+        iterations.Executed++;
+        await TaskManager.Update(Model).ConfigureAwait(false);
+    }
+}
