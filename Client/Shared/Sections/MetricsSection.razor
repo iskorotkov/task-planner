@@ -1,6 +1,9 @@
 ﻿<TaskSection OnRemove="@RemoveSection">
     <div class="form-group">
         <InputText class="tp-input-text" @bind-Value="@Metric.Title"/>
+    </div>
+
+    <div class="form-group mb-0">
         <InputNumber class="tp-input-number-w100" @bind-Value="@Metric.Value"/>
     </div>
 </TaskSection>

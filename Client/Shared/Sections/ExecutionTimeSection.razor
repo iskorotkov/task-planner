@@ -1,6 +1,9 @@
 <TaskSection OnRemove="@RemoveSection">
-    <div class="form-group mb-0">
+    <div class="form-group">
         <InputText class="tp-input-text" @bind-Value="@ExecutionTime.Title"/>
+    </div>
+
+    <div class="form-group mb-0">
         <InputTimeSpan Value="@ExecutionTime.Time"/>
     </div>
 </TaskSection>
