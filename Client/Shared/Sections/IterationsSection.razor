@@ -1,12 +1,11 @@
 ﻿<TaskSection OnRemove="@RemoveSection">
     <div class="form-group">
-        <label class="d-block mb-0">Iterations executed</label>
         <InputNumber class="tp-input-number-wide" @bind-Value="@Iterations.Executed"/>
+        <span>/</span>
+        <InputNumber class="tp-input-number-wide" @bind-Value="@Iterations.Required"/>
     </div>
 
     <div class="form-group">
-        <label class="d-block mb-0">Iterations total</label>
-        <InputNumber class="tp-input-number-wide" @bind-Value="@Iterations.Required"/>
     </div>
 
     <div class="form-group mb-0">

@@ -1,51 +1,50 @@
 ﻿@use 'node_modules/bootstrap/scss/bootstrap';
 
-.tp-input-text {
+.tp-input {
   @extend .form-control;
-  @extend .w-100;
   @extend .h-auto;
   @extend .px-1;
   @extend .py-0;
-  @extend .mb-1;
+}
+
+.tp-input-text {
+  @extend .tp-input;
+  
+  @extend .w-100;
   @extend .border;
 }
 
-.tp-input-number-base {
-  @extend .form-control;
+.tp-input-number {
+  @extend .tp-input;
+
   @extend .d-inline;
-  @extend .h-auto;
-  @extend .px-1;
-  @extend .py-0;
   @extend .border;
 }
 
 .tp-input-number-wide {
-  @extend .tp-input-number-base;
+  @extend .tp-input-number;
   
   @extend .w-100;
 }
 
-.tp-input-number-right {
-  @extend .tp-input-number-base;
+.tp-input-number-inline {
+  @extend .tp-input-number;
 
   @extend .text-right;
   @extend .w-50;
 }
 
 .tp-input-datetime {
-  @extend .form-control;
+  @extend .tp-input;
+
   @extend .w-100;
-  @extend .h-auto;
-  @extend .px-1;
-  @extend .py-0;
   @extend .border;
 }
 
 .tp-input-select {
-  @extend .form-control;
+  @extend .tp-input;
+
   @extend .d-inline;
   @extend .border-0;
-  @extend .p-0;
-  @extend .h-auto;
   @extend .w-auto;
 }
