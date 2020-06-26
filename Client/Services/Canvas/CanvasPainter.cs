@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Blazor.Extensions;
 using Blazor.Extensions.Canvas.Canvas2D;
 using TaskPlanner.Shared.Data.Coordinates;
 using TaskPlanner.Shared.Data.References;
-using TaskPlanner.Shared.Data.Sections;
 using TaskPlanner.Shared.Extensions;
 using TaskPlanner.TaskGraph.Data.Render;
 
@@ -76,39 +74,47 @@ namespace TaskPlanner.Client.Services.Canvas
                 await DrawElement(NextElement(), author, _config.ComponentFont);
             }
 
-            foreach (var section in node.Task.Sections.Take(4))
+            // TODO: Move formatting of section info in separate class
+            var slots = 4;
+            foreach (var deadline in node.Task.Deadlines)
             {
-                // TODO: Move formatting of section info in separate class
-                switch (section)
-                {
-                    case Deadline deadline:
-                        await DrawRect(NextElement(), "red");
-                        await DrawElement(NextElement(),
-                            $"Hard deadline: {deadline.Time}\n({deadline.Time.GetTimeLeftMessage()})",
-                            _config.ComponentFont);
-                        break;
-                    case ExecutionTime executionTime:
-                        await DrawRect(NextElement(), "blue");
-                        await DrawElement(NextElement(), $"{executionTime.Title}: {executionTime.Time}",
-                            _config.ComponentFont);
-                        break;
-                    case Iterations iterations:
-                        await DrawRect(NextElement(), "yellow");
-                        var timeSpan = iterations.TimePerIteration != null
-                            ? $" ({iterations.TimePerIteration.ToShortString()})"
-                            : "";
-                        await DrawElement(NextElement(),
-                            $"Iterations{timeSpan}: {iterations.Executed} / {iterations.Required}",
-                            _config.ComponentFont);
-                        break;
-                    case Metric metric:
-                        await DrawRect(NextElement(), "purple");
-                        await DrawElement(NextElement(), $"{metric.Title}: {metric.Value}",
-                            _config.ComponentFont);
-                        break;
-                    default:
-                        throw new UnsupportedSectionException(section);
-                }
+                if (slots == 0) break;
+                slots--;
+                await DrawRect(NextElement(), "red");
+                await DrawElement(NextElement(),
+                    $"Hard deadline: {deadline.Time}\n({deadline.Time.GetTimeLeftMessage()})",
+                    _config.ComponentFont);
+            }
+
+            foreach (var time in node.Task.ExecutionTimes)
+            {
+                if (slots == 0) break;
+                slots--;
+                await DrawRect(NextElement(), "blue");
+                await DrawElement(NextElement(), $"{time.Title}: {time.Time}",
+                    _config.ComponentFont);
+            }
+
+            foreach (var iteration in node.Task.Iterations)
+            {
+                if (slots == 0) break;
+                slots--;
+                await DrawRect(NextElement(), "yellow");
+                var timeSpan = iteration.TimePerIteration != null
+                    ? $" ({iteration.TimePerIteration.ToShortString()})"
+                    : "";
+                await DrawElement(NextElement(),
+                    $"Iterations{timeSpan}: {iteration.Executed} / {iteration.Required}",
+                    _config.ComponentFont);
+            }
+
+            foreach (var metric in node.Task.Metrics)
+            {
+                if (slots == 0) break;
+                slots--;
+                await DrawRect(NextElement(), "purple");
+                await DrawElement(NextElement(), $"{metric.Title}: {metric.Value}",
+                    _config.ComponentFont);
             }
 
             if (node.Task.References.Count > 0)
