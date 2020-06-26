@@ -21,16 +21,15 @@
   @extend .border;
 }
 
-.tp-input-number-wide {
+.tp-input-number-w100 {
   @extend .tp-input-number;
   
   @extend .w-100;
 }
 
-.tp-input-number-inline {
+.tp-input-number-w50 {
   @extend .tp-input-number;
 
-  @extend .text-right;
   @extend .w-50;
 }
 
