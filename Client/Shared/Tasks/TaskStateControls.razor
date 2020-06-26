@@ -22,29 +22,43 @@
     public TaskEditingState TaskEditingState { get; set; }
 
     [CascadingParameter]
+    public Todo Todo { get; set; }
+
+    [CascadingParameter]
     public bool TaskExists { get; set; }
 
     private async Task CreateTask()
     {
+        if (!TaskEditingState.AddedTasks.Contains(Todo))
+        {
+            TaskEditingState.AddedTasks.Add(Todo);
+        }
         await TaskManager.ApplyChanges(TaskEditingState);
-        await GoBack();
+        GoBack();
     }
 
     private async Task UpdateTask()
     {
+        if (!TaskEditingState.ModifiedTasks.Contains(Todo))
+        {
+            TaskEditingState.ModifiedTasks.Add(Todo);
+        }
         await TaskManager.ApplyChanges(TaskEditingState);
-        await GoBack();
+        GoBack();
     }
 
     private async Task DeleteTask()
     {
+        if (!TaskEditingState.RemovedTasks.Contains(Todo))
+        {
+            TaskEditingState.RemovedTasks.Add(Todo);
+        }
         await TaskManager.ApplyChanges(TaskEditingState);
-        await GoBack();
+        GoBack();
     }
 
-    private Task GoBack()
+    private void GoBack()
     {
         NavigationManager.NavigateTo("/overview");
-        return Task.CompletedTask;
     }
 }
