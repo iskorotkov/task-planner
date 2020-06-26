@@ -1,0 +1,10 @@
+﻿<button type="submit" class="btn btn-success d-inline" @onclick="@OnSubmit">@Title</button>
+
+@code
+{
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public EventCallback OnSubmit { get; set; }
+}

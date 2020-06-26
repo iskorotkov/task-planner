@@ -1,0 +1,34 @@
+﻿<div class="dropdown d-inline">
+    <button class="btn btn-outline-primary dropdown-toggle" id="dropdownMenu" type="button"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="oi oi-plus"></span>
+        Add component
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+        <button class="dropdown-item" type="button"
+                @onclick="@(() => Model.Deadlines.Add(new Deadline()))">
+            Add deadline
+        </button>
+
+        <button class="dropdown-item" type="button"
+                @onclick="@(() => Model.ExecutionTimes.Add(new ExecutionTime()))">
+            Add execution time
+        </button>
+
+        <button class="dropdown-item" type="button"
+                @onclick="@(() => Model.Iterations.Add(new Iterations()))">
+            Add iterations
+        </button>
+
+        <button class="dropdown-item" type="button"
+                @onclick="@(() => Model.Metrics.Add(new Metric()))">
+            Add metric
+        </button>
+    </div>
+</div>
+
+@code
+{
+    [CascadingParameter]
+    public Todo Model { get; set; }
+}
