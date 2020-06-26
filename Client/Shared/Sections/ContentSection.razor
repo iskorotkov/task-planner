@@ -1,6 +1,16 @@
 ﻿<div class="card shadow rounded-lg m-1">
     <div class="card-body">
         <input type="text" class="form-control border-0 mb-2" placeholder="Title..." @bind="@Content.Title"/>
-        <textarea class="form-control border-0" placeholder="Description..." rows="5" @bind="@Content.Description"></textarea>
+        <textarea class="form-control border-0 mb-2" placeholder="Description..." rows="5" @bind="@Content.Description"></textarea>
+        <TaskStateControls/>
     </div>
 </div>
+
+@code
+{
+    [Parameter]
+    public Content Content { get; set; }
+
+    [Parameter]
+    public string Title { get; set; }
+}

@@ -1,0 +1,50 @@
+﻿@inject ITaskManager TaskManager
+@inject NavigationManager NavigationManager
+
+<div class="container-fluid">
+    @if (TaskExists)
+    {
+        <SubmitButton Title="Update" OnSubmit="@UpdateTask"/>
+        <CancelButton Title="Delete" OnCancel="@DeleteTask"/>
+    }
+    else
+    {
+        <SubmitButton Title="Create" OnSubmit="@CreateTask"/>
+        <CancelButton Title="Cancel" OnCancel="@GoBack"/>
+    }
+
+    <AddComponentButton/>
+</div>
+
+@code
+{
+    [CascadingParameter]
+    public TaskEditingState TaskEditingState { get; set; }
+
+    [CascadingParameter]
+    public bool TaskExists { get; set; }
+
+    private async Task CreateTask()
+    {
+        await TaskManager.ApplyChanges(TaskEditingState);
+        await GoBack();
+    }
+
+    private async Task UpdateTask()
+    {
+        await TaskManager.ApplyChanges(TaskEditingState);
+        await GoBack();
+    }
+
+    private async Task DeleteTask()
+    {
+        await TaskManager.ApplyChanges(TaskEditingState);
+        await GoBack();
+    }
+
+    private Task GoBack()
+    {
+        NavigationManager.NavigateTo("/overview");
+        return Task.CompletedTask;
+    }
+}
