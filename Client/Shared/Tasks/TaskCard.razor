@@ -21,7 +21,7 @@
         @foreach (var deadline in Model.Deadlines)
         {
             <li class="list-group-item">
-                @deadline.Title: @deadline.Time<br/>(@deadline.Time.GetTimeLeftMessage())
+                @deadline.Title: @deadline.Time.ToString("yyyy-MM-dd hh:mm")<br/>(@deadline.Time.GetTimeLeftMessage())
             </li>
         }
 
