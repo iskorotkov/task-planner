@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Components;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components;
 using TaskPlanner.Shared.Data.References;
 using TaskPlanner.Shared.Data.Tasks;
 using TaskPlanner.Shared.Services.Tasks;
 
-namespace TaskPlanner.Client.Shared.Sections
+namespace TaskPlanner.Client.Shared.Components
 {
     public partial class ReferencesSection
     {

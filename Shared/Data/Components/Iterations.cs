@@ -1,6 +1,6 @@
 using TaskPlanner.Shared.Data.Spans;
 
-namespace TaskPlanner.Shared.Data.Sections
+namespace TaskPlanner.Shared.Data.Components
 {
     public class Iterations : OptionalSection
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using TaskPlanner.Shared.Data.Components;
 using TaskPlanner.Shared.Data.References;
-using TaskPlanner.Shared.Data.Sections;
 
 namespace TaskPlanner.Shared.Data.Tasks
 {

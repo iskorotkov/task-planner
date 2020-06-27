@@ -1,4 +1,4 @@
-namespace TaskPlanner.Shared.Data.Sections
+namespace TaskPlanner.Shared.Data.Components
 {
     public class Content : Section
     {

@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Components;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using TaskPlanner.Shared.Data.Sections;
+using Microsoft.AspNetCore.Components;
+using TaskPlanner.Shared.Data.Components;
 
-namespace TaskPlanner.Client.Shared.Sections
+namespace TaskPlanner.Client.Shared.Components
 {
     public partial class ExecutionTimeSection
     {

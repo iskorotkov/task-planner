@@ -1,6 +1,6 @@
 using System;
 
-namespace TaskPlanner.Shared.Data.Sections
+namespace TaskPlanner.Shared.Data.Components
 {
     public class Metadata : Section
     {

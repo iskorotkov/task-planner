@@ -8,7 +8,7 @@ using TaskPlanner.Shared.Data.Ui;
 using TaskPlanner.Shared.Services.References;
 using TaskPlanner.Shared.Services.Tasks;
 
-namespace TaskPlanner.Client.Shared.Sections
+namespace TaskPlanner.Client.Shared.Components
 {
     public partial class AddReferencesSection
     {
