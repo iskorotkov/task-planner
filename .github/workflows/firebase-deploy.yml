@@ -10,10 +10,38 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.100-preview.4.20258.7
+
+      - name: Install dependencies
+        run: dotnet restore
+
       - name: Setup Node.js environment
         uses: actions/setup-node@v1.4.2
         with:
           node-version: 14.x
+
+      - name: Install Node.js dependencies
+        run: cd "./Client/Scripts" && npm install
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal
+
+      - name: Publish the client
+        run: dotnet publish "./Client/TaskPlanner.Client.csproj" -c Release --self-contained -o "./publish"
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: "client"
+          path: "./publish"
 
       - name: Install Firebase CLI
         run: npm i -g firebase-tools
