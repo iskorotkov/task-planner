@@ -2,6 +2,8 @@
 
 ![Build and tests](https://github.com/iskorotkov/task-planner/workflows/build-and-test/badge.svg)
 ![Firebase deployment](https://github.com/iskorotkov/task-planner/workflows/firebase-deploy/badge.svg)
+![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/iskorotkov/taskplanner)
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/iskorotkov/taskplanner)
 
 Task Planner is more than a stupid task manager - it can analyze your tasks and plan things for you.
 
